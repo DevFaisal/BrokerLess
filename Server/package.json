@@ -5,15 +5,20 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon node --env-file=.env src/index.js"
   },
   "author": "Faisal Farooq, Waseem Ahmad , Shahid Manzoor",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.14.0",
     "bcrypt": "^5.1.1",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "nodemon": "^3.1.0",
-    "prettier": "^3.2.5"
+    "prettier": "^3.2.5",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "prisma": "^5.14.0"
   }
 }
