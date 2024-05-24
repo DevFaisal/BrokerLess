@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon src/index.js"
   },
-  "author": "Faisal , Waseem , Shahid",
+  "author": "Faisal Farooq, Waseem Ahmad , Shahid Manzoor",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
