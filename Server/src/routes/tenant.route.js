@@ -4,7 +4,6 @@ import Validation from "../utils/Validation.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Authentication from "../middlewares/Authentication.js";
-import { date } from "zod";
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -155,7 +154,6 @@ router.put("/profile", Authentication, async (req, res) => {
       .status(400)
       .send(result.error.errors?.map((error) => error.message));
   }
-  console.log(req.body);
   try {
     await prisma.address.create({
       data: {
