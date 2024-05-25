@@ -16,18 +16,20 @@ model Tenant {
   phone      BigInt     @unique
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
+  address    address[]
   properties Property[]
 }
 
 model Landlord {
-  id         String     @id @default(cuid())
-  name       String
-  email      String     @unique
-  password   String
-  phone      Int        @unique
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  properties Property[]
+  id              String            @id @default(cuid())
+  name            String
+  email           String            @unique
+  password        String
+  phone           BigInt            @unique
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  properties      Property[]
+  landlordaddress landlordaddress[]
 }
 
 model Property {
@@ -42,4 +44,30 @@ model Property {
   updatedAt   DateTime @updatedAt
   tenant      Tenant   @relation(fields: [tenantId], references: [id])
   landlord    Landlord @relation(fields: [landlordId], references: [id])
+}
+
+model address {
+  id        String   @id @default(cuid())
+  street    String
+  city      String
+  state     String
+  zip       String
+  country   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Tenant    Tenant?  @relation(fields: [tenantId], references: [id])
+  tenantId  String?
+}
+
+model landlordaddress {
+  id         String    @id @default(cuid())
+  street     String
+  city       String
+  state      String
+  zip        String
+  country    String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Landlord   Landlord? @relation(fields: [landlordId], references: [id])
+  landlordId String?
 }
