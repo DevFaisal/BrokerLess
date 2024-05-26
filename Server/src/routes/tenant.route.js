@@ -115,7 +115,7 @@ router.get("/profile", Authentication, async (req, res) => {
   try {
     let tenant = await prisma.tenant.findUnique({
       where: {
-        id: req.tenant.id,
+        id: req.user.id,
       },
       select: {
         id: true,

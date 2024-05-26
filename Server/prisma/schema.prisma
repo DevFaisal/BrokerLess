@@ -9,15 +9,14 @@ datasource db {
 }
 
 model Tenant {
-  id         String     @id @default(cuid())
-  name       String
-  email      String     @unique
-  password   String
-  phone      BigInt     @unique
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  address    address[]
-  properties Property[]
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  password  String
+  phone     BigInt    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  address   address[]
 }
 
 model Landlord {
@@ -33,17 +32,29 @@ model Landlord {
 }
 
 model Property {
-  id          String   @id @default(cuid())
-  name        String
-  description String
-  address     String
-  rent        Int
-  tenantId    String
-  landlordId  String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  tenant      Tenant   @relation(fields: [tenantId], references: [id])
-  landlord    Landlord @relation(fields: [landlordId], references: [id])
+  id              String            @id @default(cuid())
+  name            String
+  description     String
+  rent            Int
+  landlordId      String
+  status          String
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  landlord        Landlord          @relation(fields: [landlordId], references: [id])
+  PropertyAddress PropertyAddress[]
+}
+
+model PropertyAddress {
+  id         String    @id @default(cuid())
+  street     String
+  city       String
+  state      String
+  zip        String
+  country    String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Property   Property? @relation(fields: [propertyId], references: [id])
+  propertyId String?
 }
 
 model address {

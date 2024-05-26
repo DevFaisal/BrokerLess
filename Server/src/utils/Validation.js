@@ -104,6 +104,23 @@ const Validation = {
     });
     return schema.safeParse(data);
   },
+  propertySchemaValidation: (data) => {
+    const schema = z.object({
+      name: z
+        .string()
+        .min(5, { message: "Name must be at least 5 characters long" })
+        .max(20, { message: "Name must be at most 20 characters long" }),
+      description: z
+        .string()
+        .min(5, { message: "Description must be at least 5 characters long" })
+        .max(100, {
+          message: "Description must be at most 100 characters long",
+        }),
+      rent: z.number(),
+      status: z.string(),
+    });
+    return schema.safeParse(data);
+  },
 };
 
 export default Validation;
