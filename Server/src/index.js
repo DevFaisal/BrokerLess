@@ -1,5 +1,5 @@
 import express from "express";
-import tenantRouter from "./routes/tenant.route.js";
+import userRouter from "./routes/user.route.js";
 import landlordRouter from "./routes/landlord.route.js";
 import propertyRoute from "./routes/property.route.js";
 import cookieParser from "cookie-parser";
@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Routes
-app.use("/auth/tenant", tenantRouter);
+app.use("/auth/user", userRouter);
 app.use("/auth/landlord", landlordRouter);
 app.use("/property", propertyRoute);
 

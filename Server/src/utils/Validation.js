@@ -2,7 +2,7 @@ import z from "zod";
 
 const Validation = {
   // Validate the Tenant Registration Data
-  tenantRegistration: (data) => {
+  UserRegistration: (data) => {
     const schema = z.object({
       name: z
         .string()
@@ -27,14 +27,14 @@ const Validation = {
 
     return schema.safeParse(data);
   },
-  tenantLogin: (data) => {
+  UserLogin: (data) => {
     const schema = z.object({
       email: z.string().email({ message: "Invalid email" }),
       password: z.string(),
     });
     return schema.safeParse(data);
   },
-  tenantProfile: (data) => {
+  UserProfile: (data) => {
     const schema = z.object({
       street: z
         .string()
@@ -118,6 +118,15 @@ const Validation = {
         }),
       rent: z.number(),
       status: z.string(),
+    });
+    return schema.safeParse(data);
+  },
+  agreementSchemaValidation: (data) => {
+    const schema = z.object({
+      propertyId: z.string(),
+      startDate: z.string(), // TODO: Change to Date
+      endDate: z.string(), // TODO: Change to Date
+      rent: z.number(),
     });
     return schema.safeParse(data);
   },

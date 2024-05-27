@@ -2,10 +2,12 @@ import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
 import Validation from "../utils/Validation.js";
 import isValidLandlord from "../middlewares/isValidLandlord.js";
+import Authentication from "../middlewares/Authentication.js";
 
 const router = Router();
 const client = new PrismaClient();
 
+// ------------------- Property Routes -------------------
 //GET Request to get all properties
 router.get("/", async (req, res) => {
   try {
@@ -20,51 +22,6 @@ router.get("/", async (req, res) => {
     });
     res.status(200).json(properties);
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});
-
-// POST Request to create a new property by Landlord only
-router.post("/", isValidLandlord, async (req, res) => {
-  const result = Validation.propertySchemaValidation(req.body);
-  if (!result.success) {
-    return res
-      .status(400)
-      .send(result.error.errors?.map((error) => error.message));
-  }
-  try {
-    const PropertyAddress = await client.propertyAddress.create({
-      data: {
-        street: req.body.street,
-        city: req.body.city,
-        state: req.body.state,
-        zip: req.body.zip,
-        country: req.body.country,
-      },
-    });
-
-    const property = await client.property.create({
-      data: {
-        name: req.body.name,
-        description: req.body.description,
-        rent: req.body.rent,
-        status: req.body.status,
-        landlord: {
-          connect: {
-            id: req.user.id,
-          },
-        },
-        PropertyAddress: {
-          connect: {
-            id: PropertyAddress.id,
-          },
-        },
-        addressId: PropertyAddress.id,
-      },
-    });
-    res.status(200).json(property);
-  } catch (error) {
-    console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
@@ -121,7 +78,6 @@ router.get("/prop", async (req, res) => {
   }
 });
 
-
 // GET Request to get a property by Address
 router.get("/search", async (req, res) => {
   if (!req.query.city || !req.query.state) {
@@ -154,6 +110,78 @@ router.get("/search", async (req, res) => {
     if (!property) {
       return res.status(404).json({ message: "Property not found" });
     }
+    res.status(200).json(property);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// POST Request to create a new Agreement
+router.post("/agreement", Authentication, async (req, res) => {
+  const result = Validation.agreementSchemaValidation(req.body);
+  if (!result.success) {
+    return res
+      .status(400)
+      .send(result.error.errors?.map((error) => error.message));
+  } 
+  try {
+    const agreement = await client.agreement.create({
+      data: {
+        propertyId: req.body.propertyId,
+        tenantId: req.user.id,
+        startDate: req.body.startDate, //TODO: Change to Date
+        endDate: req.body.endDate, //TODO: Change to Date
+        rent: req.body.rent,
+        status: "PENDING",
+      },
+    });
+    res.status(200).json(agreement);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// ------------------- Landlord Routes -------------------
+// POST Request to create a new property by Landlord only
+router.post("/", isValidLandlord, async (req, res) => {
+  const result = Validation.propertySchemaValidation(req.body);
+  if (!result.success) {
+    return res
+      .status(400)
+      .send(result.error.errors?.map((error) => error.message));
+  }
+  try {
+    const PropertyAddress = await client.propertyAddress.create({
+      data: {
+        street: req.body.street,
+        city: req.body.city,
+        state: req.body.state,
+        zip: req.body.zip,
+        country: req.body.country,
+      },
+    });
+
+    const property = await client.property.create({
+      data: {
+        name: req.body.name,
+        description: req.body.description,
+        rent: req.body.rent,
+        status: req.body.status,
+        landlord: {
+          connect: {
+            id: req.user.id,
+          },
+        },
+        PropertyAddress: {
+          connect: {
+            id: PropertyAddress.id,
+          },
+        },
+        addressId: PropertyAddress.id,
+      },
+    });
     res.status(200).json(property);
   } catch (error) {
     console.log(error);

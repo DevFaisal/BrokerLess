@@ -8,10 +8,10 @@ import Authentication from "../middlewares/Authentication.js";
 const router = Router();
 const prisma = new PrismaClient();
 
-// POST Tenant Registration API Endpoint
+// POST User Registration API Endpoint
 router.post("/register", async (req, res) => {
   //Validate the request body
-  const result = Validation.tenantRegistration(req.body);
+  const result = Validation.UserRegistration(req.body);
   //Check if the request body is valid
   if (!result.success) {
     return res
@@ -20,12 +20,12 @@ router.post("/register", async (req, res) => {
   }
   try {
     //Check weather the email or phone number already exists
-    const tenant = await prisma.tenant.findFirst({
+    const user = await prisma.user.findFirst({
       where: {
         OR: [{ email: req.body.email }, { phone: BigInt(req.body.phone) }],
       },
     });
-    if (tenant) {
+    if (user) {
       return res.status(400).json({
         message: "Email or phone number already exists",
       });
@@ -34,8 +34,8 @@ router.post("/register", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-    //Create a new tenant
-    const newTenant = await prisma.tenant.create({
+    //Create a new User
+    const newUser = await prisma.user.create({
       data: {
         name: req.body.name,
         email: req.body.email,
@@ -45,17 +45,17 @@ router.post("/register", async (req, res) => {
     });
 
     return res.status(201).json({
-      message: "Tenant created successfully",
+      message: "User created successfully",
     });
   } catch (error) {
     console.log(error);
     return res.status(500).json("Internal Server Error");
   }
 });
-// POST Tenant Login API Endpoint
+// POST User Login API Endpoint
 router.post("/login", async (req, res) => {
   //Validate the request body
-  const result = Validation.tenantLogin(req.body);
+  const result = Validation.UserLogin(req.body);
   //Check if the request body is valid
   if (!result.success) {
     return res
@@ -63,13 +63,13 @@ router.post("/login", async (req, res) => {
       .send(result.error.errors?.map((error) => error.message));
   }
   try {
-    //Check if the tenant exists
-    const tenant = await prisma.tenant.findFirst({
+    //Check if the User exists
+    const user = await prisma.user.findFirst({
       where: {
         email: req.body.email,
       },
     });
-    if (!tenant) {
+    if (!user) {
       return res.status(400).json({
         message: "Invalid email or password",
       });
@@ -77,14 +77,14 @@ router.post("/login", async (req, res) => {
     //Check if the password is correct
     const validPassword = await bcrypt.compare(
       req.body.password,
-      tenant.password
+      user.password
     );
     if (!validPassword) {
       return res.status(400).json({
         message: "Wrong password",
       });
     }
-    const token = jwt.sign({ id: tenant.id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
 
     res.header("Authentication", `Bearer ${token}`);
 
@@ -97,7 +97,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// POST Tenant Logout API Endpoint
+// POST User Logout API Endpoint
 router.post("/logout", Authentication, async (req, res) => {
   try {
     res.header("Authentication", "");
@@ -110,10 +110,10 @@ router.post("/logout", Authentication, async (req, res) => {
   }
 });
 
-// GET Tenant Profile API Endpoint
+// GET User Profile API Endpoint
 router.get("/profile", Authentication, async (req, res) => {
   try {
-    let tenant = await prisma.tenant.findUnique({
+    let user = await prisma.user.findUnique({
       where: {
         id: req.user.id,
       },
@@ -134,28 +134,28 @@ router.get("/profile", Authentication, async (req, res) => {
       },
     });
 
-    tenant = {
-      ...tenant,
-      phone: tenant.phone.toString(),
+    user = {
+      ...user,
+      phone: user.phone.toString(),
     };
 
-    return res.status(200).json(tenant);
+    return res.status(200).json(user);
   } catch (error) {
     console.log(error);
     return res.status(500).json("Internal Server Error");
   }
 });
 
-//UPDATE Tenant Profile API Endpoint
+//UPDATE User Profile API Endpoint
 router.put("/profile", Authentication, async (req, res) => {
-  const result = Validation.tenantProfile(req.body);
+  const result = Validation.UserProfile(req.body);
   if (!result.success) {
     return res
       .status(400)
       .send(result.error.errors?.map((error) => error.message));
   }
   try {
-    await prisma.address.create({
+    await prisma.userAddress.create({
       data: {
         street: req.body.street,
         city: req.body.city,
@@ -182,7 +182,7 @@ router.put("/profile", Authentication, async (req, res) => {
 //GET Refresh Token API Endpoint
 router.get("/refresh-token", Authentication, async (req, res) => {
   try {
-    const token = jwt.sign({ id: req.tenant.id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: req.user.id }, process.env.JWT_SECRET);
     res.header("Authentication", `Bearer ${token}`);
     return res.status(200).json({
       message: "Token refreshed successfully",

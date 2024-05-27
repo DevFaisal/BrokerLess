@@ -4,6 +4,7 @@ import Validation from "../utils/Validation.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Authentication from "../middlewares/Authentication.js";
+import isValidLandlord from "../middlewares/isValidLandlord.js";
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -137,6 +138,50 @@ router.get("/profile", Authentication, async (req, res) => {
       }),
     };
     return res.status(200).json(landlord);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json("Internal Server Error");
+  }
+});
+
+// GET All Agreement Applications API Endpoint
+router.get("/agreements", isValidLandlord, async (req, res) => {
+  try {
+    const agreements = await prisma.agreement.findMany({
+      where: {
+        landlordId: req.user.id,
+      },
+    });
+    return res.status(200).json(agreements);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json("Internal Server Error");
+  }
+});
+
+// Approve Agreement Application API Endpoint
+router.post("/approve", isValidLandlord, async (req, res) => {
+  try {
+    const agreement = await prisma.agreement.findUnique({
+      where: {
+        id: req.body.id,
+      },
+    });
+    if (!agreement) {
+      return res.status(404).json({ message: "Agreement not found" });
+    }
+    if (agreement.landlordId !== req.user.id) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+    await prisma.agreement.update({
+      where: {
+        id: req.body.id,
+      },
+      data: {
+        status: "APPROVED",
+      },
+    });
+    return res.status(200).json({ message: "Agreement approved" });
   } catch (error) {
     console.log(error);
     return res.status(500).json("Internal Server Error");

@@ -8,15 +8,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Tenant {
-  id        String    @id @default(cuid())
-  name      String
-  email     String    @unique
-  password  String
-  phone     BigInt    @unique
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  address   address[]
+model User {
+  id          String        @id @default(cuid())
+  name        String
+  email       String        @unique
+  password    String
+  phone       BigInt        @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Agreement   Agreement[]
+  UserAddress UserAddress[]
 }
 
 model Landlord {
@@ -43,6 +44,7 @@ model Property {
   landlord        Landlord          @relation(fields: [landlordId], references: [id])
   addressId       String
   PropertyAddress PropertyAddress[]
+  Agreement       Agreement[]
 }
 
 model PropertyAddress {
@@ -58,7 +60,7 @@ model PropertyAddress {
   propertyId String?
 }
 
-model address {
+model UserAddress {
   id        String   @id @default(cuid())
   street    String
   city      String
@@ -67,7 +69,7 @@ model address {
   country   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Tenant    Tenant?  @relation(fields: [tenantId], references: [id])
+  User      User?    @relation(fields: [tenantId], references: [id])
   tenantId  String?
 }
 
@@ -82,4 +84,26 @@ model landlordaddress {
   updatedAt  DateTime  @updatedAt
   Landlord   Landlord? @relation(fields: [landlordId], references: [id])
   landlordId String?
+}
+
+model Agreement {
+  id         String   @id @default(cuid())
+  propertyId String
+  tenantId   String
+  status     Status   @default(INACTIVE)
+  startDate  String //Change to Date later
+  endDate    String //Change to Date later
+  rent       Int
+  createdAt  DateTime @default(now())
+  Property   Property @relation(fields: [propertyId], references: [id])
+  User       User     @relation(fields: [tenantId], references: [id])
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+  PENDING
+  DECLINED
+  APPROVED
+  CANCELLED
 }
