@@ -41,6 +41,7 @@ model Property {
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   landlord        Landlord          @relation(fields: [landlordId], references: [id])
+  addressId       String
   PropertyAddress PropertyAddress[]
 }
 

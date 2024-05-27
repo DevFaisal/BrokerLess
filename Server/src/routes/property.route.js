@@ -33,6 +33,16 @@ router.post("/", isValidLandlord, async (req, res) => {
       .send(result.error.errors?.map((error) => error.message));
   }
   try {
+    const PropertyAddress = await client.propertyAddress.create({
+      data: {
+        street: req.body.street,
+        city: req.body.city,
+        state: req.body.state,
+        zip: req.body.zip,
+        country: req.body.country,
+      },
+    });
+
     const property = await client.property.create({
       data: {
         name: req.body.name,
@@ -43,10 +53,94 @@ router.post("/", isValidLandlord, async (req, res) => {
           connect: {
             id: req.user.id,
           },
-        }, 
+        },
+        PropertyAddress: {
+          connect: {
+            id: PropertyAddress.id,
+          },
+        },
+        addressId: PropertyAddress.id,
       },
     });
     res.status(200).json(property);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// GET Request to get a property by ID
+router.get("/prop", async (req, res) => {
+  if (!req.query.id) {
+    return res.status(400).json({ message: "Property ID is required" });
+  }
+  try {
+    const property = await client.property.findUnique({
+      where: {
+        id: String(req.query.id),
+      },
+    });
+    if (!property) {
+      return res.status(404).json({ message: "Property not found" });
+    }
+    //JOIN with landlord to get landlord details
+
+    let landlord = await client.landlord.findUnique({
+      where: {
+        id: property.landlordId,
+      },
+      select: {
+        name: true,
+        email: true,
+        phone: true,
+      },
+    });
+    landlord = {
+      ...landlord,
+      phone: String(landlord.phone),
+    };
+    property.landlord = landlord;
+
+    if (!landlord) {
+      return res.status(404).json({ message: "Landlord not found" });
+    }
+    //JOIN with address
+    property.PropertyAddress = await client.propertyAddress.findUnique({
+      where: {
+        id: property.addressId,
+      },
+    });
+
+    if (!property.PropertyAddress) {
+      return res.status(404).json({ message: "Address not found" });
+    }
+    res.status(200).json(property);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
+// :TODO Pending API
+
+// GET Request to get a property by Address
+router.post("/address", async (req, res) => {
+  if (!req.body.street || !req.body.city || !req.body.state || !req.body.zip) {
+    return res.status(400).json({ message: "Address is required" });
+  }
+  try {
+    const address = await client.propertyAddress.findMany({
+      where: {
+        
+        city: req.body.city,
+        state: req.body.state,
+      },
+    });
+    if (!address) {
+      res.status(404).json({ message: "Address not found" });
+    }
+
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
