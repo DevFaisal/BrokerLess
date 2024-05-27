@@ -122,25 +122,39 @@ router.get("/prop", async (req, res) => {
 });
 
 
-// :TODO Pending API
-
 // GET Request to get a property by Address
-router.post("/address", async (req, res) => {
-  if (!req.body.street || !req.body.city || !req.body.state || !req.body.zip) {
+router.get("/search", async (req, res) => {
+  if (!req.query.city || !req.query.state) {
     return res.status(400).json({ message: "Address is required" });
   }
   try {
+    //Search for address in propertyAddress table
     const address = await client.propertyAddress.findMany({
       where: {
-        
-        city: req.body.city,
-        state: req.body.state,
+        city: req.query.city,
+        state: req.query.state,
       },
     });
+    //If address not found return 404
     if (!address) {
-      res.status(404).json({ message: "Address not found" });
+      return res.status(404).json({ message: "Address not found" });
     }
+    // Get all id's of address in single array
+    const addressId_s = address.map((add) => add.id);
 
+    //Search for properties with addressId
+    const property = await client.property.findMany({
+      where: {
+        addressId: {
+          in: addressId_s,
+        },
+      },
+    });
+    //If property not found return 404
+    if (!property) {
+      return res.status(404).json({ message: "Property not found" });
+    }
+    res.status(200).json(property);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
