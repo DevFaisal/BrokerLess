@@ -121,6 +121,23 @@ const Validation = {
     });
     return schema.safeParse(data);
   },
+  UpdatePropertySchemaValidation: (data) => {
+    const schema = z.object({
+      id: z.string(),
+      name: z
+        .string()
+        .min(5, { message: "Name must be at least 5 characters long" })
+        .max(20, { message: "Name must be at most 20 characters long" }),
+      description: z
+        .string()
+        .min(5, { message: "Description must be at least 5 characters long" })
+        .max(100, {
+          message: "Description must be at most 100 characters long",
+        }),
+      rent: z.number(),
+    });
+    return schema.safeParse(data);
+  },
   agreementSchemaValidation: (data) => {
     const schema = z.object({
       propertyId: z.string(),
@@ -130,6 +147,7 @@ const Validation = {
     });
     return schema.safeParse(data);
   },
+  // TODO: Create property Address Schema TOD
 };
 
 export default Validation;

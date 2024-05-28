@@ -2,7 +2,6 @@ import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
 import Validation from "../utils/Validation.js";
 import isValidLandlord from "../middlewares/isValidLandlord.js";
-import Authentication from "../middlewares/Authentication.js";
 
 const router = Router();
 const client = new PrismaClient();
@@ -117,32 +116,6 @@ router.get("/search", async (req, res) => {
   }
 });
 
-// POST Request to create a new Agreement
-router.post("/agreement", Authentication, async (req, res) => {
-  const result = Validation.agreementSchemaValidation(req.body);
-  if (!result.success) {
-    return res
-      .status(400)
-      .send(result.error.errors?.map((error) => error.message));
-  } 
-  try {
-    const agreement = await client.agreement.create({
-      data: {
-        propertyId: req.body.propertyId,
-        tenantId: req.user.id,
-        startDate: req.body.startDate, //TODO: Change to Date
-        endDate: req.body.endDate, //TODO: Change to Date
-        rent: req.body.rent,
-        status: "PENDING",
-      },
-    });
-    res.status(200).json(agreement);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});
-
 // ------------------- Landlord Routes -------------------
 // POST Request to create a new property by Landlord only
 router.post("/", isValidLandlord, async (req, res) => {
@@ -186,6 +159,51 @@ router.post("/", isValidLandlord, async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// PUT Request to update a property by Landlord only
+router.put("/update", isValidLandlord, async (req, res) => {
+  const result = Validation.UpdatePropertySchemaValidation(req.body);
+  if (!result.success) {
+    return res.status(400).json({ message: "Invalid Input" });
+  }
+  try {
+    const property = await client.property.update({
+      where: {
+        id: req.body.id,
+      },
+      data: {
+        name: req.body.name,
+        description: req.body.description,
+        rent: req.body.rent,
+      },
+    });
+    if (!property) {
+      return res.status(401).json({ message: "Invalid Property" });
+    }
+    return res.status(201).json({ message: "Updated Successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+router.delete("/delete", isValidLandlord, async (req, res) => {
+  try {
+    const deletedProperty = await client.property.delete({
+      where: {
+        id: req.body.id,
+      },
+    });
+
+    if (!deletedProperty) {
+      return res.status(400).json({ message: "Invalid Property" });
+    }
+    res.status(201).json({ message: "Property Deleted Successfully" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
