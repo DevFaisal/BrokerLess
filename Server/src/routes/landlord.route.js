@@ -3,7 +3,6 @@ import { PrismaClient } from "@prisma/client";
 import Validation from "../utils/Validation.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import Authentication from "../middlewares/Authentication.js";
 import isValidLandlord from "../middlewares/isValidLandlord.js";
 
 const router = Router();
@@ -43,7 +42,7 @@ router.post("/register", async (req, res) => {
         email: req.body.email,
         password: hashedPassword,
         phone: BigInt(req.body.phone),
-        landlordaddress: {
+        Landlordaddress: {
           create: {
             street: req.body.street,
             city: req.body.city,
@@ -113,21 +112,21 @@ router.post("/login", async (req, res) => {
 });
 
 // GET Landlord Profile API Endpoint
-router.get("/profile", Authentication, async (req, res) => {
+router.get("/profile", isValidLandlord, async (req, res) => {
   try {
     let landlord = await prisma.landlord.findUnique({
       where: {
         id: req.user.id,
       },
       include: {
-        landlordaddress: true,
+        Landlordaddress: true,
       },
     });
     landlord = {
       name: landlord.name,
       email: landlord.email,
       phone: landlord.phone.toString(),
-      address: landlord.landlordaddress.map((address) => {
+      address: landlord.Landlordaddress.map((address) => {
         return {
           street: address.street,
           city: address.city,

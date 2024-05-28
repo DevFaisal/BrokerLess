@@ -162,7 +162,7 @@ router.put("/profile", Authentication, async (req, res) => {
         state: req.body.state,
         zip: req.body.zip,
         country: req.body.country,
-        Tenant: {
+        User: {
           connect: {
             id: req.user.id,
           },
