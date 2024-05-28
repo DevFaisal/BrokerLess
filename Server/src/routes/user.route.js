@@ -22,7 +22,7 @@ router.post("/register", async (req, res) => {
     //Check weather the email or phone number already exists
     const user = await prisma.user.findFirst({
       where: {
-        OR: [{ email: req.body.email }, { phone: BigInt(req.body.phone) }],
+        OR: [{ email: req.body.email }, { phone: req.body.phone }],
       },
     });
     if (user) {
@@ -122,7 +122,7 @@ router.get("/profile", Authentication, async (req, res) => {
         name: true,
         email: true,
         phone: true,
-        address: {
+        UserAddress: {
           select: {
             street: true,
             city: true,
@@ -134,6 +134,11 @@ router.get("/profile", Authentication, async (req, res) => {
       },
     });
 
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
     user = {
       ...user,
       phone: user.phone.toString(),
