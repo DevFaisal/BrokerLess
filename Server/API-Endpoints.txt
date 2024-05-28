@@ -1,6 +1,7 @@
 -----USER ENDPOINTS-------
+
 1. User Regsitration
- url: http://localhost:8000/auth/tenant/register
+ url: http://localhost:8000/auth/user/register
  type: POST
  body:{
     name,
@@ -17,9 +18,140 @@
     password
  }
 
- 3.
+ 3. User Logout
+  url: http://localhost:8000/auth/user/logout
+  type: POST
+  body: {
+   Null
+  }
 
+4. User Profile
+ url: http://localhost:8000/auth/user/profile
+ type: GET
+ Body:{
+      NULL
+ }
 
+5. UPDATE USER Profile
+ url: http://localhost:8000/auth/user/profile
+ type: PUT
+ body:{
+   street,
+   city,
+   state,
+   zip,
+   country
+ }
 
+ 6. Refresh Token 
+  url: http://localhost:8000/auth/user//refresh-token
+  type: GET
+  body:{
+   NULL
+  }
 
 ----LANDLORD ENDPOINTS------
+1. Landlord Regsitration
+ url: http://localhost:8000/auth/landlord/register
+ type: POST
+ body:{
+  name,
+    email,
+    password,
+    phone,
+    street,
+    city,
+    state,
+    zip,
+    country
+ }
+
+ 2. Landlord Login
+  url: http://localhost:8000/auth/landlord/Login
+  type: POST
+  body:{
+   email,
+   password
+  }
+
+3. Landlord Profile 
+ url: http://localhost:8000/auth/landlord/profile
+ type: GET
+ body:{
+   NULL
+ }
+
+----AGREEMENT ENDPOINTS------
+
+1. CREATE AGREEMENT
+ URL: http://localhost:8000/api/agreement/generate
+ type: POST
+ body:{
+   property id,
+   tenent id,
+   start date,
+   end date,
+   rent,
+   status
+ }
+
+2. GET ALL AGREEMENT APLLICATION 
+ URL: http://localhost:8000/api/agreement/
+ type: GET
+ body:{
+   NULL
+ }
+
+3. Approve Agreement Application
+ URL: http://localhost:8000/api/agreement/approve
+ type: POST
+ body:{
+   NULL
+ }
+
+----PROPERTY ENDPOINTS------
+
+1. GET Request to get all properties
+ URL: http://localhost:8000/api/property/
+ type: GET
+ body:{
+   NuLL (Confusion)
+ }
+
+2. A property by ID
+ URL: http://localhost:8000/api/property/prop
+ type: GET
+ body:{
+
+ }
+
+3. Get A Property By Address
+ URL: http://localhost:8000/api/property/search
+ type: GET
+ body:{
+
+ }
+
+4. Create a new Property By Landlord
+ URL: http://localhost:8000/api/property/
+ type: POST
+ body:{
+   street,
+   city,
+   state,
+   zip,
+   country,
+   name,
+   description,
+   rent,
+   status
+ }
+
+ 5. Update Propert by Landlord
+  URL: http://localhost:8000/api/property/Update
+  type: POST
+  body:{
+   name,
+   description,
+   rent
+  }
