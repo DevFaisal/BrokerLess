@@ -1,0 +1,25 @@
+-----USER ENDPOINTS-------
+1. User Regsitration
+ url: http://localhost:8000/auth/tenant/register
+ type: POST
+ body:{
+    name,
+    email,
+    password,
+    phone
+ }
+
+2. User Login
+ url: http://localhost:8000/auth/user/Login
+ type: POST
+ body:{
+    email,
+    password
+ }
+
+ 3.
+
+
+
+
+----LANDLORD ENDPOINTS------
