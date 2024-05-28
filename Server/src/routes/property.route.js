@@ -116,6 +116,7 @@ router.get("/search", async (req, res) => {
   }
 });
 
+
 // ------------------- Landlord Routes -------------------
 // POST Request to create a new property by Landlord only
 router.post("/", isValidLandlord, async (req, res) => {
@@ -141,7 +142,7 @@ router.post("/", isValidLandlord, async (req, res) => {
         name: req.body.name,
         description: req.body.description,
         rent: req.body.rent,
-        status: req.body.status,
+        // status: req.body.status,
         landlord: {
           connect: {
             id: req.user.id,
