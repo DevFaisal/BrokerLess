@@ -10,15 +10,17 @@ datasource db {
 
 // USER MODEL
 model User {
-  id          String        @id @default(cuid())
-  name        String
-  email       String        @unique
-  password    String
-  phone       BigInt        @unique
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  Agreement   Agreement[]
-  UserAddress UserAddress[]
+  id                String        @id @default(cuid())
+  name              String
+  email             String        @unique
+  password          String
+  phone             BigInt        @unique
+  isVerified        Boolean       @default(false)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  verificationToken String?
+  Agreement         Agreement[]
+  UserAddress       UserAddress[]
 }
 
 // USER ADDRESS MODEL

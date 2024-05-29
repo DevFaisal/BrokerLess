@@ -7,12 +7,16 @@ import {
   userProfile,
   updateUserProfile,
   refreshToken,
+  verifyEmail,
 } from "../controllers/user.controller.js";
 
 const router = Router();
 
 // POST User Registration API Endpoint
 router.route("/register").post(registerUser);
+
+// Verify Email API Endpoint
+router.route("/verify-email").get(verifyEmail);
 
 // POST User Login API Endpoint
 router.route("/login").post(loginUser);

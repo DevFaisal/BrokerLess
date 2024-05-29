@@ -13,7 +13,7 @@ import propertyRoute from "./routes/property.route.js";
 import cookieParser from "cookie-parser";
 import agreementRoute from "./routes/agreement.route.js";
 
-// Routes 
+// Routes
 app.use("/auth/user", userRouter);
 app.use("/auth/landlord", landlordRouter);
 app.use("/api/property", propertyRoute);

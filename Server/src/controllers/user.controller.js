@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import Validation from "../utils/Validation.js";
+import verificationEmail from "../utils/verificationEmail.js";
+import z from "zod";
 
 const prisma = new PrismaClient();
 
@@ -30,6 +32,24 @@ const registerUser = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
+    // Generate a random 6 digit number
+    const verificationToken = jwt.sign(
+      {
+        exp: Math.floor((Date.now() + 5 * 60000) / 1000), // Verification token expires in 5 minutes
+        email: req.body.email,
+      },
+      process.env.JWT_SECRET
+    );
+
+    const { data, error } = await verificationEmail(
+      req.body.email,
+      verificationToken
+    );
+    if (error) {
+      return res.status(500).json({
+        message: "Failed to send verification email",
+      });
+    }
     //Create a new User
     const newUser = await prisma.user.create({
       data: {
@@ -37,15 +57,64 @@ const registerUser = async (req, res) => {
         email: req.body.email,
         password: hashedPassword,
         phone: BigInt(req.body.phone),
+        verificationToken: verificationToken,
       },
     });
 
     return res.status(201).json({
-      message: "User created successfully",
+      message: "User registered successfully and verification email sent",
     });
   } catch (error) {
     console.log(error);
     return res.status(500).json("Internal Server Error");
+  }
+};
+
+const verifyEmail = async (req, res) => {
+  const { verificationToken } = req.query;
+  const email = jwt.verify(
+    verificationToken,
+    process.env.JWT_SECRET,
+    (error, decoded) => {
+      if (error) {
+        return res.status(400).json({
+          message: "Invalid Token or Token expired",
+        });
+      }
+      if (decoded) {
+        return decoded.email;
+      }
+    }
+  );
+  /* Here we are checking if the email is valid or not because if the token is expired
+  it sends the server error data which can become true in if-else condition so we are
+  checking weather it is email type or not */
+  if (!z.string().email().safeParse(email).success) {
+    // Here i am returning without sending any response because
+    //the error message is already sent in the above code
+    return;
+  }
+  try {
+    const user = await prisma.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+        isVerified: true,
+        verificationToken: "",
+      },
+    });
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+    return res.status(200).json({
+      message: "Email verified successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json("Internal Server Error");
   }
 };
 
@@ -197,4 +266,5 @@ export {
   userProfile,
   updateUserProfile,
   refreshToken,
+  verifyEmail,
 };
