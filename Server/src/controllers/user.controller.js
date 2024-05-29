@@ -41,13 +41,14 @@ const registerUser = async (req, res) => {
       process.env.JWT_SECRET
     );
 
-    const { data, error } = await verificationEmail(
+    const mail = await verificationEmail(
       req.body.email,
-      verificationToken
+      verificationToken,
+      req.body.name
     );
-    if (error) {
+    if (mail.error) {
       return res.status(500).json({
-        message: "Failed to send verification email",
+        message: "error: " + mail.error.message,
       });
     }
     //Create a new User
@@ -95,13 +96,9 @@ const verifyEmail = async (req, res) => {
     return;
   }
   try {
-    const user = await prisma.user.update({
+    const user = await prisma.user.findFirst({
       where: {
         email: email,
-      },
-      data: {
-        isVerified: true,
-        verificationToken: "",
       },
     });
     if (!user) {
@@ -109,12 +106,76 @@ const verifyEmail = async (req, res) => {
         message: "User not found",
       });
     }
+    if (user.isVerified) {
+      return res.status(400).json({
+        message: "Email already verified",
+      });
+    }
+    await prisma.user.update({
+      where: {
+        email: user.email,
+      },
+      data: {
+        isVerified: true,
+        verificationToken: "",
+      },
+    });
     return res.status(200).json({
       message: "Email verified successfully",
     });
   } catch (error) {
     console.log(error);
     res.status(500).json("Internal Server Error");
+  }
+};
+
+const resendVerificationEmail = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        email: email,
+      },
+    });
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+    if (user.isVerified) {
+      return res.status(400).json({
+        message: "Email already verified",
+      });
+    }
+    const verificationToken = jwt.sign(
+      {
+        exp: Math.floor((Date.now() + 5 * 60000) / 1000), // Verification token expires in 5 minutes
+        email: email,
+      },
+      process.env.JWT_SECRET
+    );
+
+    const mail = await verificationEmail(email, verificationToken, user.name);
+    if (mail.error) {
+      return res.status(500).json({
+        message: "error: " + mail.error.message,
+      });
+    }
+
+    await prisma.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+        verificationToken: verificationToken,
+      },
+    });
+
+    return res.status(200).json({
+      message: "Verification email sent successfully",
+    });
+  } catch (error) {
+    return res.status(500).json("Internal Server Error");
   }
 };
 
@@ -149,6 +210,14 @@ const loginUser = async (req, res) => {
         message: "Wrong password",
       });
     }
+
+    //Check if the email is verified
+    if (!user.isVerified) {
+      return res.status(400).json({
+        message: "Email not verified",
+      });
+    }
+
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
 
     res.header("Authentication", `Bearer ${token}`);
@@ -267,4 +336,5 @@ export {
   updateUserProfile,
   refreshToken,
   verifyEmail,
+  resendVerificationEmail,
 };

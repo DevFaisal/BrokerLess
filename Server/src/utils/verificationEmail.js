@@ -3,13 +3,14 @@ import { RESEND_API_KEY } from "../constants.js";
 
 const resend = new Resend(RESEND_API_KEY);
 
-const VerificationEmail = async (email, token) => {
-  const { data, error } = await resend.emails.send({
-    from: "BrokerLess <onboarding@resend.dev>",
-    to: email,
-    subject: "BrokerLess | Verification Email",
-    html: `
-    <!DOCTYPE html>
+const VerificationEmail = async (email, token, name) => {
+  try {
+    const { data, error } = await resend.emails.send({
+      from: "BrokerLess <onboarding@resend.dev>",
+      to: email,
+      subject: "Verify Your Email - BrokerLess",
+      html: `
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -36,6 +37,11 @@ const VerificationEmail = async (email, token) => {
         }
         h1 {
             color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .welcome {
+            font-size: 20px;
+            color: #16a085;
             margin-bottom: 20px;
         }
         p {
@@ -67,11 +73,16 @@ const VerificationEmail = async (email, token) => {
             font-size: 12px;
             color: #bdc3c7;
         }
+        span {
+            color: #e67e22;
+            font-weight: lighter;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>BrokerLess | Room Rental Service</h1>
+        <h1>BrokerLess <span>Room Rental Platform</span></h1>
+        <p class="welcome">Welcome Mr ${name}</p>
         <p>Click the link below to verify your email address</p>
         <p>This link will expire in 5 minutes</p>
         <a id='a-tag' href="http://localhost:8000/auth/user/verify-email?verificationToken=${token}">Verify Email</a>
@@ -84,9 +95,18 @@ const VerificationEmail = async (email, token) => {
     </div>
 </body>
 </html>
-    `,
-  });
-  return { data, error };
+
+             `,
+    });
+    // const res = await resend.emails.get(data.id);
+    // if (res.error) {
+    //   return { error: res.error };
+    // }
+
+    return { data, error };
+  } catch (error) {
+    return { error };
+  }
 };
 
 export default VerificationEmail;

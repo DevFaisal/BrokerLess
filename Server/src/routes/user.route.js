@@ -8,6 +8,7 @@ import {
   updateUserProfile,
   refreshToken,
   verifyEmail,
+  resendVerificationEmail,
 } from "../controllers/user.controller.js";
 
 const router = Router();
@@ -17,6 +18,9 @@ router.route("/register").post(registerUser);
 
 // Verify Email API Endpoint
 router.route("/verify-email").get(verifyEmail);
+
+// Resend Verification Email API Endpoint
+router.route("/resend-verification-email").post(resendVerificationEmail);
 
 // POST User Login API Endpoint
 router.route("/login").post(loginUser);
