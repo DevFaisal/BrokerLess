@@ -55,7 +55,7 @@
  url: http://localhost:8000/auth/landlord/register
  type: POST
  body:{
-  name,
+    name,
     email,
     password,
     phone,
@@ -88,11 +88,9 @@
  type: POST
  body:{
    property id,
-   tenent id,
    start date,
    end date,
-   rent,
-   status
+   rent
  }
 
 2. GET ALL AGREEMENT APLLICATION 
@@ -115,21 +113,22 @@
  URL: http://localhost:8000/api/property/
  type: GET
  body:{
-   NuLL (Confusion)
+   NULL
  }
 
-2. A property by ID
+2. GET A property by ID
  URL: http://localhost:8000/api/property/prop
  type: GET
  body:{
-
+    ID
  }
 
 3. Get A Property By Address
  URL: http://localhost:8000/api/property/search
  type: GET
  body:{
-
+    City,
+    state
  }
 
 4. Create a new Property By Landlord
