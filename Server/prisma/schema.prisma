@@ -8,18 +8,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// USER MODEL
 model User {
-  id          String        @id @default(cuid())
-  name        String
-  email       String        @unique
-  password    String
-  phone       BigInt        @unique
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  Agreement   Agreement[]
-  UserAddress UserAddress[]
+  id                String        @id @default(cuid())
+  name              String
+  email             String        @unique
+  password          String
+  phone             BigInt        @unique
+  isVerified        Boolean       @default(false)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  verificationToken String?
+  Agreement         Agreement[]
+  UserAddress       UserAddress[]
 }
 
+// USER ADDRESS MODEL
+model UserAddress {
+  id        String   @id @default(cuid())
+  street    String
+  city      String
+  state     String
+  zip       String
+  country   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+}
+
+// LANDLORD MODEL
 model Landlord {
   id              String            @id @default(cuid())
   name            String
@@ -29,16 +47,31 @@ model Landlord {
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   properties      Property[]
-  landlordaddress landlordaddress[]
+  Landlordaddress Landlordaddress[]
 }
 
+// LANDLORD ADDRESS MODEL
+model Landlordaddress {
+  id         String    @id @default(cuid())
+  street     String
+  city       String
+  state      String
+  zip        String
+  country    String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Landlord   Landlord? @relation(fields: [landlordId], references: [id])
+  landlordId String?
+}
+
+// PROPERTY MODEL
 model Property {
   id              String            @id @default(cuid())
   name            String
   description     String
   rent            Int
   landlordId      String
-  status          String
+  status          PropertyStatus    @default(AVAILABLE)
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   landlord        Landlord          @relation(fields: [landlordId], references: [id])
@@ -47,6 +80,14 @@ model Property {
   Agreement       Agreement[]
 }
 
+enum PropertyStatus {
+  AVAILABLE
+  RENTED
+  MAINTENANCE
+  UNAVAILABLE
+}
+
+// PROPERTY ADDRESS MODEL
 model PropertyAddress {
   id         String    @id @default(cuid())
   street     String
@@ -60,46 +101,21 @@ model PropertyAddress {
   propertyId String?
 }
 
-model UserAddress {
-  id        String   @id @default(cuid())
-  street    String
-  city      String
-  state     String
-  zip       String
-  country   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [tenantId], references: [id])
-  tenantId  String?
-}
-
-model landlordaddress {
-  id         String    @id @default(cuid())
-  street     String
-  city       String
-  state      String
-  zip        String
-  country    String
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  Landlord   Landlord? @relation(fields: [landlordId], references: [id])
-  landlordId String?
-}
-
+// AGREEMENT MODEL
 model Agreement {
-  id         String   @id @default(cuid())
+  id         String          @id @default(cuid())
   propertyId String
   tenantId   String
-  status     Status   @default(INACTIVE)
+  status     AgreementStatus @default(INACTIVE)
   startDate  String //Change to Date later
   endDate    String //Change to Date later
   rent       Int
-  createdAt  DateTime @default(now())
-  Property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
-  User       User     @relation(fields: [tenantId], references: [id])
+  createdAt  DateTime        @default(now())
+  Property   Property        @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  User       User            @relation(fields: [tenantId], references: [id])
 }
 
-enum Status {
+enum AgreementStatus {
   ACTIVE
   INACTIVE
   PENDING
