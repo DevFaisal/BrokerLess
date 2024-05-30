@@ -28,9 +28,6 @@ const registerUser = async (req, res) => {
         message: "Email or phone number already exists",
       });
     }
-    //Hash the password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
     // Generate a random 6 digit number
     const verificationToken = jwt.sign(
@@ -39,7 +36,7 @@ const registerUser = async (req, res) => {
         email: req.body.email,
       },
       process.env.JWT_SECRET
-    );
+    ); 
 
     const mail = await verificationEmail(
       req.body.email,
@@ -51,6 +48,10 @@ const registerUser = async (req, res) => {
         message: "error: " + mail.error.message,
       });
     }
+    //Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
     //Create a new User
     const newUser = await prisma.user.create({
       data: {

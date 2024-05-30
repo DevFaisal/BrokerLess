@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { RESEND_API_KEY } from "../constants.js";
+import ejs from "ejs";
 
 const resend = new Resend(RESEND_API_KEY);
 
@@ -9,94 +10,10 @@ const VerificationEmail = async (email, token, name) => {
       from: "BrokerLess <onboarding@resend.dev>",
       to: email,
       subject: "Verify Your Email - BrokerLess",
-      html: `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BrokerLess Email Verification</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            max-width: 600px;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-        .welcome {
-            font-size: 20px;
-            color: #16a085;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 16px;
-            color: #7f8c8d;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-        .description {
-            text-align: left;
-            margin-bottom: 30px;
-        }
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 24px;
-            color: black;
-            background-color: #e67e22;
-            text-decoration: none;
-            border-radius: 25px;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        a:hover {
-            background-color: #d35400;
-        }
-        .footer {
-            margin-top: 30px;
-            font-size: 12px;
-            color: #bdc3c7;
-        }
-        span {
-            color: #e67e22;
-            font-weight: lighter;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>BrokerLess <span>Room Rental Platform</span></h1>
-        <p class="welcome">Welcome Mr ${name}</p>
-        <p>Click the link below to verify your email address</p>
-        <p>This link will expire in 5 minutes</p>
-        <a id='a-tag' href="http://localhost:8000/auth/user/verify-email?verificationToken=${token}">Verify Email</a>
-        <div class="description">
-            <p>This project presents <strong>Brokerless</strong>, an innovative Property Rent Platform designed to streamline the rental process for landlords and tenants by eliminating intermediaries. Utilizing contemporary web technologies, Brokerless ensures a robust, secure, and intuitive user experience. The platform's primary goal is to efficiently connect tenants with landlords offering available rooms in specific areas, promoting transparency and efficiency in the rental process.</p>
-        </div>
-        <div class="footer">
-            <p>If you did not request this email, please ignore it.</p>
-        </div>
-    </div>
-</body>
-</html>
-
-             `,
+      html: await ejs.renderFile("public/verificationEmail.ejs", {
+        name,
+        token,
+      }),
     });
     // const res = await resend.emails.get(data.id);
     // if (res.error) {
