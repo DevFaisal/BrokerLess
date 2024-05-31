@@ -14,13 +14,13 @@ const prisma = new PrismaClient();
 
 //-----------------Agreement Routes-----------------
 // POST Request to create a new Agreement
-router.route("/generate", Authentication).post(generateAgreement);
+router.route("/generate").post(Authentication, generateAgreement);
 
 //------------Agreement Landlord Routes------------
 // GET All Agreement Applications API Endpoint
-router.route("/", isValidLandlord).get(getAgreements);
+router.route("/").get(isValidLandlord, getAgreements);
 
 // Approve Agreement Application API Endpoint
-router.route("/approve", isValidLandlord).post(approveAgreement);
+router.route("/approve").post(isValidLandlord, approveAgreement);
 
 export default router;
