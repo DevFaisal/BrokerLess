@@ -112,6 +112,7 @@ const searchProperty = async (req, res) => {
 
 // ------------------- Landlord Routes -------------------
 const createProperty = async (req, res) => {
+  console.log(req.body);
   const result = Validation.propertySchemaValidation(req.body);
   if (!result.success) {
     return res

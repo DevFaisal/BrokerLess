@@ -27,12 +27,12 @@ router.route("/search").get(searchProperty);
 // ------------------- Landlord Routes -------------------
 
 // POST Request to create a new property by Landlord only
-router.route("/", isValidLandlord).post(createProperty);
+router.route("/").post(isValidLandlord, createProperty);
 
 // PUT Request to update a property by Landlord only
-router.route("/update", isValidLandlord).put(updateProperty);
+router.route("/update").put(isValidLandlord, updateProperty);
 
 // DELETE Request to delete a property by Landlord only
-router.route("/delete", isValidLandlord).delete(deleteProperty);
+router.route("/delete").delete(isValidLandlord, deleteProperty);
 
 export default router;

@@ -26,15 +26,15 @@ router.route("/resend-verification-email").post(resendVerificationEmail);
 router.route("/login").post(loginUser);
 
 // POST User Logout API Endpoint
-router.route("/logout", Authentication).post(logoutUser);
+router.route("/logout").post(Authentication, logoutUser);
 
 // GET User Profile API Endpoint
-router.route("/profile", Authentication).get(userProfile);
+router.route("/profile").get(Authentication, userProfile);
 
 //UPDATE User Profile API Endpoint
-router.route("/profile", Authentication).put(updateUserProfile);
+router.route("/profile").put(Authentication, updateUserProfile);
 
 //GET Refresh Token API Endpoint
-router.route("/refresh-token", Authentication).get(refreshToken);
+router.route("/refresh-token").get(Authentication, refreshToken);
 
 export default router;
