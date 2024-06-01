@@ -21,4 +21,5 @@ app.use("/api/property", propertyRoute);
 app.use("/api/agreement", agreementRoute);
 
 
+
 export { app };

@@ -15,14 +15,8 @@ const Validation = {
         .max(20, { message: "Password must be at most 20 characters long" }),
 
       phone: z
-        .number()
-        .refine(
-          (phone) =>
-            phone.toString().length >= 10 && phone.toString().length <= 10,
-          {
-            message: "Phone number must be at least 10 digits long",
-          }
-        ),
+        .string()
+        .min(10, { message: "Phone number must be at least 10 digits long" }),
     });
 
     return schema.safeParse(data);
@@ -70,14 +64,8 @@ const Validation = {
         .max(20, { message: "Password must be at most 20 characters long" }),
 
       phone: z
-        .number()
-        .refine(
-          (phone) =>
-            phone.toString().length >= 10 && phone.toString().length <= 10,
-          {
-            message: "Phone number must be at least 10 digits long",
-          }
-        ),
+        .string()
+        .min(10, { message: "Phone number must be at least 10 digits long" }),
       street: z
         .string()
         .min(5, { message: "Street must be at least 5 characters long" }),
@@ -116,7 +104,9 @@ const Validation = {
         .max(100, {
           message: "Description must be at most 100 characters long",
         }),
-      rent: z.number(),
+      rent: z
+        .string()
+        .max(10, { message: "Rent must be at most 10 characters long" }),
       status: z.string(),
     });
     return schema.safeParse(data);

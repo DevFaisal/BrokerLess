@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import Validation from "../utils/validation.js";
+import uploadOnCloudinary from "../utils/Cloudinary.js";
 
 const client = new PrismaClient();
 
@@ -26,45 +27,41 @@ const getPropertyById = async (req, res) => {
     return res.status(400).json({ message: "Property ID is required" });
   }
   try {
-    const property = await client.property.findUnique({
+    let property = await client.property.findUnique({
       where: {
-        id: String(req.query.id),
+        id: req.query.id,
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        rent: true,
+        status: true,
+        imageUrl: true,
+        addressId: true,
+        landlordId: true,
+        PropertyAddress: {
+          select: {
+            street: true,
+            city: true,
+            state: true,
+            zip: true,
+            country: true,
+          },
+        },
+        landlord: {
+          select: {
+            name: true,
+            email: true,
+            phone: true,
+          },
+        },
       },
     });
     if (!property) {
       return res.status(404).json({ message: "Property not found" });
     }
-    //JOIN with landlord to get landlord details
 
-    let landlord = await client.landlord.findUnique({
-      where: {
-        id: property.landlordId,
-      },
-      select: {
-        name: true,
-        email: true,
-        phone: true,
-      },
-    });
-    landlord = {
-      ...landlord,
-      phone: String(landlord.phone),
-    };
-    property.landlord = landlord;
-
-    if (!landlord) {
-      return res.status(404).json({ message: "Landlord not found" });
-    }
-    //JOIN with address
-    property.PropertyAddress = await client.propertyAddress.findUnique({
-      where: {
-        id: property.addressId,
-      },
-    });
-
-    if (!property.PropertyAddress) {
-      return res.status(404).json({ message: "Address not found" });
-    }
     res.status(200).json(property);
   } catch (error) {
     console.log(error);
@@ -77,28 +74,42 @@ const searchProperty = async (req, res) => {
     return res.status(400).json({ message: "Address is required" });
   }
   try {
-    //Search for address in propertyAddress table
-    const address = await client.propertyAddress.findMany({
-      where: {
-        city: req.query.city,
-      },
-    });
-    //If address not found return 404
-    if (!address) {
-      return res.status(404).json({ message: "Address not found" });
-    }
-    // Get all id's of address in single array
-    const addressId_s = address.map((add) => add.id);
-
-    //Search for properties with addressId
     const property = await client.property.findMany({
       where: {
-        addressId: {
-          in: addressId_s,
+        PropertyAddress: {
+          some: {
+            city: req.query.city,
+          },
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        rent: true,
+        status: true,
+        imageUrl: true,
+        addressId: true,
+        landlordId: true,
+        PropertyAddress: {
+          select: {
+            street: true,
+            city: true,
+            state: true,
+            zip: true,
+            country: true,
+          },
+        },
+        landlord: {
+          select: {
+            name: true,
+            email: true,
+            phone: true,
+          },
         },
       },
     });
-    //If property not found return 404
+
     if (!property) {
       return res.status(404).json({ message: "Property not found" });
     }
@@ -111,7 +122,6 @@ const searchProperty = async (req, res) => {
 
 // ------------------- Landlord Routes -------------------
 const createProperty = async (req, res) => {
-  console.log(req.body);
   const result = Validation.propertySchemaValidation(req.body);
   if (!result.success) {
     return res
@@ -119,33 +129,34 @@ const createProperty = async (req, res) => {
       .send(result.error.errors?.map((error) => error.message));
   }
   try {
-    const PropertyAddress = await client.propertyAddress.create({
-      data: {
-        street: req.body.street,
-        city: req.body.city,
-        state: req.body.state,
-        zip: req.body.zip,
-        country: req.body.country,
-      },
-    });
-
+    //Upload Image on Cloudinary
+    const imageUrl = await uploadOnCloudinary(
+      req.file.path,
+      `Property/${req.user.id}/${Date.now()}`
+    );
+    if (!imageUrl) {
+      return res.status(500).json({ message: "Image Upload Failed" });
+    }
     const property = await client.property.create({
       data: {
         name: req.body.name,
         description: req.body.description,
         rent: req.body.rent,
-        // status: req.body.status,
+        imageUrl: imageUrl,
         landlord: {
           connect: {
             id: req.user.id,
           },
         },
         PropertyAddress: {
-          connect: {
-            id: PropertyAddress.id,
+          create: {
+            street: req.body.street,
+            city: req.body.city,
+            state: req.body.state,
+            zip: req.body.zip,
+            country: req.body.country,
           },
         },
-        addressId: PropertyAddress.id,
       },
     });
     res.status(200).json(property);
