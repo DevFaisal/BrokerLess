@@ -73,7 +73,7 @@ const getPropertyById = async (req, res) => {
 };
 
 const searchProperty = async (req, res) => {
-  if (!req.query.city || !req.query.state) {
+  if (!req.query.city) {
     return res.status(400).json({ message: "Address is required" });
   }
   try {
@@ -81,7 +81,6 @@ const searchProperty = async (req, res) => {
     const address = await client.propertyAddress.findMany({
       where: {
         city: req.query.city,
-        state: req.query.state,
       },
     });
     //If address not found return 404
@@ -200,6 +199,55 @@ const deleteProperty = async (req, res) => {
   }
 };
 
+const getTenants = async (req, res) => {
+  if (!req.query.id) {
+    return res.status(400).json({ message: "Property ID is required" });
+  }
+  try {
+    const property = await client.property.findUnique({
+      where: {
+        id: String(req.query.id),
+        status: "RENTED",
+      },
+    });
+
+    if (!property) {
+      return res.status(404).json({ message: "Property not found" });
+    }
+
+    let tenants = await client.user.findMany({
+      where: {
+        Agreement: {
+          some: {
+            propertyId: property.id,
+            status: "APPROVED",
+          },
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+      },
+    });
+    if (!tenants) {
+      return res.status(404).json({ message: "No Tenants Found" });
+    }
+    tenants = tenants.map((tenant) => {
+      return {
+        ...tenant,
+        phone: String(tenant.phone),
+      };
+    });
+
+    return res.status(200).json(tenants);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 export {
   getAllProperties,
   getPropertyById,
@@ -207,4 +255,5 @@ export {
   createProperty,
   updateProperty,
   deleteProperty,
+  getTenants,
 };

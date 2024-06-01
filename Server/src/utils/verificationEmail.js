@@ -8,7 +8,7 @@ const VerificationEmail = async (email, token, name) => {
   try {
     const { data, error } = await resend.emails.send({
       from: "BrokerLess <onboarding@resend.dev>",
-      to: email,
+      to: "dfaisal59@gmail.com", //TODO: Change this to email
       subject: "Verify Your Email - BrokerLess",
       html: await ejs.renderFile("public/verificationEmail.ejs", {
         name,

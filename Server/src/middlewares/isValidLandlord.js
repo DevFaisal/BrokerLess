@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 
 export default function isValidLandlord(req, res, next) {
-  console.log(req)
   if (!req.headers.authorization) {
     return res.status(401).json({
       message: "Unauthorized Access",
@@ -31,7 +30,7 @@ export default function isValidLandlord(req, res, next) {
       }
       next();
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return res.status(500).json({
         message: "Internal Server Error",
       });

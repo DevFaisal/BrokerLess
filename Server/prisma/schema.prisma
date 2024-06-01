@@ -33,7 +33,7 @@ model UserAddress {
   country   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
+  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String?
 }
 
@@ -60,7 +60,7 @@ model Landlordaddress {
   country    String
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
-  Landlord   Landlord? @relation(fields: [landlordId], references: [id])
+  Landlord   Landlord? @relation(fields: [landlordId], references: [id], onDelete: Cascade)
   landlordId String?
 }
 
@@ -74,7 +74,7 @@ model Property {
   status          PropertyStatus    @default(AVAILABLE)
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
-  landlord        Landlord          @relation(fields: [landlordId], references: [id])
+  landlord        Landlord          @relation(fields: [landlordId], references: [id], onDelete: Cascade)
   addressId       String
   PropertyAddress PropertyAddress[]
   Agreement       Agreement[]

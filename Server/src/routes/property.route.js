@@ -8,6 +8,7 @@ import {
   createProperty,
   updateProperty,
   deleteProperty,
+  getTenants,
 } from "../controllers/property.controller.js";
 
 const router = Router();
@@ -34,5 +35,8 @@ router.route("/update").put(isValidLandlord, updateProperty);
 
 // DELETE Request to delete a property by Landlord only
 router.route("/delete").delete(isValidLandlord, deleteProperty);
+
+// GET List of TENANTS for a property
+router.route("/tenants").get(isValidLandlord, getTenants);
 
 export default router;
