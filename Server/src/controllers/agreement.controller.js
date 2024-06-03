@@ -12,8 +12,21 @@ const generateAgreement = async (req, res) => {
       .status(400)
       .send(result.error.errors?.map((error) => error.message));
   }
+
   try {
-    const agreement = await client.agreement.create({
+    // Check weather if any agreement already exists for the property
+    const agreementExists = await prisma.agreement.findFirst({
+      where: {
+        propertyId: req.body.propertyId,
+        User: {
+          id: req.user.id,
+        },
+      },
+    });
+    if (agreementExists) {
+      return res.status(400).json({ message: "Agreement already exists" });
+    }
+    const agreement = await prisma.agreement.create({
       data: {
         propertyId: req.body.propertyId,
         tenantId: req.user.id,

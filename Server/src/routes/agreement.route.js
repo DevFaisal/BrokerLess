@@ -12,11 +12,16 @@ import {
 const router = Router();
 const prisma = new PrismaClient();
 
-//-----------------Agreement Routes-----------------
+//-----------------Agreement Tenant Routes-----------------
+
 // POST Request to create a new Agreement
 router.route("/generate").post(Authentication, generateAgreement);
 
+
+
+
 //------------Agreement Landlord Routes------------
+
 // GET All Agreement Applications API Endpoint
 router.route("/").get(isValidLandlord, getAgreements);
 
