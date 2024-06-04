@@ -2,6 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import PrimaryButton from './PrimaryButton'
 import states from '../utils/geodata'
+import Container from './Container'
 
 
 function LandLordRegistration() {
@@ -92,52 +93,50 @@ function LandLordRegistration() {
 
     ]
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className='p-5 bg-white  rounded-md max-w-1/2
-        shadow-lg
-        '>
-            <div className='flex flex-col p-10  w-auto  gap-3'>
-                <h1 className='text-3xl font-bold text-secondary mb-5'>Landlord Registration</h1>
-                <span
-                    className='h-[1px] w-auto bg-green-600 mb-5'
-                />
-                <h1 className='text-2xl font-semibold text-black'>
-                    Sing Up to your account
-                </h1>
+        <Container>
+            <form onSubmit={handleSubmit(onSubmit)} className='px-2 bg-white  rounded-md shadow-lg'>
+                <div className='flex flex-col p-10  w-auto  gap-3'>
+                    <h1 className='text-3xl font-bold text-secondary mb-5'>Landlord Registration</h1>
+                    <span
+                        className='h-[1px] w-auto bg-green-600 mb-5'
+                    />
+                    <h1 className='text-2xl font-semibold text-black'>
+                        Sing Up to your account
+                    </h1>
 
-                {
-                    Inputs.map((input, index) => (
-                        <div key={index}
-                            className='
-                            
-                            '
-                        >
-                            <div className='grid grid-cols-2 gap-2'>
-                                <label
-                                    className='block font-semibold text-black'
-                                >
-                                    {input.label}
-                                </label>
-                                <input
-                                    id={input.name}
-                                    key={index}
-                                    {...register(input.name, { required: input.required })}
-                                    type={input.type}
-                                    placeholder={input.placeholder}
-                                    className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent'
-                                />
+                    {
+                        Inputs.map((input, index) => (
+                            <div key={index}
+                                className='flex flex-col items-evenly  gap-1  p-1'
+                            >
+                                <div className='flex justify-between  grid-cols-2 gap-2'>
+                                    <label
+                                        className='block font-semibold text-black'
+                                    >
+                                        {input.label}
+                                    </label>
+                                    <input
+                                        id={input.name}
+                                        key={index}
+                                        {...register(input.name, { required: input.required })}
+                                        type={input.type}
+                                        placeholder={input.placeholder}
+                                        className='w-2/3 py-1 px-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent'
+                                    />
+                                </div>
+
                             </div>
+                        ))
 
-                        </div>
-                    ))
-
-                }
-                <PrimaryButton
-                    onClick={handleSubmit(onSubmit)}
-                >
-                    Sign Up
-                </PrimaryButton>
-            </div>
-        </form >
+                    }
+                    <PrimaryButton
+                        onClick={handleSubmit(onSubmit)}
+                    >
+                        Sign Up
+                    </PrimaryButton>
+                </div>
+            </form >
+        </Container>
     )
 }
 

@@ -8,18 +8,21 @@ import AboutPage from './pages/AboutPage'
 import ServicesPage from './pages/ServicesPage'
 import ContactPage from './pages/ContactPage'
 import ErrorPage from './pages/ErrorPage'
-import SignUpPage from './pages/SignUpPage'
+import LandLordSignUpPage from './pages/LandLordSignUpPage'
+import UserSignUpPage from './pages/UserSignUpPage'
+
 
 const router = createBrowserRouter([
   {
     path: '/', element: <RootLayout />,
     children: [
+      { path: '*', element: <ErrorPage /> },
       { path: '/', element: <HomePage /> },
       { path: 'about', element: <AboutPage /> },
       { path: 'services', element: <ServicesPage /> },
       { path: 'contact', element: <ContactPage /> },
-      { path: 'signup', element: <SignUpPage /> },
-      { path: '*', element: <ErrorPage /> }
+      { path: 'signup', element: <UserSignUpPage /> },
+      { path: 'landlord-registration', element: <LandLordSignUpPage /> }
     ]
   },
 ])

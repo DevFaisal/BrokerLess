@@ -11,7 +11,9 @@ function NavBar() {
         { path: '/contact', text: 'Contact' }
     ]
     return (
-        <nav className=' text-black flex justify-between items-center p-4 px-20 '>
+        <nav className=' text-black flex justify-between items-center p-3 px-20
+        sticky top-0 bg-white z-50 shadow-md
+        '>
             <div>
                 <img src={logo} />
             </div>
@@ -19,7 +21,7 @@ function NavBar() {
                 {
                     links.map((link, index) => (
                         <Link key={index} to={link.path} className='
-                        text-primary text-lg font-semibold hover:text-tertiary transition duration-300 ease-in-out
+                        text-black text-lg font-semibold hover:text-tertiary transition duration-300 ease-in-out
                         '>
                             {link.text}
                         </Link>

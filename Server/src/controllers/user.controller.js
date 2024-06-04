@@ -36,7 +36,7 @@ const registerUser = async (req, res) => {
         email: req.body.email,
       },
       process.env.JWT_SECRET
-    ); 
+    );
 
     const mail = await verificationEmail(
       req.body.email,
@@ -58,7 +58,7 @@ const registerUser = async (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: hashedPassword,
-        phone: BigInt(req.body.phone),
+        phone: req.body.phone,
         verificationToken: verificationToken,
       },
     });
