@@ -9,6 +9,8 @@ import {
   refreshToken,
   verifyEmail,
   resendVerificationEmail,
+  forgetPassword,
+  resetPassword,
 } from "../controllers/user.controller.js";
 
 const router = Router();
@@ -27,6 +29,12 @@ router.route("/login").post(loginUser);
 
 // POST User Logout API Endpoint
 router.route("/logout").post(Authentication, logoutUser);
+
+// POST User forgot password API Endpoint
+router.route("/forgot-password").post(forgetPassword);
+
+// POST User Reset Password API Endpoint
+router.route("/reset-password").post(resetPassword);
 
 // GET User Profile API Endpoint
 router.route("/profile").get(Authentication, userProfile);

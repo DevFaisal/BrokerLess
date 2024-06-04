@@ -28,9 +28,14 @@ function NavBar() {
                     ))
                 }
             </div>
-            <PrimaryButton>
-                <Link to='/signup' > Connect</Link >
-            </PrimaryButton>
+            <div className='flex gap-3'>
+                <PrimaryButton>
+                    <Link to='/signup' > Connect</Link >
+                </PrimaryButton>
+                <PrimaryButton className={'bg-secondary'}>
+                    <Link to='/login' > Login</Link >
+                </PrimaryButton>
+            </div>
         </nav >
     )
 }

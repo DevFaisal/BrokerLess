@@ -11,6 +11,7 @@ import ErrorPage from './pages/ErrorPage'
 import LandLordSignUpPage from './pages/LandLordSignUpPage'
 import UserSignUpPage from './pages/UserSignUpPage'
 import EmailVerificationPage from './pages/EmailVerificationPage'
+import UserLoginPage from './pages/UserLoginPage'
 
 
 const router = createBrowserRouter([
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
       { path: 'about', element: <AboutPage /> },
       { path: 'services', element: <ServicesPage /> },
       { path: 'contact', element: <ContactPage /> },
+      { path: 'login', element: <UserLoginPage /> },
       { path: 'signup', element: <UserSignUpPage /> },
       { path: 'landlord-registration', element: <LandLordSignUpPage /> }
     ]

@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import Validation from "../utils/Validation.js";
 import verificationEmail from "../utils/verificationEmail.js";
 import z from "zod";
+import resetPasswordEmail from "../utils/resetPasswordEmail.js";
 
 const prisma = new PrismaClient();
 
@@ -244,6 +245,116 @@ const logoutUser = async (req, res) => {
   }
 };
 
+const forgetPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        email: email,
+      },
+    });
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+    const resetToken = jwt.sign(
+      {
+        exp: Math.floor((Date.now() + 5 * 60000) / 1000), // Reset token expires in 5 minutes
+        email: email,
+      },
+      process.env.JWT_SECRET
+    );
+
+    const mail = await resetPasswordEmail(email, resetToken, user.name);
+    if (mail.error) {
+      return res.status(500).json({
+        message: "error: " + mail.error.message,
+      });
+    }
+
+    await prisma.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+        verificationToken: resetToken,
+      },
+    });
+
+    return res.status(200).json({
+      message: "Reset password email sent successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { resetToken, password } = req.body;
+  const email = jwt.verify(
+    resetToken,
+    process.env.JWT_SECRET,
+    (error, decoded) => {
+      if (error) {
+        return res.status(400).json({
+          message: "Invalid Token or Token expired",
+        });
+      }
+      if (decoded) {
+        return decoded.email;
+      }
+    }
+  );
+  /* Here we are checking if the email is valid or not because if the token is expired
+  it sends the server error data which can become true in if-else condition so we are
+  checking weather it is email type or not */
+  if (!z.string().email().safeParse(email).success) {
+    // Here i am returning without sending any response because
+    //the error message is already sent in the above code
+    return;
+  }
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        email: email,
+      },
+    });
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+    const validToken = user.resetToken === resetToken;
+    if (!validToken) {
+      return res.status(400).json({
+        message: "Invalid Token",
+      });
+    }
+
+    //Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    await prisma.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+        password: hashedPassword,
+        verificationToken: "",
+      },
+    });
+
+    return res.status(200).json({
+      message: "Password reset successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json("Internal Server Error");
+  }
+};
+
 const userProfile = async (req, res) => {
   try {
     let user = await prisma.user.findUnique({
@@ -338,4 +449,6 @@ export {
   refreshToken,
   verifyEmail,
   resendVerificationEmail,
+  forgetPassword,
+  resetPassword,
 };

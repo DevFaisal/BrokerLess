@@ -5,15 +5,15 @@ import Container from './Container'
 import { UserSignUpPage } from '../utils/Api_Endpoint'
 import { LoaderCircle } from 'lucide-react'
 import toast, { Toaster } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 
 
-function UserRegistration() {
+function UserLogin() {
 
-    const navigate = useNavigate()
+
     const [loading, setLoading] = React.useState(false)
+    const [emailError, setEmailError] = React.useState(false)
     const { register,
         formState: { errors },
         handleSubmit } = useForm({
@@ -26,28 +26,37 @@ function UserRegistration() {
         })
     const onSubmit = async (data) => {
         setLoading(true)
-        const response = await axios.post(`${import.meta.env.VITE_LOCALHOST}/auth/user/register`, data)
+        const response = await axios.post(`${import.meta.env.VITE_LOCALHOST}/auth/user/login`, data)
             .then((res) => {
                 setLoading(false)
                 toast.success(res.data.message)
-                navigate('/login')
                 return res;
             })
             .catch((error) => {
                 setLoading(false)
                 toast.error(error.response.data.message)
+                if (error.response.data.message === 'Email not verified') {
+                    setEmailError(true)
+                }
                 return error;
             });
     }
-    const Inputs = [
-        {
-            label: 'Full Name',
-            type: 'text',
-            name: 'name',
-            placeholder: 'Enter your full name',
-            required: true
 
-        },
+    const resendEmail = async () => {
+        const response = await axios.post(`${import.meta.env.VITE_LOCALHOST}/auth/user/resend-verification-email`, { email: document.getElementById('email').value })
+            .then((res) => {
+                toast.success(res.data.message)
+                setEmailError(false)
+                return res;
+            })
+            .catch((error) => {
+                toast.error(error.response.data.message)
+                return error;
+            });
+    }
+
+
+    const Inputs = [
         {
             label: 'Email',
             type: 'email',
@@ -55,13 +64,6 @@ function UserRegistration() {
             placeholder: 'Enter your email address',
             required: true
 
-        },
-        {
-            label: 'Phone Number',
-            type: 'tel',
-            name: 'phone',
-            placeholder: 'Enter your phone number',
-            required: true
         },
         {
             label: 'Password',
@@ -80,12 +82,12 @@ function UserRegistration() {
             />
             <form onSubmit={handleSubmit(onSubmit)} className='p-5 bg-white mx-5 2xl:mx-40 rounded-md max-w-1/2 shadow-md'>
                 <div className='flex flex-col  w-auto  gap-3'>
-                    <h1 className='text-3xl font-bold text-secondary mb-5'>User Registration</h1>
+                    <h1 className='text-3xl font-bold text-secondary mb-5'>User Login</h1>
                     <span
                         className='h-[1px] w-auto bg-green-600 mb-5'
                     />
                     <h1 className='text-2xl font-semibold text-black'>
-                        Sing Up to your account
+                        Sing In to your account
                     </h1>
                     {
                         Inputs.map((input, index) => (
@@ -116,19 +118,38 @@ function UserRegistration() {
                     >
 
                         {
-                            loading ? <LoaderCircle size={20} className='text-white animate-spin' /> : 'Register'
+                            loading ? <LoaderCircle size={20} className='text-white animate-spin' /> : 'Login'
                         }
                     </PrimaryButton>
+                    <div>
+                        {
+
+                            emailError && <p
+                                className='pt-1 font-bold'
+                            >
+                                Resend verification email
+                                <button
+                                    className='text-green-600 p-1'
+                                    type='button'
+                                    onClick={resendEmail}
+                                >
+                                    Resend
+                                </button>
+                            </p>
+                        }
+                    </div>
+
                     <p>
-                        Already have an account? <a href='/login' className='text-green-600'>Login</a>
+                        Don't have an account? <a href='/signup' className='text-green-600'>Register</a>
                     </p>
                     <p>
-                        Are you a landlord? <a href='/landlord-registration' className='text-green-600'>Register as a landlord</a>
+                        Forget Password? <a href='/forget-password' className='text-green-600'>Reset Password</a>
                     </p>
                 </div>
             </form>
+
         </Container>
     )
 }
 
-export default UserRegistration
+export default UserLogin
