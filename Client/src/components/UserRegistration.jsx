@@ -8,6 +8,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios'
 
 
+
 function UserRegistration() {
 
 
@@ -20,32 +21,21 @@ function UserRegistration() {
                 email: '',
                 password: '',
                 phone: ''
-            }
+            },
         })
     const onSubmit = async (data) => {
         setLoading(true)
-        try {
-            const response = await axios.post(
-                `${import.meta.env.VITE_LOCALHOST}/auth/user/register`,
-                data
-            );
-            if (response.status === 201) {
-                toast.success(response.data.message)
-            }
-            else {
-                toast.error(response.data.message)
-            }
-
-        } catch (error) {
-            if (error.response.data.message) {
-                return toast.error(error.response.data.message)
-            }
-            toast.error(error.response.data[0])
-        }
-        finally {
-            setLoading(false)
-        }
-
+        const response = await axios.post(`${import.meta.env.VITE_LOCALHOST}/auth/user/register`, data)
+            .then((res) => {
+                setLoading(false)
+                toast.success(res.data.message)
+                return res;
+            })
+            .catch((error) => {
+                setLoading(false)
+                toast.error(error.response.data.message)
+                return error;
+            });
     }
     const Inputs = [
         {
@@ -98,10 +88,7 @@ function UserRegistration() {
                     {
                         Inputs.map((input, index) => (
                             <div key={index}>
-                                <label
-                                    className='block font-semibold text-black'
-                                >
-                                    {input.label}
+                                <label className='block font-semibold text-black'>{input.label}
                                 </label>
                                 <input
                                     id={input.name}
@@ -112,13 +99,14 @@ function UserRegistration() {
                                     aria-invalid={errors[input.name] ? "true" : "false"}
                                     className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent'
                                 />
-                                {
-                                    errors[input.name] && <span
-                                        className='text-red-500'
-                                    >{errors[input.name].message}</span>
-                                }
+                                <p
+                                    className='text-red-500 text-sm pt-1 font-bold'
+                                >
+                                    {errors[input.name] && errors[input.name].type === 'required' && `${input.label} is required`}
+                                </p>
                             </div>
                         ))
+
                     }
                     <PrimaryButton
                         className={"flex justify-center w-full mt-5 "}

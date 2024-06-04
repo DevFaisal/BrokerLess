@@ -14,7 +14,7 @@ const registerUser = async (req, res) => {
   if (!result.success) {
     return res
       .status(400)
-      .send(result.error.errors?.map((error) => error.message));
+      .json({ message: result.error.errors.map((error) => error.message) });
   }
   try {
     //Check weather the email or phone number already exists
@@ -126,7 +126,7 @@ const verifyEmail = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json("Internal Server Error");
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 

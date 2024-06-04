@@ -73,9 +73,7 @@
       <p class="welcome">Hello, <span> <%= name %> !</span></p>
       <p>Click the link below to verify your email address</p>
       <p>This link will expire in 5 minutes</p>
-      <a
-        id="a-tag"
-        href="http://localhost:8000/auth/user/verify-email?verificationToken=<%=token%>"
+      <a id="a-tag" href="http://localhost:5173/email-verification/<%=token%>"
         >Verify Email</a
       >
       <div class="description">

@@ -16,9 +16,12 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.5",
     "react-hot-toast": "^2.4.1",
-    "react-router-dom": "^6.23.1"
+    "react-router-dom": "^6.23.1",
+    "serve": "^14.2.3",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@hookform/resolvers": "^3.4.2",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",

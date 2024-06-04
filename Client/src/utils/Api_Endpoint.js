@@ -1,9 +1,8 @@
 import axios from "axios";
 
 export const UserSignUpPage = async (data) => {
-  const response = await axios.post(
-    `${import.meta.env.VITE_LOCALHOST}/auth/user/register`,
-    data
-  );
+  console.log(data);
+  
+  console.log(response);
   return response;
 };
