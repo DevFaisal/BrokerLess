@@ -2,3 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+  body {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+  }
+}

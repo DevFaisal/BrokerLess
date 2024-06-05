@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 
 function RootLayout() {
     return (
-        <div className='bg-background'>
+        <div className='bg-[#d8e2dc]'>
             <NavBar />
             <Outlet />
             <Footer />
