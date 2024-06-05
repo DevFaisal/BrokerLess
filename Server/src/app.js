@@ -20,6 +20,10 @@ import propertyRoute from "./routes/property.route.js";
 import cookieParser from "cookie-parser";
 import agreementRoute from "./routes/agreement.route.js";
 
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to Rently API" });
+});
+
 // Routes
 app.use("/auth/user", userRouter);
 app.use("/auth/landlord", landlordRouter);
