@@ -57,7 +57,7 @@ const registerLandlord = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json("Internal Server Error");
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -105,7 +105,7 @@ const loginLandlord = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json("Internal Server Error");
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -136,7 +136,7 @@ const getLandlordProfile = async (req, res) => {
     return res.status(200).json(landlord);
   } catch (error) {
     console.log(error);
-    return res.status(500).json("Internal Server Error");
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 

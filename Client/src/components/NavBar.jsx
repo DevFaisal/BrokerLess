@@ -2,6 +2,7 @@ import React from 'react'
 import logo from '../assets/logo.svg'
 import PrimaryButton from './PrimaryButton'
 import { Link } from 'react-router-dom'
+import OutlineButton from './OutlineButton'
 
 function NavBar() {
     const links = [
@@ -14,9 +15,9 @@ function NavBar() {
         <nav className=' text-black flex justify-between items-center p-3 px-20
         
         '>
-            <div>
-                <img src={logo} />
-            </div>
+
+            <Link to={'/'}><img src={logo} /></Link>
+
             <div className='hidden md:flex justify-around gap-10  px-4 py-3'>
                 {
                     links.map((link, index) => (
@@ -30,9 +31,9 @@ function NavBar() {
                 }
             </div>
             <div className='flex gap-3'>
-                <PrimaryButton>
+                <OutlineButton>
                     <Link to='/auth/register-user' > Connect</Link >
-                </PrimaryButton>
+                </OutlineButton>
                 <PrimaryButton className={'bg-secondary'}>
                     <Link to='/auth/login-user' > Login</Link >
                 </PrimaryButton>

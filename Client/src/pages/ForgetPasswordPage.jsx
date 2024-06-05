@@ -43,7 +43,7 @@ function ForgetPasswordPage() {
         <Container>
             <div className='flex items-center justify-center h-screen w-full'>
                 <div
-                    className='flex flex-col  items-center justify-start w-1/3 h-1/2 p-5 border  border-gray-300 rounded-md'
+                    className='flex flex-col items-center justify-start w-1/3 border bg-white p-10  border-gray-300 rounded-lg                         shadow-md hover:shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105'
                 >
                     <h1
                         className='text-3xl font-bold mb-32'
