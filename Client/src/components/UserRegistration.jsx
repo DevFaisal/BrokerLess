@@ -2,7 +2,6 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import PrimaryButton from './PrimaryButton'
 import Container from './Container'
-import { UserSignUpPage } from '../utils/Api_Endpoint'
 import { LoaderCircle } from 'lucide-react'
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom'

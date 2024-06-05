@@ -7,7 +7,7 @@ function Footer() {
     return (
 
         <div
-            className='bg-secondary text-white  p-4 text-center w-full' >
+            className='bg-secondary text-white  p-4 text-center w-full z-20' >
             <div>
                 <img
                     className='h-96 w-96'
