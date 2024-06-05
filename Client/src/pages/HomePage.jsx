@@ -13,10 +13,12 @@ function HomePage() {
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-10 justify-start items-center px-5 md:px-20 py-20  '>
                     <div className=' flex flex-col gap-4 '>
                         <div className='flex flex-col gap-2 '>
-                            <h1 className='text-5xl top-0 z-50 md:text-8xl font-bold text-primary'>Brokerless</h1>
+                            <h1 className='text-5xl top-0 z-20 md:text-8xl font-bold text-primary'>Brokerless</h1>
                             <h2 className='text-2xl md:text-3xl font-semibold text-secondary'>Rent
                                 <span>
-                                    <FlipWords words={words} />
+                                    <FlipWords words={words}
+                                    className='text-2xl md:text-3xl font-semibold text-secondary'
+                                    />
                                 </span>
                             </h2>
                         </div>
