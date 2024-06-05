@@ -4,13 +4,13 @@ import ejs from "ejs";
 
 const resend = new Resend(RESEND_API_KEY);
 
-const VerificationEmail = async (email, token, name) => {
+const resetPasswordEmail = async (email, token, name) => {
   try {
     const { data, error } = await resend.emails.send({
       from: "BrokerLess <onboarding@resend.dev>",
       to: "dar36235@gmail.com", //TODO: Change this to email
-      subject: "Verify Your Email - BrokerLess",
-      html: await ejs.renderFile("public/verificationEmail.ejs", {
+      subject: "Forgot Password - BrokerLess",
+      html: await ejs.renderFile("public/resetPasswordEmail.ejs", {
         name,
         token,
       }),
@@ -26,4 +26,4 @@ const VerificationEmail = async (email, token, name) => {
   }
 };
 
-export default VerificationEmail;
+export default resetPasswordEmail;
