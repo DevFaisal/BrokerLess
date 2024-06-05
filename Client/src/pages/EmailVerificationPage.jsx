@@ -26,7 +26,7 @@ function EmailVerificationPage() {
                 console.log(error)
             }
             setTimeout(() => { 
-                navigate('/login')
+                navigate('/auth/login-user')
             }, 2000)
         }
         verifyEmail()

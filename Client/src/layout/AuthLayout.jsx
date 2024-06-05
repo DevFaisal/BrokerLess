@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 
 function AuthLayout() {
   return (
-      <div className='bg-background'>
+      <div>
           <NavBar />
           <Outlet />
           <Footer />

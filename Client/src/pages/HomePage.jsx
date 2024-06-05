@@ -1,8 +1,8 @@
 import Container from '../components/Container'
 import React from 'react'
 import PrimaryButton from '../components/PrimaryButton'
-import image from '../assets/image-1.png'
 import background from '../assets/background-1.png'
+import { Link } from 'react-router-dom'
 
 function HomePage() {
     return (
@@ -17,7 +17,9 @@ function HomePage() {
                         <p className='text-justify pr-5 font-semibold leading-7 text-lg text-primary'>Discover Brokerless. Rent rooms broker-free. Save time and money with direct owner connections. Rent smarter with Brokerless</p>
                         <PrimaryButton
                             className={'w-40 h-12 bg-primary  text-white  hover:bg-secondary transition duration-700 ease-in-out hover:scale-110 transform hover:font-bold'}
-                        >Sing Up</PrimaryButton>
+                        >
+                            <Link to='/auth/login-user'>Get Started</Link>
+                        </PrimaryButton>
                     </div>
                     <div className='hidden md:flex '>
                         <img

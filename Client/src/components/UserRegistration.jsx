@@ -4,8 +4,8 @@ import PrimaryButton from './PrimaryButton'
 import Container from './Container'
 import { UserSignUpPage } from '../utils/Api_Endpoint'
 import { LoaderCircle } from 'lucide-react'
-import toast, { Toaster } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 
@@ -75,14 +75,11 @@ function UserRegistration() {
     ]
     return (
         <Container>
-            <Toaster
-                position="bottom-center"
-            />
             <form onSubmit={handleSubmit(onSubmit)} className='p-5 bg-white mx-5 2xl:mx-40 rounded-md max-w-1/2 shadow-md'>
                 <div className='flex flex-col  w-auto  gap-3'>
-                    <h1 className='text-3xl font-bold text-secondary mb-5'>User Registration</h1>
+                    <h1 className='text-3xl text-center font-bold text-secondary mb-5'>User Registration</h1>
                     <span
-                        className='h-[1px] w-auto bg-green-600 mb-5'
+                        className='h-[1px] w-auto bg-background mb-5'
                     />
                     <h1 className='text-2xl font-semibold text-black'>
                         Sing Up to your account
@@ -120,10 +117,10 @@ function UserRegistration() {
                         }
                     </PrimaryButton>
                     <p>
-                        Already have an account? <a href='/login' className='text-green-600'>Login</a>
+                        Already have an account? <Link to='/auth/login-user' className='text-success'>Login</Link>
                     </p>
                     <p>
-                        Are you a landlord? <a href='/landlord-registration' className='text-green-600'>Register as a landlord</a>
+                        Are you a landlord? <Link to='/auth/register-landlord' className='text-success'>Register as a landlord</Link>
                     </p>
                 </div>
             </form>

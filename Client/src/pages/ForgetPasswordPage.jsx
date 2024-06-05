@@ -41,10 +41,6 @@ function ForgetPasswordPage() {
 
     return (
         <Container>
-            <Toaster
-                position='bottom-center'
-                reverseOrder={false}
-            />
             <div className='flex items-center justify-center h-screen w-full'>
                 <div
                     className='flex flex-col  items-center justify-start w-1/3 h-1/2 p-5 border  border-gray-300 rounded-md'
@@ -74,7 +70,7 @@ function ForgetPasswordPage() {
                         }
                     </PrimaryButton>
                     <Link
-                        to="/login"
+                        to="/auth/login-user"
                         className='text-secondary hover:underline'
                     >
                         Back to Login

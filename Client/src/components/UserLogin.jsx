@@ -4,8 +4,9 @@ import PrimaryButton from './PrimaryButton'
 import Container from './Container'
 import { UserSignUpPage } from '../utils/Api_Endpoint'
 import { LoaderCircle } from 'lucide-react'
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 
 
@@ -77,14 +78,11 @@ function UserLogin() {
     ]
     return (
         <Container>
-            <Toaster
-                position="bottom-center"
-            />
             <form onSubmit={handleSubmit(onSubmit)} className='p-5 bg-white mx-5 2xl:mx-40 rounded-md max-w-1/2 shadow-md'>
                 <div className='flex flex-col  w-auto  gap-3'>
-                    <h1 className='text-3xl font-bold text-secondary mb-5'>User Login</h1>
+                    <h1 className='text-3xl text-center font-bold text-secondary mb-5'>User Login</h1>
                     <span
-                        className='h-[1px] w-auto bg-green-600 mb-5'
+                        className='h-[1px] w-auto bg-success mb-5'
                     />
                     <h1 className='text-2xl font-semibold text-black'>
                         Sing In to your account
@@ -140,10 +138,10 @@ function UserLogin() {
                     </div>
 
                     <p>
-                        Don't have an account? <a href='/signup' className='text-green-600'>Register</a>
+                        Don't have an account? <Link to='/auth/register-user' className='text-success'>Register</Link>
                     </p>
                     <p>
-                        Forget Password? <a href='/forget-password' className='text-green-600'>Reset Password</a>
+                        Forget Password? <Link to='/auth/forget-password' className='text-success'>Reset Password</Link>
                     </p>
                 </div>
             </form>

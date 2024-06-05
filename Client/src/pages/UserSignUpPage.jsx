@@ -1,7 +1,5 @@
 import React from 'react'
 import UserRegistration from '../components/UserRegistration'
-import LandLordRegistration from '../components/LandlordRegistration'
-import Container from '../components/Container'
 import logoWhite from '../assets/logowhite.svg'
 
 
@@ -12,10 +10,10 @@ function UserSignUpPage() {
         <div className='
         flex flex-col-reverse xl:flex-row
         '>
-            <aside className='bg-[#264653] flex justify-center items-center h-screen w-full xl:w-1/2 max-w-2/5'>
+            <aside className='bg-backgroundThree flex justify-center items-center h-screen w-full xl:w-1/2 max-w-2/5'>
                 <UserRegistration />
             </aside>
-            <aside className='bg-success flex flex-col justify-center items-start p-5 md:p-10 w-full xl:w-1/2 max-w-2/5 h-1/2 xl:h-screen'>
+            <aside className='bg-backgroundOne flex flex-col justify-center items-start p-5 md:p-10 w-full xl:w-1/2 max-w-2/5 h-1/2 xl:h-screen'>
                 <p>
                     <img width={900}
                         className='text-white'

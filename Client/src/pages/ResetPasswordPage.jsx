@@ -55,7 +55,7 @@ function ResetPasswordPage() {
             if (response.status === 200) {
                 toast.success(response.data.message)
                 setTimeout(() => {
-                    navigate('/login')
+                    navigate('/auth/login-user')
                 }, 2000)
             }
             else {
@@ -73,10 +73,6 @@ function ResetPasswordPage() {
     return (
         <>
             {error ? <Container>
-                <Toaster
-                    position='bottom-center'
-                    reverseOrder={false}
-                />
                 <div className='flex flex-col items-center justify-center h-screen w-full'>
                     <h1 className='text-3xl text-danger font-bold'>
                         Error 404
@@ -87,10 +83,6 @@ function ResetPasswordPage() {
                 </div>
             </Container> :
                 <Container>
-                    <Toaster
-                        position='bottom-center'
-                        reverseOrder={false}
-                    />
                     <div className='flex items-center justify-center h-screen w-full'>
                         <div className='flex flex-col  items-center justify-start w-1/3 h-1/2 p-5 border  border-gray-300 rounded-md'>
                             <h1
@@ -128,7 +120,7 @@ function ResetPasswordPage() {
                                 }
                             </PrimaryButton>
                             <Link
-                                to="/login"
+                                to="/auth/login-user"
                                 className='text-secondary hover:underline'
                             >
                                 Back to Login

@@ -31,10 +31,10 @@ function NavBar() {
             </div>
             <div className='flex gap-3'>
                 <PrimaryButton>
-                    <Link to='/signup' > Connect</Link >
+                    <Link to='/auth/register-user' > Connect</Link >
                 </PrimaryButton>
                 <PrimaryButton className={'bg-secondary'}>
-                    <Link to='/login' > Login</Link >
+                    <Link to='/auth/login-user' > Login</Link >
                 </PrimaryButton>
             </div>
         </nav >

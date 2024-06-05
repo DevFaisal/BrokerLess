@@ -14,6 +14,8 @@ import EmailVerificationPage from './pages/EmailVerificationPage'
 import UserLoginPage from './pages/UserLoginPage'
 import ForgetPasswordPage from './pages/ForgetPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
+import AuthLayout from './layout/AuthLayout'
+import { Toaster } from 'react-hot-toast'
 
 
 const router = createBrowserRouter([
@@ -24,16 +26,17 @@ const router = createBrowserRouter([
       { path: '/', element: <HomePage /> },
       { path: 'about', element: <AboutPage /> },
       { path: 'services', element: <ServicesPage /> },
-      { path: 'contact', element: <ContactPage /> },
-      {
-        path: '/auth', element: <UserLoginPage />,
-        children: [
-          { path: 'register-landlord', element: <LandLordSignUpPage /> },
-          { path: 'register-user', element: <UserSignUpPage /> },
-          { path: 'forget-password', element: <ForgetPasswordPage /> },
-          { path: 'reset-password/:verificationToken', element: <ResetPasswordPage /> },
-        ]
-      },
+      { path: 'contact', element: <ContactPage /> }
+    ]
+  },
+  {
+    path: '/auth', element: <AuthLayout />,
+    children: [
+      { path: 'register-landlord', element: <LandLordSignUpPage /> },
+      { path: 'register-user', element: <UserSignUpPage /> },
+      { path: 'login-user', element: <UserLoginPage /> },
+      { path: 'forget-password', element: <ForgetPasswordPage /> },
+      { path: 'reset-password/:verificationToken', element: <ResetPasswordPage /> },
     ]
   },
   {
@@ -42,5 +45,12 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <>
+    <Toaster
+      position="bottom-center"
+    />
+    <RouterProvider router={router} />
+  </>
+
+
 )

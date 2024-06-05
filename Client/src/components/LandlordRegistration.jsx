@@ -1,7 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import PrimaryButton from './PrimaryButton'
-import states from '../utils/geodata'
 import Container from './Container'
 
 
@@ -96,9 +95,9 @@ function LandLordRegistration() {
         <Container>
             <form onSubmit={handleSubmit(onSubmit)} className='px-2 bg-white  rounded-md shadow-lg'>
                 <div className='flex flex-col p-10  w-auto  gap-3'>
-                    <h1 className='text-3xl font-bold text-secondary mb-5'>Landlord Registration</h1>
+                    <h1 className='text-3xl text-center font-bold text-secondary mb-5'>Landlord Registration</h1>
                     <span
-                        className='h-[1px] w-auto bg-green-600 mb-5'
+                        className='h-[1px] w-auto bg-success mb-5'
                     />
                     <h1 className='text-2xl font-semibold text-black'>
                         Sing Up to your account
