@@ -258,7 +258,7 @@ const forgetPassword = async (req, res) => {
         message: "User not found",
       });
     }
-    const resetToken = jwt.sign(
+    const verificationToken = jwt.sign(
       {
         exp: Math.floor((Date.now() + 5 * 60000) / 1000), // Reset token expires in 5 minutes
         email: email,
@@ -266,7 +266,7 @@ const forgetPassword = async (req, res) => {
       process.env.JWT_SECRET
     );
 
-    const mail = await resetPasswordEmail(email, resetToken, user.name);
+    const mail = await resetPasswordEmail(email, verificationToken, user.name);
     if (mail.error) {
       return res.status(500).json({
         message: "error: " + mail.error.message,
@@ -278,7 +278,7 @@ const forgetPassword = async (req, res) => {
         email: email,
       },
       data: {
-        verificationToken: resetToken,
+        verificationToken: verificationToken,
       },
     });
 
@@ -290,10 +290,12 @@ const forgetPassword = async (req, res) => {
   }
 };
 
-const resetPassword = async (req, res) => {
-  const { resetToken, password } = req.body;
+const checkVerificationToken = async (req, res) => {
+
+  const { verificationToken } = req.params;
+  console.log(verificationToken);
   const email = jwt.verify(
-    resetToken,
+    verificationToken,
     process.env.JWT_SECRET,
     (error, decoded) => {
       if (error) {
@@ -325,7 +327,57 @@ const resetPassword = async (req, res) => {
         message: "User not found",
       });
     }
-    const validToken = user.resetToken === resetToken;
+    const validToken = user.verificationToken === verificationToken;
+    if (!validToken) {
+      return res.status(400).json({
+        message: "Invalid Token",
+      });
+    }
+    return res.status(200).json({
+      message: "Token is valid",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json("Internal Server Error");
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { verificationToken, password } = req.body;
+  const email = jwt.verify(
+    verificationToken,
+    process.env.JWT_SECRET,
+    (error, decoded) => {
+      if (error) {
+        return res.status(400).json({
+          message: "Invalid Token or Token expired",
+        });
+      }
+      if (decoded) {
+        return decoded.email;
+      }
+    }
+  );
+  /* Here we are checking if the email is valid or not because if the token is expired
+  it sends the server error data which can become true in if-else condition so we are
+  checking weather it is email type or not */
+  if (!z.string().email().safeParse(email).success) {
+    // Here i am returning without sending any response because
+    //the error message is already sent in the above code
+    return;
+  }
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        email: email,
+      },
+    });
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+    const validToken = user.verificationToken === verificationToken;
     if (!validToken) {
       return res.status(400).json({
         message: "Invalid Token",
@@ -451,4 +503,5 @@ export {
   resendVerificationEmail,
   forgetPassword,
   resetPassword,
+  checkVerificationToken,
 };

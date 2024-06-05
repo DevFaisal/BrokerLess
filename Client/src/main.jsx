@@ -12,6 +12,8 @@ import LandLordSignUpPage from './pages/LandLordSignUpPage'
 import UserSignUpPage from './pages/UserSignUpPage'
 import EmailVerificationPage from './pages/EmailVerificationPage'
 import UserLoginPage from './pages/UserLoginPage'
+import ForgetPasswordPage from './pages/ForgetPasswordPage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
 
 
 const router = createBrowserRouter([
@@ -25,7 +27,9 @@ const router = createBrowserRouter([
       { path: 'contact', element: <ContactPage /> },
       { path: 'login', element: <UserLoginPage /> },
       { path: 'signup', element: <UserSignUpPage /> },
-      { path: 'landlord-registration', element: <LandLordSignUpPage /> }
+      { path: 'landlord-registration', element: <LandLordSignUpPage /> },
+      { path: 'forget-password', element: <ForgetPasswordPage /> },
+      { path: 'reset-password/:verificationToken', element: <ResetPasswordPage /> },
     ]
   },
   {

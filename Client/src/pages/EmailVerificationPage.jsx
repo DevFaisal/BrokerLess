@@ -3,12 +3,14 @@ import Container from '../components/Container'
 import { CircleAlert, CircleCheck } from 'lucide-react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 function EmailVerificationPage() {
 
     const { verificationToken } = useParams()
     const [isVerified, setIsVerified] = useState(false)
     const [error, setError] = useState('')
+    const navigate = useNavigate()
 
 
 
@@ -23,9 +25,14 @@ function EmailVerificationPage() {
                 setError(error.response.data.message)
                 console.log(error)
             }
+            setTimeout(() => { 
+                navigate('/login')
+            }, 2000)
         }
         verifyEmail()
     }, [verificationToken])
+
+    
 
     return (
         <Container>
