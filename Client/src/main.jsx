@@ -25,11 +25,15 @@ const router = createBrowserRouter([
       { path: 'about', element: <AboutPage /> },
       { path: 'services', element: <ServicesPage /> },
       { path: 'contact', element: <ContactPage /> },
-      { path: 'login', element: <UserLoginPage /> },
-      { path: 'signup', element: <UserSignUpPage /> },
-      { path: 'landlord-registration', element: <LandLordSignUpPage /> },
-      { path: 'forget-password', element: <ForgetPasswordPage /> },
-      { path: 'reset-password/:verificationToken', element: <ResetPasswordPage /> },
+      {
+        path: '/auth', element: <UserLoginPage />,
+        children: [
+          { path: 'register-landlord', element: <LandLordSignUpPage /> },
+          { path: 'register-user', element: <UserSignUpPage /> },
+          { path: 'forget-password', element: <ForgetPasswordPage /> },
+          { path: 'reset-password/:verificationToken', element: <ResetPasswordPage /> },
+        ]
+      },
     ]
   },
   {
