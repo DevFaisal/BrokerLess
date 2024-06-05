@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --env-file .env src/index.js",
-    "build": "prisma generate && prisma migrate dev --name init --preview-feature && node src/index.js"
+    "build": "prisma generate && prisma migrate dev --name init --preview-feature && npm run build"
   },
   "author": "Faisal Farooq, Waseem Ahmad , Shahid Manzoor",
   "license": "ISC",
