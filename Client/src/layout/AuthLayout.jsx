@@ -6,7 +6,7 @@ import Footer from '../components/Footer'
 function AuthLayout() {
   return (
 
-    <div className=" flex-col dark:bg-primary bg-white  dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2] flex">
+    <div className=" flex-col bg-white bg-grid-small-black/[0.2] flex">
       <div
         className='top-0 z-50'
       >

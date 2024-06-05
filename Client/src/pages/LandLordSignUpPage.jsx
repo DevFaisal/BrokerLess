@@ -1,44 +1,24 @@
-import React from 'react'
-import LandLordRegistration from '../components/LandlordRegistration'
-import logoWhite from '../assets/logowhite.svg'
-
+import React from "react";
+import LandLordRegistration from "../components/LandlordRegistration";
+import logoWhite from "../assets/logowhite.svg";
+import AuthContainer from "../components/AuthContainer";
 
 function LandLordSignUpPage() {
-
-
-    return (
-        <div className='flex justify-between items-center  bg-[#2a9d8f]'>
-            <aside className='bg-backgroundTwo flex flex-col justify-center items-start p-10 w-1/2 max-w-2/5 h-screen'>
-
-                <p>
-                    <img width={900}
-                        className='text-white'
-                        src={logoWhite} alt="logo" />
-                </p>
-                <h1
-                    className='text-5xl font-bold text-white mb-5'
-                >
-                    Post your property and get the best tenants
-                </h1>
-                <ul
-                    className='text-gray-200'
-                >
-                    <li>
-                        We are here to help you find the best tenants
-                    </li>
-                    <li>
-                        We provide you with the best options
-                    </li>
-                    <li>
-                        Find the best tenants with us
-                    </li>
-                </ul>
-            </aside>
-            <aside className='bg-backgroundThree px-28 flex justify-center items-center h-screen w-1/2 max-w-2/5'>
-                <LandLordRegistration />
-            </aside>
-        </div>
-    )
+  const text = [
+    {
+      text: "Post your property and get the best tenants",
+      list: [
+        "We are here to help you find the best tenants",
+        "We provide you with the best options",
+        "Find the best tenants with us",
+      ],
+    },
+  ];
+  return (
+    <AuthContainer logo={logoWhite} text={text}>
+      <LandLordRegistration />
+    </AuthContainer>
+  );
 }
 
-export default LandLordSignUpPage
+export default LandLordSignUpPage;
