@@ -26,8 +26,8 @@ function ForgetPassword() {
       );
       if (response.status === 200) {
         toast.success(response.data.message);
-        useTimeout(() => {
-          navigate("/login");
+        setTimeout(() => {
+          navigate("/auth/login-user");
         }, 2000);
       } else {
         toast.error(response.data.message);

@@ -3,6 +3,7 @@ import { CircleAlert, CircleCheck } from "lucide-react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { H4, P } from "../../Index";
 
 function EmailVerification() {
   const { verificationToken } = useParams();
@@ -31,27 +32,24 @@ function EmailVerification() {
   }, [verificationToken]);
 
   return (
-    <div className="flex justify-center items-center flex-col h-screen w-full text-center">
+    <div>
       {isVerified ? (
         <>
-          <CircleCheck
-            className="h-36 w-40
-                        animate__animated animate__bounce animate__infinite
-                        "
-            color="green"
-          />
-          <h1 className="text-3xl pt-2 font-bold text-gray-800">
-            Email Verified Successfully!
-          </h1>
-          <p className="w-96 pt-5 text-lg text-gray-600">
-            Thank you for verifying your email address. You can now login to
-            your account.
-          </p>
+          <div className="flex py-4 flex-col gap-2 text-center items-center justify-center">
+            <CircleCheck className="h-16 w-16 md:h-36 md:w-32" color="green" />
+
+            <H4>Email Verified Successfully!</H4>
+
+            <P>
+              Thank you for verifying your email address. You can now login to
+              your account.
+            </P>
+          </div>
         </>
       ) : (
-        <div className="flex flex-col items-center justify-center">
-          <CircleAlert className="h-36 w-40" color="red" />
-          <h1 className="text-3xl pt-2 font-bold text-danger">{error}</h1>
+        <div className="flex gap-2 py-4 flex-col text-center items-center justify-center">
+          <CircleAlert className="h-16 w-16 md:h-36 md:w-32" color="red" />
+          <H4>{error}</H4>
         </div>
       )}
     </div>

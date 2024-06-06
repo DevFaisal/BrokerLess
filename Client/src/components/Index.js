@@ -14,6 +14,7 @@ import H1 from "./Inputs/H1";
 import H2 from "./Inputs/H2";
 import H3 from "./Inputs/H3";
 import H4 from "./Inputs/H4";
+import P from "./Inputs/P";
 
 export {
   EmailVerification,
@@ -32,4 +33,5 @@ export {
   H2,
   H3,
   H4,
+  P,
 };

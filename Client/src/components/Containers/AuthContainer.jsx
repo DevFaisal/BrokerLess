@@ -1,7 +1,6 @@
 import React from "react";
 import { H2 } from "../Index";
 
-
 function AuthContainer({ children, logo, text, bgColorleft, bgColorright }) {
   return (
     <div className="flex flex-col-reverse md:flex-row-reverse">
@@ -18,7 +17,7 @@ function AuthContainer({ children, logo, text, bgColorleft, bgColorright }) {
         <p>
           <img width={900} className="text-black " src={logo} alt="logo" />
         </p>
-        <H2 className="mb-5">{text[0].text}</H2>
+        <H2 className="mb-5">{text[0]?.text}</H2>
         <ul className="text-gray-700 leading-4 font-light">
           {text[0].list?.map((item, index) => (
             <li key={index} className="mb-2">
