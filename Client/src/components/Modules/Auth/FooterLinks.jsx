@@ -5,7 +5,7 @@ function FooterLinks({ Links }) {
   return (
     <div className="text-center text-sm py-4 md:text-md font-semibold text-black pt-5">
       {Links.map((link, index) => (
-        <p>
+        <p key={index}>
           {" "}
           {link.text}
           <Link

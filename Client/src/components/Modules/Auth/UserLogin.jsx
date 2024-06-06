@@ -1,11 +1,13 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { LoaderCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Button, Container, FooterLinks, FormInput } from "../../Index";
+import { useNavigate } from "react-router-dom";
 
 function UserLogin() {
+  const navigate = useNavigate();
   const [loading, setLoading] = React.useState(false);
   const [emailError, setEmailError] = React.useState(false);
   const {
@@ -20,12 +22,16 @@ function UserLogin() {
       phone: "",
     },
   });
+
   const onSubmit = async (data) => {
     setLoading(true);
     const response = await axios
-      .post(`${import.meta.env.VITE_LOCALHOST}/auth/user/login`, data)
+      .post(`${import.meta.env.VITE_LOCALHOST}/auth/user/login`, data, {
+        withCredentials: true,
+      })
       .then((res) => {
         setLoading(false);
+        window.location.reload("/user/dashboard");
         toast.success(res.data.message);
         return res;
       })

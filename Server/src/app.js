@@ -1,14 +1,17 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+
 const app = express();
 
+// Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static("public"));
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
@@ -17,7 +20,6 @@ app.use(
 import userRouter from "./routes/user.route.js";
 import landlordRouter from "./routes/landlord.route.js";
 import propertyRoute from "./routes/property.route.js";
-import cookieParser from "cookie-parser";
 import agreementRoute from "./routes/agreement.route.js";
 
 app.get("/", (req, res) => {

@@ -5,6 +5,7 @@ import Validation from "../utils/Validation.js";
 import verificationEmail from "../utils/verificationEmail.js";
 import z from "zod";
 import resetPasswordEmail from "../utils/resetPasswordEmail.js";
+import CookieParser from "cookie-parser";
 
 const prisma = new PrismaClient();
 
@@ -222,7 +223,14 @@ const loginUser = async (req, res) => {
 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
 
-    res.header("Authentication", `Bearer ${token}`);
+    const cookieOptions = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+      maxAge: 3600000,
+    };
+
+    res.cookie("Authentication", `Bearer ${token}`, cookieOptions);
 
     return res.status(200).json({
       message: "Login successful",
@@ -235,7 +243,7 @@ const loginUser = async (req, res) => {
 
 const logoutUser = async (req, res) => {
   try {
-    res.header("Authentication", "");
+    res.clearCookie("Authentication");
     return res.status(200).json({
       message: "Logout successful",
     });
@@ -416,15 +424,16 @@ const userProfile = async (req, res) => {
         name: true,
         email: true,
         phone: true,
-        UserAddress: {
-          select: {
-            street: true,
-            city: true,
-            state: true,
-            zip: true,
-            country: true,
-          },
-        },
+        isVerified: true,
+        // UserAddress: {
+        //   select: {
+        //     street: true,
+        //     city: true,
+        //     state: true,
+        //     zip: true,
+        //     country: true,
+        //   },
+        // },
       },
     });
 

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import RootLayout from "./layout/RootLayout";
 import AuthLayout from "./layout/AuthLayout";
 import { Toaster } from "react-hot-toast";
+import { RecoilRoot } from "recoil";
 import {
   HomePage,
   AboutPage,
@@ -18,12 +19,23 @@ import {
   ForgetPasswordPage,
   ResetPasswordPage,
 } from "./pages/Index";
+import Dashboard from "./components/User/Dashboard";
+import Auth from "./components/Auth";
+import Loading from "./components/Modules/Loading";
+import UserAuth from "./layout/UserAuth";
+import Protected from "./components/Protected";
 
 const router = createBrowserRouter([
   { path: "*", element: <ErrorPage /> },
   {
     path: "/",
-    element: <RootLayout />,
+    element: (
+      <Suspense fallback={<Loading />}>
+        <Auth>
+          <RootLayout />
+        </Auth>
+      </Suspense>
+    ),
     children: [
       { path: "/", element: <HomePage /> },
       { path: "about", element: <AboutPage /> },
@@ -33,7 +45,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/auth",
-    element: <AuthLayout />,
+    element: (
+      <Suspense fallback={<Loading />}>
+        <Auth>
+          <AuthLayout />
+        </Auth>
+      </Suspense>
+    ),
     children: [
       { path: "register-landlord", element: <LandLordRegistrationPage /> },
       { path: "register-user", element: <UserRegistrationPage /> },
@@ -46,6 +64,21 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/user",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <Protected>
+          <UserAuth />
+        </Protected>
+      </Suspense>
+    ),
+    children: [
+      { path: "dashboard", element: <Dashboard /> },
+      { path: "profile", element: <div>Profile</div> },
+      { path: "settings", element: <div>Settings</div> },
+    ],
+  },
+  {
     path: "/email-verification/:verificationToken",
     element: <EmailVerificationPage />,
   },
@@ -54,6 +87,8 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>
     <Toaster position="bottom-center" />
-    <RouterProvider router={router} />
+    <RecoilRoot>
+      <RouterProvider router={router} />
+    </RecoilRoot>
   </>
 );
