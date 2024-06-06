@@ -1,6 +1,6 @@
 import React from "react";
 import UserRegistration from "../components/UserRegistration";
-import logoWhite from "../assets/logowhite.svg";
+import logo from "../assets/logo.svg";
 import AuthContainer from "../components/AuthContainer";
 
 function UserSignUpPage() {
@@ -16,7 +16,12 @@ function UserSignUpPage() {
   ];
 
   return (
-    <AuthContainer logo={logoWhite} text={text}>
+    <AuthContainer
+      logo={logo}
+      text={text}
+      bgColorleft={"bg-[#ccd5ae]"}
+      bgColorright={"bg-[#83c5be]"}
+    >
       <UserRegistration />
     </AuthContainer>
   );

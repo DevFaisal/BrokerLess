@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import Button from "./Buttons/Button";
 import H3 from "./Inputs/H3";
 import H4 from "./Inputs/H4";
+import FormInput from "./FormInput";
 
 function UserLogin() {
   const [loading, setLoading] = React.useState(false);
@@ -78,35 +79,12 @@ function UserLogin() {
   ];
   return (
     <Container>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="px-6 py-2 md:p-5 bg-white mx-5 2xl:mx-40 rounded-md max-w-1/2 shadow-md"
-      >
-        <div className="flex flex-col  w-auto  gap-3">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col w-auto">
           <H3 className="text-center">User Login</H3>
           <span className="h-[1px] w-auto bg-success mb-5" />
           <H4 className="text-center">Sign In to your account</H4>
-          {Inputs.map((input, index) => (
-            <div key={index}>
-              <label className="block md:font-semibold text-black">
-                {input.label}
-              </label>
-              <input
-                id={input.name}
-                key={index}
-                {...register(input.name, { required: input.required })}
-                type={input.type}
-                placeholder={input.placeholder}
-                aria-invalid={errors[input.name] ? "true" : "false"}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
-              />
-              <p className="text-red-500 text-sm pt-1 md:font-bold">
-                {errors[input.name] &&
-                  errors[input.name].type === "required" &&
-                  `${input.label} is required`}
-              </p>
-            </div>
-          ))}
+          <FormInput Inputs={Inputs} register={register} errors={errors} />
           <Button
             className={"flex justify-center w-full mt-5 "}
             onClick={handleSubmit(onSubmit)}

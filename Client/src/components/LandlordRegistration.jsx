@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Container from "./Container";
 import Button from "./Buttons/Button";
+import FormInput from "./FormInput";
 
 function LandLordRegistration() {
   const {
@@ -91,38 +92,16 @@ function LandLordRegistration() {
   ];
   return (
     <Container>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="px-2 bg-white  rounded-md shadow-lg"
-      >
-        <div className="flex flex-col p-10  w-auto  gap-3">
-          <h1 className="text-3xl text-center font-bold text-secondary mb-5">
-            Landlord Registration
-          </h1>
-          <span className="h-[1px] w-auto bg-success mb-5" />
-          <h1 className="text-2xl font-semibold text-black">
-            Sing Up to your account
-          </h1>
-
-          {Inputs.map((input, index) => (
-            <div key={index} className="flex flex-col items-evenly  gap-1  p-1">
-              <div className="flex justify-between  grid-cols-2 gap-2">
-                <label className="block font-semibold text-black">
-                  {input.label}
-                </label>
-                <input
-                  id={input.name}
-                  key={index}
-                  {...register(input.name, { required: input.required })}
-                  type={input.type}
-                  placeholder={input.placeholder}
-                  className="w-2/3 py-1 px-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"
-                />
-              </div>
-            </div>
-          ))}
-          <Button onClick={handleSubmit(onSubmit)}>Sign Up</Button>
-        </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <h1 className="text-3xl text-center font-bold text-secondary mb-5">
+          Landlord Registration
+        </h1>
+        <span className="h-[1px] w-auto bg-success mb-5" />
+        <h1 className="text-2xl font-semibold text-black">
+          Sing Up to your account
+        </h1>
+        <FormInput Inputs={Inputs} register={register} errors={errors} />
+        <Button onClick={handleSubmit(onSubmit)}>Sign Up</Button>
       </form>
     </Container>
   );

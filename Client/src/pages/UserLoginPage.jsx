@@ -17,7 +17,12 @@ function UserLoginPage() {
   ];
 
   return (
-    <AuthContainer logo={logo} text={text}>
+    <AuthContainer
+      logo={logo}
+      text={text}
+      bgColorleft={"bg-[#8ecae6]"}
+      bgColorright={"bg-[#d0f4de]"}
+    >
       <UserLogin />
     </AuthContainer>
   );

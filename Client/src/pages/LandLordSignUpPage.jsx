@@ -1,6 +1,6 @@
 import React from "react";
 import LandLordRegistration from "../components/LandlordRegistration";
-import logoWhite from "../assets/logowhite.svg";
+import logo from "../assets/logo.svg";
 import AuthContainer from "../components/AuthContainer";
 
 function LandLordSignUpPage() {
@@ -15,7 +15,12 @@ function LandLordSignUpPage() {
     },
   ];
   return (
-    <AuthContainer logo={logoWhite} text={text}>
+    <AuthContainer
+      logo={logo}
+      text={text}
+      bgColorleft={"bg-[#a8dadc]"}
+      bgColorright={"bg-[#faedcd]"}
+    >
       <LandLordRegistration />
     </AuthContainer>
   );
