@@ -2,8 +2,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Button, Container, FooterLinks, FormInput } from "../../Index";
 
-
-
 function LandLordRegistration() {
   const {
     register,
@@ -105,11 +103,14 @@ function LandLordRegistration() {
           Inputs={Inputs}
           register={register}
           errors={errors}
-          className={"grid grid-cols-2 gap-2"}
+          className={"grid grid-cols-2 gap-2  "}
           Heading={"Landlord Registration"}
           Subheading={"Register as landlord"}
         />
-        <Button onClick={handleSubmit(onSubmit)}>Sign Up</Button>
+
+        <Button className={"w-full"} onClick={handleSubmit(onSubmit)}>
+          Sign Up
+        </Button>
         <FooterLinks Links={FooterLink} />
       </form>
     </Container>

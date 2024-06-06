@@ -39,15 +39,17 @@ model UserAddress {
 
 // LANDLORD MODEL
 model Landlord {
-  id              String            @id @default(cuid())
-  name            String
-  email           String            @unique
-  password        String
-  phone           String            @unique
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  properties      Property[]
-  Landlordaddress Landlordaddress[]
+  id                String            @id @default(cuid())
+  name              String
+  email             String            @unique
+  password          String
+  phone             String            @unique
+  isVerified        Boolean           @default(false)
+  verificationToken String?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  properties        Property[]
+  Landlordaddress   Landlordaddress[]
 }
 
 // LANDLORD ADDRESS MODEL

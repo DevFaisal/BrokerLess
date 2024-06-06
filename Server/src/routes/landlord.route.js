@@ -17,7 +17,6 @@ router.route("/register").post(registerLandlord);
 router.route("/login").post(loginLandlord);
 
 // GET Landlord Profile API Endpoint
-router.route("/profile").get(isValidLandlord, getLandlordProfile);
-
+router.route("/me").get(isValidLandlord, getLandlordProfile);
 
 export default router;

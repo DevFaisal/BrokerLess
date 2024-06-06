@@ -11,7 +11,7 @@ function FooterLinks({ Links }) {
           <Link
             key={index}
             to={link.link}
-            className="text-black hover:text-green-600"
+            className="text-green-600 pl-2 hover:text-green-500"
           >
             {link.linkText}
           </Link>

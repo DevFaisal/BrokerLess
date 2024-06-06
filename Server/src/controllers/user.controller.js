@@ -226,7 +226,7 @@ const loginUser = async (req, res) => {
     const cookieOptions = {
       httpOnly: true,
       secure: true,
-      sameSite: "None",
+      sameSite: "none",
       maxAge: 3600000,
     };
 

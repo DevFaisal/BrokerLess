@@ -123,6 +123,7 @@ const getLandlordProfile = async (req, res) => {
       name: landlord.name,
       email: landlord.email,
       phone: landlord.phone.toString(),
+      isVerified: landlord.isVerified,
       address: landlord.Landlordaddress.map((address) => {
         return {
           street: address.street,

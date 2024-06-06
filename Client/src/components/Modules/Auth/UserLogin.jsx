@@ -83,7 +83,7 @@ function UserLogin() {
     },
     {
       text: "Forget Password?",
-      link: "/auth/forget-password",
+      link: "/auth/forget-password-user",
       linkText: "Reset Password",
     },
   ];

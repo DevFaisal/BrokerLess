@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { logo } from "../../assets/Index";
 import Button from "../Buttons/Button";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, Navigate } from "react-router-dom";
 import OutlineButton from "../Buttons/OutlineButton";
 import { AlignJustify } from "lucide-react";
 import { useRecoilValue } from "recoil";
@@ -30,7 +30,9 @@ function NavBar() {
       await axios.get(`${import.meta.env.VITE_LOCALHOST}/auth/user/logout`, {
         withCredentials: true,
       });
-      window.location.reload("/auth/login-user");
+      setTimeout(() => {
+        window.location.reload("/auth/login-user");
+      }, 1000);
     } catch (error) {
       console.log(error);
     }
@@ -82,18 +84,20 @@ function NavBar() {
 
       {!user?.isVerified ? (
         <div className="md:flex gap-3 hidden">
-          <OutlineButton>
-            <Link to="/auth/register-user">Connect</Link>
-          </OutlineButton>
-          <Button className="bg-secondary">
-            <Link to="/auth/login-user">Login</Link>
-          </Button>
+          <Link to="/auth/register-user">
+            <OutlineButton>Connect</OutlineButton>
+          </Link>
+          <Link to="/auth/login-user">
+            <Button className="bg-secondary">Login</Button>
+          </Link>
         </div>
       ) : (
         <div className="md:flex gap-3 hidden">
-          <Button className="bg-secondary" onClick={logOutUser}>
-            <Link to="/auth/login-user">Logout</Link>
-          </Button>
+          <Link to="/auth/login-user">
+            <Button className="bg-secondary" onClick={logOutUser}>
+              Logout
+            </Button>
+          </Link>
         </div>
       )}
     </nav>
