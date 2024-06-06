@@ -29,7 +29,7 @@ const Routes = () => {
       path: "/",
       element: (
         <Suspense fallback={<Loading />}>
-          <RootLayout />
+          <RootLayout user={user} />
         </Suspense>
       ),
       children: [

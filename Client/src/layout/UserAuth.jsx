@@ -13,7 +13,7 @@ function UserAuth({ user }) {
           <PageFooter />
         </>
       ) : (
-        <Navigate to="/auth/login-user" replace />
+        <Navigate to="/auth/login-user" replace={true} />
       )}
     </>
   );

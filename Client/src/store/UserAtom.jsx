@@ -27,5 +27,19 @@ export const UserSelector = selector({
   },
 });
 
+// Component to fetch and set the user data
+const FetchUser = () => {
+  const setUser = useSetRecoilState(UserAtom);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await UserSelector.get();
+      setUser(user);
+    };
+    fetchUser();
+  }, []);
+
+  return null;
+};
 
 export default FetchUser;

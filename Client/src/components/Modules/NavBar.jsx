@@ -50,7 +50,6 @@ function NavBar() {
             key={index}
             to={link.path}
             onClick={() => setIsOpen(false)}
-            // className={`text-red-500 `}
             className={({ isActive }) =>
               isActive ? "text-blue-500" : "text-black"
             }

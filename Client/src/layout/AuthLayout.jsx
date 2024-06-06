@@ -13,7 +13,7 @@ function AuthLayout({ user }) {
           <PageFooter />
         </>
       ) : (
-        <Navigate to="/user/dashboard" replace />
+        <Navigate to="/user/dashboard" replace={true} />
       )}
     </div>
   );
