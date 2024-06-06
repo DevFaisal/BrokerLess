@@ -1,8 +1,8 @@
 import React from "react";
 import logo from "../assets/logo.svg";
-import Button from "./Buttons/Button";
+import Button from "../Buttons/Button";
 import { Link, NavLink } from "react-router-dom";
-import OutlineButton from "./Buttons/OutlineButton";
+import OutlineButton from "../Buttons/OutlineButton";
 import { AlignJustify } from "lucide-react";
 
 const links = [

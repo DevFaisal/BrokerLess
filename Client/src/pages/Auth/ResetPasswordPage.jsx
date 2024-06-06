@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Container from "../components/Container";
+import Container from "../../components/Containers/Container";
 import { Link } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { LoaderCircle } from "lucide-react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Button from "../components/Buttons/Button";
+import Button from "../../components/Buttons/Button";
 
 function ResetPasswordPage() {
   const [password, setPassword] = useState("");

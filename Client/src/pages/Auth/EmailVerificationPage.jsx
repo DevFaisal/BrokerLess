@@ -1,6 +1,6 @@
 import React from "react";
-import Container from "../components/Container";
-import EmailVerification from "../components/EmailVerification";
+import Container from "../../components/Containers/Container";
+import EmailVerification from "../../components/Modules/Auth/EmailVerification";
 
 function EmailVerificationPage() {
   return (

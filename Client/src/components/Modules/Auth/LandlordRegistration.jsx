@@ -1,8 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import Container from "./Container";
-import Button from "./Buttons/Button";
-import FormInput from "./FormInput";
+import Container from "../Containers/Container";
+import Button from "../Buttons/Button";
+import FormInput from "./Auth/FormInput";
+import FooterLinks from "./Auth/FooterLinks";
 
 function LandLordRegistration() {
   const {
@@ -90,18 +91,27 @@ function LandLordRegistration() {
       required: true,
     },
   ];
+
+  const FooterLink = [
+    {
+      text: "Already have an account?",
+      link: "/auth/login-landlord",
+      linkText: "Login",
+    },
+  ];
   return (
     <Container>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h1 className="text-3xl text-center font-bold text-secondary mb-5">
-          Landlord Registration
-        </h1>
-        <span className="h-[1px] w-auto bg-success mb-5" />
-        <h1 className="text-2xl font-semibold text-black">
-          Sing Up to your account
-        </h1>
-        <FormInput Inputs={Inputs} register={register} errors={errors} />
+        <FormInput
+          Inputs={Inputs}
+          register={register}
+          errors={errors}
+          className={"grid grid-cols-2 gap-2"}
+          Heading={"Landlord Registration"}
+          Subheading={"Register as landlord"}
+        />
         <Button onClick={handleSubmit(onSubmit)}>Sign Up</Button>
+        <FooterLinks Links={FooterLink} />
       </form>
     </Container>
   );

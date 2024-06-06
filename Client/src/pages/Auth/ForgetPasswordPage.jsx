@@ -1,13 +1,12 @@
 import React from "react";
+import AuthContainer from "../../components/AuthContainer";
 import logo from "../assets/logo.svg";
-import UserLogin from "../components/UserLogin";
-import H2 from "../components/Inputs/H2";
-import AuthContainer from "../components/AuthContainer";
+import ForgetPassword from "../../components/ForgetPassword";
 
-function UserLoginPage() {
+function ForgetPasswordPage() {
   const text = [
     {
-      text: "Login to your account",
+      text: "Forget your password",
       list: [
         "We are here to help you find your dream home",
         "We provide you with the best options",
@@ -20,12 +19,12 @@ function UserLoginPage() {
     <AuthContainer
       logo={logo}
       text={text}
-      bgColorleft={"bg-[#8ecae6]"}
-      bgColorright={"bg-[#d0f4de]"}
+      bgColorleft={"bg-[#778da9]"}
+      bgColorright={"bg-[#a3b18a]"}
     >
-      <UserLogin />
+      <ForgetPassword />
     </AuthContainer>
   );
 }
 
-export default UserLoginPage;
+export default ForgetPasswordPage;

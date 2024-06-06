@@ -1,8 +1,20 @@
 import React from "react";
+import H3 from "./Inputs/H3";
+import H4 from "./Inputs/H4";
 
-function FormInput({ Inputs, register, errors }) {
+function FormInput({
+  Inputs,
+  register,
+  errors,
+  className,
+  Heading,
+  Subheading,
+}) {
   return (
-    <div className="flex flex-col  pt-10">
+    <div>
+      <H3 className="text-center mb-4">{Heading}</H3>
+      <span className="h-[1px] w-auto bg-background mb-5" />
+      <H4>{Subheading}</H4>
       {Inputs.map((input, index) => (
         <div key={index}>
           <label className="block md:font-semibold text-black">

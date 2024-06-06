@@ -1,13 +1,10 @@
-import React from 'react'
+import React from "react";
 
-function H4({
-    children,
-    className = '',
-    ...rest
-}) {
-    return <h2
-        className={`${className} text-secondary font-bold text-xl md:text-2xl`}
-    >{children}</h2>
-
+function H4({ children, className = "", ...rest }) {
+  return (
+    <h4 className={`${className} text-secondary text-xl md:text-2xl`}>
+      {children}
+    </h4>
+  );
 }
-export default H4
+export default H4;

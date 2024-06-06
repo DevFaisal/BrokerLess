@@ -1,7 +1,7 @@
 import React from "react";
-import LandLordRegistration from "../components/LandlordRegistration";
+import LandLordRegistration from "../../components/Modules/LandlordRegistration";
 import logo from "../assets/logo.svg";
-import AuthContainer from "../components/AuthContainer";
+import AuthContainer from "../../components/AuthContainer";
 
 function LandLordSignUpPage() {
   const text = [

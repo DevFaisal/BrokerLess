@@ -1,7 +1,7 @@
 import React from "react";
-import UserRegistration from "../components/UserRegistration";
+import UserRegistration from "../../components/Modules/UserRegistration";
 import logo from "../assets/logo.svg";
-import AuthContainer from "../components/AuthContainer";
+import AuthContainer from "../../components/AuthContainer";
 
 function UserSignUpPage() {
   const text = [

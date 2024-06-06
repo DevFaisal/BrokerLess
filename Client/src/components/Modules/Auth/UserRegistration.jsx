@@ -1,12 +1,13 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import Button from "./Buttons/Button";
-import Container from "./Container";
+import Button from "../Buttons/Button";
+import Container from "../Containers/Container";
 import { LoaderCircle } from "lucide-react";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import FormInput from "./FormInput";
+import FormInput from "./Auth/FormInput";
+import FooterLinks from "./Auth/FooterLinks";
 
 function UserRegistration() {
   const navigate = useNavigate();
@@ -69,18 +70,29 @@ function UserRegistration() {
       required: true,
     },
   ];
+  const FooterLink = [
+    {
+      text: "Already have an account?",
+      link: "/auth/login-user",
+      linkText: "Login",
+    },
+    {
+      text: "Are you a landlord?",
+      link: "/auth/register-landlord",
+      linkText: "Register as a landlord",
+    },
+  ];
   return (
     <Container>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col  w-auto  gap-3">
-          <h1 className="text-3xl text-center font-bold text-secondary mb-5">
-            User Registration
-          </h1>
-          <span className="h-[1px] w-auto bg-background mb-5" />
-          <h1 className="text-2xl font-semibold text-black">
-            Sing Up to your account
-          </h1>
-          <FormInput Inputs={Inputs} register={register} errors={errors} />
+          <FormInput
+            Inputs={Inputs}
+            register={register}
+            errors={errors}
+            Heading={"User Registration"}
+            Subheading={"Sign up to get started with us"}
+          />
           <Button
             className={"flex justify-center w-full mt-5 "}
             onClick={handleSubmit(onSubmit)}
@@ -91,18 +103,7 @@ function UserRegistration() {
               "Register"
             )}
           </Button>
-          <p>
-            Already have an account?{" "}
-            <Link to="/auth/login-user" className="text-success">
-              Login
-            </Link>
-          </p>
-          <p>
-            Are you a landlord?{" "}
-            <Link to="/auth/register-landlord" className="text-success">
-              Register as a landlord
-            </Link>
-          </p>
+          <FooterLinks Links={FooterLink} />
         </div>
       </form>
     </Container>

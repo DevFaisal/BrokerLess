@@ -1,14 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import Container from "./Container";
+import Container from "../Containers/Container";
 import { LoaderCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import Button from "./Buttons/Button";
-import H3 from "./Inputs/H3";
-import H4 from "./Inputs/H4";
-import FormInput from "./FormInput";
+import Button from "../Buttons/Button";
+import FormInput from "./Auth/FormInput";
+import FooterLinks from "./Auth/FooterLinks";
 
 function UserLogin() {
   const [loading, setLoading] = React.useState(false);
@@ -77,14 +75,30 @@ function UserLogin() {
       required: true,
     },
   ];
+
+  const FooterLink = [
+    {
+      text: "Don't have an account?",
+      link: "/auth/register-user",
+      linkText: "Register",
+    },
+    {
+      text: "Forget Password?",
+      link: "/auth/forget-password",
+      linkText: "Reset Password",
+    },
+  ];
   return (
     <Container>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col w-auto">
-          <H3 className="text-center">User Login</H3>
-          <span className="h-[1px] w-auto bg-success mb-5" />
-          <H4 className="text-center">Sign In to your account</H4>
-          <FormInput Inputs={Inputs} register={register} errors={errors} />
+          <FormInput
+            Inputs={Inputs}
+            register={register}
+            errors={errors}
+            Heading={"Login"}
+            Subheading={"Login to your account"}
+          />
           <Button
             className={"flex justify-center w-full mt-5 "}
             onClick={handleSubmit(onSubmit)}
@@ -109,19 +123,8 @@ function UserLogin() {
                 </button>
               </p>
             )}
-            <p>
-              Don't have an account?{" "}
-              <Link to="/auth/register-user" className="text-success">
-                Register
-              </Link>
-            </p>
-            <p>
-              Forget Password?{" "}
-              <Link to="/auth/forget-password" className="text-success">
-                Reset Password
-              </Link>
-            </p>
           </div>
+          <FooterLinks Links={FooterLink} />
         </div>
       </form>
     </Container>
