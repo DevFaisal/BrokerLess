@@ -59,7 +59,7 @@ const getAgreements = async (req, res) => {
     return res.status(200).json(agreements);
   } catch (error) {
     console.log(error);
-    return res.status(500).json("Internal Server Error");
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -104,7 +104,7 @@ const approveAgreement = async (req, res) => {
     return res.status(200).json({ message: "Agreement approved" });
   } catch (error) {
     console.log(error);
-    return res.status(500).json("Internal Server Error");
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 

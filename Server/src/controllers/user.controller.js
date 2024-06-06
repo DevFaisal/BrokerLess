@@ -229,7 +229,7 @@ const loginUser = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json("Internal Server Error");
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -291,9 +291,7 @@ const forgetPassword = async (req, res) => {
 };
 
 const checkVerificationToken = async (req, res) => {
-
   const { verificationToken } = req.params;
-  console.log(verificationToken);
   const email = jwt.verify(
     verificationToken,
     process.env.JWT_SECRET,
@@ -338,7 +336,7 @@ const checkVerificationToken = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json("Internal Server Error");
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -403,7 +401,7 @@ const resetPassword = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json("Internal Server Error");
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -475,7 +473,7 @@ const updateUserProfile = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json("Internal Server Error");
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 

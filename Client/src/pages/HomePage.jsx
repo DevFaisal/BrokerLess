@@ -1,33 +1,53 @@
-import Container from '../components/Container'
-import React from 'react'
-import PrimaryButton from '../components/PrimaryButton'
-import image from '../assets/image-1.png'
+import React from "react";
+import Button from "../components/Buttons/Button";
+import background from "../assets/Images/background-1.png";
+import { Link } from "react-router-dom";
+import { FlipWords } from "../utils/flip-words";
+import H1 from "../components/Inputs/H1";
+import H3 from "../components/Inputs/H3";
+import { Container } from "../components/Index";
 
 function HomePage() {
-    return (
-        <Container>
-            <div >
-                <div className='grid grid-cols-1  md:grid-cols-2 gap-10 justify-start items-start px-5 md:px-20 
-                 py-60
-                '>
-                    <div className=' flex flex-col gap-4'>
-                        <div className='flex flex-col gap-2'>
-                            <h1 className='text-3xl font-semibold'>Welcome to </h1>
-                            <div className='w-[350px] h-[2px] bg-green-700'></div>
-                            <h1 className='text-7xl font-bold 
-                            text-green-700
-                            '>Brokerless</h1>
-                        </div>
-                        <p className='text-justify font-semibold leading-7 text-[#2B1B12] text-lg'>Welcome to Brokerless, where room rentals are hassle-free and broker-free. Connect directly with property owners, saving time and money. Explore our wide range of listings and find your perfect room in just a few clicks. Rent smarter with Brokerless.</p>
-                        <PrimaryButton>Get Started</PrimaryButton>
-                    </div>
-                    <div>
-                        <img src={image} alt="" />
-                    </div>
-                </div>
+  const words = ["Rooms", "Houses", "Apartments", "Offices", "Spaces"];
+  return (
+    <Container>
+      <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center px-5 md:px-20 py-20 h-screen w-full">
+          <div className="flex flex-col gap-4  w-fit">
+            <div className="flex flex-col gap-2 ">
+              <H1 className="z-20">Brokerless</H1>
+              <H3>
+                Rent
+                <span>
+                  <FlipWords
+                    words={words}
+                    className="text-2xl md:text-3xl font-semibold text-secondary"
+                  />
+                </span>
+              </H3>
             </div>
-        </Container >
-    )
+            <p className="text-justify font-semibold md:leading-7 text-xs md:text-lg text-primary">
+              Discover Brokerless. Rent rooms broker-free. Save time and money
+              with direct owner connections. Rent smarter with Brokerless
+            </p>
+            <Button
+              className={
+                "w-30 md:w-40 md:px-2 md:py-3  bg-primary  text-white  hover:bg-secondary transition duration-700 ease-in-out hover:scale-110 transform"
+              }
+            >
+              <Link to="/auth/login-user">Get Started</Link>
+            </Button>
+          </div>
+          <div className="hidden 2xl:flex ">
+            <img
+              className="object-contain absolute  bottom-70 top-10 left-90 right-10 w-[900px] z-20"
+              src={background}
+            />
+          </div>
+        </div>
+      </div>
+    </Container>
+  );
 }
 
-export default HomePage
+export default HomePage;
