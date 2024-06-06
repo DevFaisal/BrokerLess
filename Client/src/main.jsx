@@ -2,8 +2,7 @@ import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import RootLayout from "./layout/RootLayout";
-import AuthLayout from "./layout/AuthLayout";
+import { RootLayout, AuthLayout, UserAuth } from "./layout/Index";
 import { Toaster } from "react-hot-toast";
 import { RecoilRoot } from "recoil";
 import {
@@ -19,11 +18,7 @@ import {
   ForgetPasswordPage,
   ResetPasswordPage,
 } from "./pages/Index";
-import Dashboard from "./components/User/Dashboard";
-import Auth from "./components/Auth";
-import Loading from "./components/Modules/Loading";
-import UserAuth from "./layout/UserAuth";
-import Protected from "./components/Protected";
+import { Protected, Auth, Loading, Dashboard } from "./components/Index";
 
 const router = createBrowserRouter([
   { path: "*", element: <ErrorPage /> },
@@ -47,15 +42,15 @@ const router = createBrowserRouter([
     path: "/auth",
     element: (
       <Suspense fallback={<Loading />}>
-        <Auth>
-          <AuthLayout />
-        </Auth>
+        {/* <Auth> */}
+        <AuthLayout />
+        {/* </Auth> */}
       </Suspense>
     ),
     children: [
-      { path: "register-landlord", element: <LandLordRegistrationPage /> },
       { path: "register-user", element: <UserRegistrationPage /> },
       { path: "login-user", element: <UserLoginPage /> },
+      { path: "register-landlord", element: <LandLordRegistrationPage /> },
       { path: "forget-password", element: <ForgetPasswordPage /> },
       {
         path: "reset-password/:verificationToken",

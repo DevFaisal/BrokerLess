@@ -1,5 +1,5 @@
-import React from "react";
-import { set, useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { LoaderCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 function UserLogin() {
   const navigate = useNavigate();
-  const [loading, setLoading] = React.useState(false);
-  const [emailError, setEmailError] = React.useState(false);
+  const [loading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState(false);
   const {
     register,
     formState: { errors },
@@ -25,41 +25,37 @@ function UserLogin() {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    const response = await axios
-      .post(`${import.meta.env.VITE_LOCALHOST}/auth/user/login`, data, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setLoading(false);
-        window.location.reload("/user/dashboard");
-        toast.success(res.data.message);
-        return res;
-      })
-      .catch((error) => {
-        setLoading(false);
-        toast.error(error.response.data.message);
-        if (error.response.data.message === "Email not verified") {
-          setEmailError(true);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_LOCALHOST}/auth/user/login`,
+        data,
+        {
+          withCredentials: true,
         }
-        return error;
-      });
+      );
+      window.location.reload("/user/dashboard");
+      setLoading(false);
+      toast.success(response.data.message);
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.response.data.message);
+      if (error.response.data.message === "Email not verified") {
+        setEmailError(true);
+      }
+    }
   };
 
   const resendEmail = async () => {
-    const response = await axios
-      .post(
+    try {
+      const response = await axios.post(
         `${import.meta.env.VITE_LOCALHOST}/auth/user/resend-verification-email`,
         { email: document.getElementById("email").value }
-      )
-      .then((res) => {
-        toast.success(res.data.message);
-        setEmailError(false);
-        return res;
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-        return error;
-      });
+      );
+      toast.success(response.data.message);
+      setEmailError(false);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
 
   const Inputs = [
@@ -91,6 +87,7 @@ function UserLogin() {
       linkText: "Reset Password",
     },
   ];
+
   return (
     <Container>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -104,7 +101,8 @@ function UserLogin() {
           />
           <Button
             className={"flex justify-center w-full mt-5 "}
-            onClick={handleSubmit(onSubmit)}
+            type="submit"
+            disabled={loading}
           >
             {loading ? (
               <LoaderCircle size={20} className="text-white animate-spin" />

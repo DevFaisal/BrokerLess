@@ -1,18 +1,17 @@
 import React, { useEffect } from "react";
-import { useRecoilValue } from "recoil";
-import { UserSelector } from "../store/UserAtom";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { UserSelector } from "../../../store/UserAtom";
 
-function Auth({ children }) {
+function Protected({ children }) {
   const navigate = useNavigate();
   const user = useRecoilValue(UserSelector);
-  
   useEffect(() => {
-    if (user?.isVerified) {
-      return navigate("/user/dashboard");
+    if (!user?.isVerified) {
+      return navigate("/auth/login-user");
     }
   }, []);
   return <>{children}</>;
 }
 
-export default Auth;
+export default Protected;
