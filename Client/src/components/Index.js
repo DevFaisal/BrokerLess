@@ -15,7 +15,6 @@ import H2 from "./Inputs/H2";
 import H3 from "./Inputs/H3";
 import H4 from "./Inputs/H4";
 import P from "./Inputs/P";
-import Auth from "./Modules/Auth/Auth";
 import Protected from "./Modules/Auth/Protected";
 import Loading from "./Modules/Loading";
 import Dashboard from "./User/Dashboard";
@@ -38,7 +37,6 @@ export {
   H3,
   H4,
   P,
-  Auth,
   Protected,
   Loading,
   Dashboard,

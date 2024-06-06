@@ -1,22 +1,20 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { UserSelector } from "../store/UserAtom";
+import React from "react";
+import { Navigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import { NavBar } from "../components/Index";
+import { NavBar, PageFooter } from "../components/Index";
 
-function UserAuth() {
-  const navigate = useNavigate();
-  const user = useRecoilValue(UserSelector);
-  useEffect(() => {
-    if (!user?.isVerified) {
-      navigate("/auth/login-user");
-    }
-  }, [user]);
+function UserAuth({ user }) {
   return (
     <>
       <NavBar />
-      <Outlet />
+      {user?.isVerified ? (
+        <>
+          <Outlet />
+          <PageFooter />
+        </>
+      ) : (
+        <Navigate to="/auth/login-user" replace />
+      )}
     </>
   );
 }
