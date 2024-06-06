@@ -1,7 +1,7 @@
 import React from "react";
-import NavBar from "../components/NavBar";
+import { NavBar } from "../components/Index";
 import { Outlet } from "react-router-dom";
-import Footer from "../components/Footer";
+import { PageFooter } from "../components/Index";
 
 function RootLayout() {
   return (
@@ -11,7 +11,7 @@ function RootLayout() {
         <NavBar />
       </div>
       <Outlet />
-      <Footer />
+      <PageFooter />
     </div>
   );
 }

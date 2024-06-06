@@ -1,9 +1,9 @@
 import React from "react";
-import LandLordRegistration from "../../components/Modules/LandlordRegistration";
-import logo from "../assets/logo.svg";
-import AuthContainer from "../../components/AuthContainer";
+import AuthContainer from "../../components/Containers/AuthContainer";
+import { LandLordRegistration } from "../../components/Index";
+import { logo } from "../../assets/Index";
 
-function LandLordSignUpPage() {
+function LandLordRegistrationPage() {
   const text = [
     {
       text: "Post your property and get the best tenants",
@@ -26,4 +26,4 @@ function LandLordSignUpPage() {
   );
 }
 
-export default LandLordSignUpPage;
+export default LandLordRegistrationPage;

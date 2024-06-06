@@ -1,7 +1,7 @@
 import React from "react";
-import AuthContainer from "../../components/AuthContainer";
-import logo from "../assets/logo.svg";
-import ForgetPassword from "../../components/ForgetPassword";
+import { logo } from "../../assets/Index";
+import AuthContainer from "../../components/Containers/AuthContainer";
+import { ForgetPassword } from "../../components/Index";
 
 function ForgetPasswordPage() {
   const text = [

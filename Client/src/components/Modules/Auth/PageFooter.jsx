@@ -1,7 +1,7 @@
 import React from "react";
-import logo from "../assets/logo.svg";
+import { logo } from "../../../assets/Index";
 
-function Footer() {
+function PageFooter() {
   const date = new Date();
   const year = date.getFullYear();
   return (
@@ -14,4 +14,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default PageFooter;

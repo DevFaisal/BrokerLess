@@ -1,13 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import Button from "../Buttons/Button";
-import Container from "../Containers/Container";
 import { LoaderCircle } from "lucide-react";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import axios from "axios";
-import FormInput from "./Auth/FormInput";
-import FooterLinks from "./Auth/FooterLinks";
+import { Button, Container, FooterLinks, FormInput } from "../../Index";
 
 function UserRegistration() {
   const navigate = useNavigate();

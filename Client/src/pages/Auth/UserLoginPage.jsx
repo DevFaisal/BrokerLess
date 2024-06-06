@@ -1,8 +1,7 @@
 import React from "react";
-import logo from "../assets/logo.svg";
-import UserLogin from "../../components/Modules/UserLogin";
-import H2 from "../../components/Inputs/H2";
-import AuthContainer from "../../components/AuthContainer";
+import { logo } from "../../assets/Index";
+import AuthContainer from "../../components/Containers/AuthContainer";
+import { UserLogin } from "../../components/Index";
 
 function UserLoginPage() {
   const text = [

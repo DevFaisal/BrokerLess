@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/logo.svg";
+import { logo } from "../../assets/Index";
 import Button from "../Buttons/Button";
 import { Link, NavLink } from "react-router-dom";
 import OutlineButton from "../Buttons/OutlineButton";

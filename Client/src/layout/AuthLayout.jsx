@@ -1,7 +1,6 @@
 import React from "react";
-import NavBar from "../components/NavBar";
 import { Outlet } from "react-router-dom";
-import Footer from "../components/Footer";
+import { NavBar, PageFooter } from "../components/Index";
 
 function AuthLayout() {
   return (
@@ -10,7 +9,7 @@ function AuthLayout() {
         <NavBar />
       </div>
       <Outlet />
-      <Footer />
+      <PageFooter />
     </div>
   );
 }

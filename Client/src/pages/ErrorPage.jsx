@@ -1,7 +1,7 @@
 import React from "react";
-import Container from "../components/Container";
-import image from "../assets/404.png";
+import image from "../assets/Images/404.png";
 import { Link } from "react-router-dom";
+import { Container } from "../components/Index";
 
 function ErrorPage() {
   return (

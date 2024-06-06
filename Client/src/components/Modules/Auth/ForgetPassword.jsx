@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Container from "./Containers/Container";
-import Button from "../components/Buttons/Button";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { LoaderCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Button, Container } from "../../Index";
 
 function ForgetPassword() {
   const [email, setEmail] = useState("");

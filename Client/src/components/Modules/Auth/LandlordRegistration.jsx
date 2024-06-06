@@ -1,9 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import Container from "../Containers/Container";
-import Button from "../Buttons/Button";
-import FormInput from "./Auth/FormInput";
-import FooterLinks from "./Auth/FooterLinks";
+import { Button, Container, FooterLinks, FormInput } from "../../Index";
+
+
 
 function LandLordRegistration() {
   const {

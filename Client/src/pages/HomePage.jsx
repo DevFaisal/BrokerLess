@@ -1,4 +1,3 @@
-import Container from "../components/Container";
 import React from "react";
 import Button from "../components/Buttons/Button";
 import background from "../assets/Images/background-1.png";
@@ -6,6 +5,7 @@ import { Link } from "react-router-dom";
 import { FlipWords } from "../utils/flip-words";
 import H1 from "../components/Inputs/H1";
 import H3 from "../components/Inputs/H3";
+import { Container } from "../components/Index";
 
 function HomePage() {
   const words = ["Rooms", "Houses", "Apartments", "Offices", "Spaces"];

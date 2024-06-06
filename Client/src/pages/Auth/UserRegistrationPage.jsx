@@ -1,9 +1,9 @@
 import React from "react";
-import UserRegistration from "../../components/Modules/UserRegistration";
-import logo from "../assets/logo.svg";
-import AuthContainer from "../../components/AuthContainer";
+import AuthContainer from "../../components/Containers/AuthContainer";
+import { UserRegistration } from "../../components/Index";
+import { logo } from "../../assets/Index";
 
-function UserSignUpPage() {
+function UserRegistrationPage() {
   const text = [
     {
       text: "Find your dream home with us",
@@ -27,4 +27,4 @@ function UserSignUpPage() {
   );
 }
 
-export default UserSignUpPage;
+export default UserRegistrationPage;

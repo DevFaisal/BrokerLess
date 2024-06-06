@@ -1,6 +1,5 @@
 import React from "react";
-import H3 from "./Inputs/H3";
-import H4 from "./Inputs/H4";
+import { H3, H4 } from "../../Index";
 
 function FormInput({
   Inputs,

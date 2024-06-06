@@ -1,5 +1,6 @@
 import React from "react";
-import H2 from "./Inputs/H2";
+import { H2 } from "../Index";
+
 
 function AuthContainer({ children, logo, text, bgColorleft, bgColorright }) {
   return (
