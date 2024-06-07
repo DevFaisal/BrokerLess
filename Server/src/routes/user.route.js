@@ -7,7 +7,6 @@ import {
   userProfile,
   updateUserProfile,
   refreshToken,
-  verifyEmail,
   resendVerificationEmail,
   forgetPassword,
   resetPassword,
@@ -18,9 +17,6 @@ const router = Router();
 
 // POST User Registration API Endpoint
 router.route("/register").post(registerUser);
-
-// Verify Email API Endpoint
-router.route("/verify-email").get(verifyEmail);
 
 // Resend Verification Email API Endpoint
 router.route("/resend-verification-email").post(resendVerificationEmail);

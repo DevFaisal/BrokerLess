@@ -18,7 +18,7 @@ import {
   ForgetPasswordPage,
   ResetPasswordPage,
 } from "../pages/Index";
-import { Loading, Dashboard } from "../components/Index";
+import { Dashboard } from "../components/Index";
 import { RootLayout, UserAuth } from "../layout/Index";
 
 const Routes = () => {
@@ -28,11 +28,7 @@ const Routes = () => {
     {
       // General pages
       path: "/",
-      element: (
-        <Suspense fallback={<Loading />}>
-          <RootLayout user={user} />
-        </Suspense>
-      ),
+      element: <RootLayout user={user} />,
       children: [
         { path: "/", element: <HomePage /> },
         { path: "about", element: <AboutPage /> },
@@ -43,14 +39,10 @@ const Routes = () => {
     {
       // Authentication pages
       path: "/auth",
-      element: (
-        <Suspense fallback={<Loading />}>
-          <RootLayout user={user} />
-        </Suspense>
-      ),
+      element: <RootLayout user={user} />,
       children: [
         { path: "register-user", element: <UserRegistrationPage /> },
-        { path: "login-user", element: <UserLoginPage />},
+        { path: "login-user", element: <UserLoginPage /> },
         { path: "forget-password-user", element: <ForgetPasswordPage /> },
         {
           path: "reset-password/:verificationToken",
@@ -61,11 +53,7 @@ const Routes = () => {
     {
       // User pages
       path: "/user",
-      element: (
-        <Suspense fallback={<Loading />}>
-          <UserAuth user={user} />
-        </Suspense>
-      ),
+      element: <UserAuth user={user} />,
       children: [
         { path: "dashboard", element: <Dashboard /> },
         { path: "profile", element: <div>Profile</div> },
@@ -73,18 +61,9 @@ const Routes = () => {
       ],
     },
     {
-      path: "/email-verification/user/:verificationToken",
-      element: <EmailVerificationPage />,
-    },
-    { path: "*", element: <ErrorPage /> },
-    {
       // Landing pages
       path: "/auth",
-      element: (
-        <Suspense fallback={<Loading />}>
-          <RootLayout user={user} />
-        </Suspense>
-      ),
+      element: <RootLayout user={user} />,
       children: [
         { path: "register-landlord", element: <LandLordRegistrationPage /> },
         { path: "login-landlord", element: <>Login Landlord</> },
@@ -95,6 +74,11 @@ const Routes = () => {
         },
       ],
     },
+    {
+      path: "/email-verification/:verificationToken",
+      element: <EmailVerificationPage />,
+    },
+    { path: "*", element: <ErrorPage /> },
   ]);
 
   return (

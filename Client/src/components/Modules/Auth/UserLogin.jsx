@@ -51,6 +51,7 @@ function UserLogin() {
         `${import.meta.env.VITE_LOCALHOST}/auth/user/resend-verification-email`,
         { email: document.getElementById("email").value }
       );
+      console.log(response);
       toast.success(response.data.message);
       setEmailError(false);
     } catch (error) {

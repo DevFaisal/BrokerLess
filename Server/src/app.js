@@ -21,6 +21,7 @@ import userRouter from "./routes/user.route.js";
 import landlordRouter from "./routes/landlord.route.js";
 import propertyRoute from "./routes/property.route.js";
 import agreementRoute from "./routes/agreement.route.js";
+import verificationRoute from "./routes/verification.route.js";
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Rently API" });
@@ -31,5 +32,6 @@ app.use("/auth/user", userRouter);
 app.use("/auth/landlord", landlordRouter);
 app.use("/api/property", propertyRoute);
 app.use("/api/agreement", agreementRoute);
+app.use("/api/verification", verificationRoute);
 
 export { app };

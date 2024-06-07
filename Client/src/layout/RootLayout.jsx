@@ -6,10 +6,13 @@ import { PageFooter } from "../components/Index";
 function RootLayout({ user }) {
   return (
     <div className="h-[50rem] w-full  bg-white bg-grid-black/[0.2] relative flex flex-col">
-      <div className="top-0 z-50"></div>
       {!user?.isVerified ? (
         <>
-          <NavBar />
+          <div className="top-0 z-30">
+            {" "}
+            <NavBar />
+          </div>
+
           <Outlet />
           <PageFooter />
         </>

@@ -10,17 +10,17 @@ datasource db {
 
 // USER MODEL
 model User {
-  id                String        @id @default(cuid())
+  id                String              @id @default(cuid())
   name              String
-  email             String        @unique
+  email             String              @unique
   password          String
-  phone             String        @unique
-  isVerified        Boolean       @default(false)
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
-  verificationToken String?
+  phone             String              @unique
+  isVerified        Boolean             @default(false)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
   Agreement         Agreement[]
   UserAddress       UserAddress[]
+  verificationToken verificationToken[]
 }
 
 // USER ADDRESS MODEL
@@ -39,17 +39,17 @@ model UserAddress {
 
 // LANDLORD MODEL
 model Landlord {
-  id                String            @id @default(cuid())
+  id                String              @id @default(cuid())
   name              String
-  email             String            @unique
+  email             String              @unique
   password          String
-  phone             String            @unique
-  isVerified        Boolean           @default(false)
-  verificationToken String?
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
+  phone             String              @unique
+  isVerified        Boolean             @default(false)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
   properties        Property[]
   Landlordaddress   Landlordaddress[]
+  verificationToken verificationToken[]
 }
 
 // LANDLORD ADDRESS MODEL
@@ -124,4 +124,15 @@ enum AgreementStatus {
   DECLINED
   APPROVED
   CANCELLED
+}
+
+model verificationToken {
+  id         String    @id @default(cuid())
+  token      String
+  userId     String?
+  landlordId String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  User       User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Landlord   Landlord? @relation(fields: [landlordId], references: [id], onDelete: Cascade)
 }

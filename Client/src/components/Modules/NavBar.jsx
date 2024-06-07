@@ -30,9 +30,7 @@ function NavBar() {
       await axios.get(`${import.meta.env.VITE_LOCALHOST}/auth/user/logout`, {
         withCredentials: true,
       });
-      setTimeout(() => {
-        window.location.reload("/auth/login-user");
-      }, 1000);
+      window.location.reload("/auth/login-user");
     } catch (error) {
       console.log(error);
     }

@@ -61,7 +61,11 @@ const registerUser = async (req, res) => {
         email: req.body.email,
         password: hashedPassword,
         phone: req.body.phone,
-        verificationToken: verificationToken,
+        verificationToken: {
+          create: {
+            token: verificationToken,
+          },
+        },
       },
     });
 
@@ -71,64 +75,6 @@ const registerUser = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json("Internal Server Error");
-  }
-};
-
-const verifyEmail = async (req, res) => {
-  const { verificationToken } = req.query;
-  const email = jwt.verify(
-    verificationToken,
-    process.env.JWT_SECRET,
-    (error, decoded) => {
-      if (error) {
-        return res.status(400).json({
-          message: "Invalid Token or Token expired",
-        });
-      }
-      if (decoded) {
-        return decoded.email;
-      }
-    }
-  );
-  /* Here we are checking if the email is valid or not because if the token is expired
-  it sends the server error data which can become true in if-else condition so we are
-  checking weather it is email type or not */
-  if (!z.string().email().safeParse(email).success) {
-    // Here i am returning without sending any response because
-    //the error message is already sent in the above code
-    return;
-  }
-  try {
-    const user = await prisma.user.findFirst({
-      where: {
-        email: email,
-      },
-    });
-    if (!user) {
-      return res.status(404).json({
-        message: "User not found",
-      });
-    }
-    if (user.isVerified) {
-      return res.status(400).json({
-        message: "Email already verified",
-      });
-    }
-    await prisma.user.update({
-      where: {
-        email: user.email,
-      },
-      data: {
-        isVerified: true,
-        verificationToken: "",
-      },
-    });
-    return res.status(200).json({
-      message: "Email verified successfully",
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -170,7 +116,11 @@ const resendVerificationEmail = async (req, res) => {
         email: email,
       },
       data: {
-        verificationToken: verificationToken,
+        verificationToken: {
+          create: {
+            token: verificationToken,
+          },
+        },
       },
     });
 
@@ -178,7 +128,7 @@ const resendVerificationEmail = async (req, res) => {
       message: "Verification email sent successfully",
     });
   } catch (error) {
-    return res.status(500).json("Internal Server Error");
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -506,7 +456,6 @@ export {
   userProfile,
   updateUserProfile,
   refreshToken,
-  verifyEmail,
   resendVerificationEmail,
   forgetPassword,
   resetPassword,

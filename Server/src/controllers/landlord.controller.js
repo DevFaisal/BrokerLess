@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import Validation from "../utils/Validation.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import VerificationEmail from "../utils/verificationEmail.js";
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -10,7 +11,6 @@ const prisma = new PrismaClient();
 const registerLandlord = async (req, res) => {
   //Validate the request body
   const result = Validation.landlordRegistration(req.body);
-  console.log(req.body);
   //Check if the request body is valid
   if (!result.success) {
     return res
@@ -29,6 +29,26 @@ const registerLandlord = async (req, res) => {
         message: "Email or phone number already exists",
       });
     }
+    // Generate a random 6 digit number
+    const verificationToken = jwt.sign(
+      {
+        exp: Math.floor((Date.now() + 5 * 60000) / 1000), // Verification token expires in 5 minutes
+        email: req.body.email,
+      },
+      process.env.JWT_SECRET
+    );
+
+    const mail = await VerificationEmail(
+      req.body.email,
+      verificationToken,
+      "Landlord " + req.body.name
+    );
+    if (mail.error) {
+      return res.status(500).json({
+        message: "error: " + mail.error.message,
+      });
+    }
+
     //Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -39,7 +59,7 @@ const registerLandlord = async (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: hashedPassword,
-        phone: BigInt(req.body.phone),
+        phone: req.body.phone,
         Landlordaddress: {
           create: {
             street: req.body.street,
@@ -49,11 +69,21 @@ const registerLandlord = async (req, res) => {
             country: req.body.country,
           },
         },
+        verificationToken: {
+          create: {
+            token: verificationToken,
+          },
+        }
       },
     });
+    if (!newLandlord) {
+      return res.status(500).json({
+        message: "Failed to create landlord",
+      });
+    }
 
     return res.status(201).json({
-      message: "Landlord created successfully",
+      message: "Landlord created successfully. Please verify your email",
     });
   } catch (error) {
     console.log(error);
