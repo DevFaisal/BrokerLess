@@ -5,10 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "prisma generate",
     "start": "node src/api/index.js"
   },
-  "author": "Faisal Farooq, Waseem Ahmad, Shahid Manzoor",
+  "author": "Faisal Farooq, Waseem Ahmad , Shahid Manzoor",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.14.0",
