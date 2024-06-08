@@ -5,10 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --env-file .env src/api/index.js",
-    "postinstall": "prisma generate",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/api/index.js",
-    "versal-build": "prisma generate && npm run build"
+    "dev": "nodemon --env-file .env src/api/index.js",
+    "postinstall": "prisma generate"
   },
   "author": "Faisal Farooq, Waseem Ahmad , Shahid Manzoor",
   "license": "ISC",
