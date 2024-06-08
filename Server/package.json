@@ -2,15 +2,13 @@
   "name": "brokerless",
   "version": "1.0.0",
   "description": "The Final Year MCA Project",
-  "main": "src/index.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon --env-file .env src/index.js",
-    "start": "node src/index.js",
-    "postinstall": "prisma generate",
-    "build": "npm run postinstall"
+    "postinstall": "prisma generate"
   },
-  "author": "Faisal Farooq, Waseem Ahmad, Shahid Manzoor",
+  "author": "Faisal Farooq, Waseem Ahmad , Shahid Manzoor",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.14.0",
