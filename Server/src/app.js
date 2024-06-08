@@ -17,11 +17,11 @@ app.use(
 );
 
 // Import Routes
-import userRouter from "../routes/user.route.js";
-import landlordRouter from "../routes/landlord.route.js";
-import propertyRoute from "../routes/property.route.js";
-import agreementRoute from "../routes/agreement.route.js";
-import verificationRoute from "../routes/verification.route.js";
+import userRouter from "./routes/user.route.js";
+import landlordRouter from "./routes/landlord.route.js";
+import propertyRoute from "./routes/property.route.js";
+import agreementRoute from "./routes/agreement.route.js";
+import verificationRoute from "./routes/verification.route.js";
 
 app.get("/", (req, res) => res.send("Express on Vercel"));
 

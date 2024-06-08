@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --env-file .env src/index.js",
-    "postinstall": "prisma generate"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/api/index.js"
   },
   "author": "Faisal Farooq, Waseem Ahmad, Shahid Manzoor",
   "license": "ISC",
