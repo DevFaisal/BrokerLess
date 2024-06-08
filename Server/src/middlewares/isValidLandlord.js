@@ -4,12 +4,12 @@ import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 
 export default function isValidLandlord(req, res, next) {
-  if (!req.headers.authorization) {
+  if (!req.cookies.Authentication) {
     return res.status(401).json({
       message: "Unauthorized Access",
     });
   }
-  const token = req.headers.authorization.split(" ")[1];
+  const token = req.cookies.Authentication.split(" ")[1];
   jwt.verify(token, process.env.JWT_SECRET, async (error, decoded) => {
     if (error) {
       return res.status(401).json({

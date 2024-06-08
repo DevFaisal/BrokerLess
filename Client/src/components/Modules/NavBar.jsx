@@ -86,13 +86,18 @@ function NavBar() {
             <OutlineButton>Connect</OutlineButton>
           </Link>
           <Link to="/auth/login-user">
-            <Button className="bg-secondary">Login</Button>
+            <Button className="bg-secondary">User Login</Button>
+          </Link>
+          <Link to="/auth/login-landlord">
+            <Button className="bg-backgroundTwo hover:bg-slate-800">
+              Landlord Login
+            </Button>
           </Link>
         </div>
       ) : (
         <div className="md:flex gap-3 hidden">
           <Link to="/auth/login-user">
-            <Button className="bg-secondary" onClick={logOutUser}>
+            <Button className="bg-slate-700" onClick={logOutUser}>
               Logout
             </Button>
           </Link>

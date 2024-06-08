@@ -6,7 +6,7 @@ import axios from "axios";
 import { Button, Container, FooterLinks, FormInput } from "../../Index";
 import { useNavigate } from "react-router-dom";
 
-function UserLogin() {
+function LandlordLogin() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState(false);
@@ -16,24 +16,25 @@ function UserLogin() {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
-      phone: "",
     },
   });
 
   const onSubmit = async (data) => {
+    console.log(data);
     setLoading(true);
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_LOCALHOST}/auth/user/login`,
+        `${import.meta.env.VITE_LOCALHOST}/auth/landlord/login`,
         data,
         {
           withCredentials: true,
         }
       );
-      window.location.reload("/user/dashboard");
+      console.log(response);
+      window.location.reload("/landlord/dashboard");
+
       setLoading(false);
       toast.success(response.data.message);
     } catch (error) {
@@ -46,6 +47,7 @@ function UserLogin() {
   };
 
   const resendEmail = async () => {
+    //TODO: Yet to be implemented
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_LOCALHOST}/auth/user/resend-verification-email`,
@@ -79,13 +81,13 @@ function UserLogin() {
   const FooterLink = [
     {
       text: "Don't have an account?",
-      link: "/auth/register-user",
+      link: "/auth/register-landlord",
       linkText: "Register",
     },
     {
       text: "Forget Password?",
-      link: "/auth/forget-password-user",
-      linkText: "Reset Password",
+      link: "/auth/forget-password-landlord", //TODO: Add the correct link
+      linkText: "Reset",
     },
   ];
 
@@ -97,8 +99,8 @@ function UserLogin() {
             Inputs={Inputs}
             register={register}
             errors={errors}
-            Heading={"User Login"}
-            Subheading={"Login as User"}
+            Heading={"Landlord Login"}
+            Subheading={"Login as Landlord"}
           />
           <Button
             className={"flex justify-center w-full mt-5 "}
@@ -133,4 +135,4 @@ function UserLogin() {
   );
 }
 
-export default UserLogin;
+export default LandlordLogin;

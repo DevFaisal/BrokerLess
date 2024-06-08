@@ -4,6 +4,7 @@ import Validation from "../utils/Validation.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import VerificationEmail from "../utils/verificationEmail.js";
+import cookieParser from "cookie-parser";
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -73,7 +74,7 @@ const registerLandlord = async (req, res) => {
           create: {
             token: verificationToken,
           },
-        }
+        },
       },
     });
     if (!newLandlord) {
@@ -102,14 +103,21 @@ const loginLandlord = async (req, res) => {
   }
   try {
     //Check if the landlord exists
-    const landlord = await prisma.landlord.findFirst({
+    const landlord = await prisma.landlord.findUnique({
       where: {
         email: req.body.email,
       },
     });
+
     if (!landlord) {
       return res.status(400).json({
-        message: "Invalid email or password",
+        message: "Landlord not found",
+      });
+    }
+    //Check if the landlord has verified their email
+    if (!landlord.isVerified) {
+      return res.status(400).json({
+        message: "Email not verified",
       });
     }
     //Check if the password is correct
@@ -128,10 +136,16 @@ const loginLandlord = async (req, res) => {
       process.env.JWT_SECRET
     );
 
-    res.header("Authorization", "Bearer " + token);
+    const cookieOptions = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 3600000,
+    };
 
+    res.cookie("Authentication", `Bearer ${token}`, cookieOptions);
     return res.status(200).json({
-      message: "Login successful",
+      message: "Logged in successfully",
     });
   } catch (error) {
     console.log(error);

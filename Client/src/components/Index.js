@@ -17,7 +17,11 @@ import H4 from "./Inputs/H4";
 import P from "./Inputs/P";
 import Protected from "./Modules/Auth/Protected";
 import Loading from "./Modules/Loading";
-import Dashboard from "./User/Dashboard";
+import LandlordLogin from "./Modules/Auth/LandlordLogin";
+import UserDashboard from "./Modules/User/UserDashboard";
+import LandLordDashboard from "./Modules/Landlord/LandLordDashboard";
+import UserPrivateRoute from "./Modules/UserPrivateRoute";
+import LandLordPrivateRoute from "./Modules/LandLordPrivateRoute";
 
 export {
   EmailVerification,
@@ -39,5 +43,9 @@ export {
   P,
   Protected,
   Loading,
-  Dashboard,
+  LandlordLogin,
+  UserDashboard,
+  LandLordDashboard,
+  UserPrivateRoute,
+  LandLordPrivateRoute,
 };
