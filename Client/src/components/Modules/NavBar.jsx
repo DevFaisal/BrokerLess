@@ -4,9 +4,6 @@ import Button from "../Buttons/Button";
 import { Link, NavLink, Navigate } from "react-router-dom";
 import OutlineButton from "../Buttons/OutlineButton";
 import { AlignJustify } from "lucide-react";
-import { useRecoilValue } from "recoil";
-import { UserSelector } from "../../store/UserAtom";
-import axios from "axios";
 
 const links = [
   { path: "/", text: "Home" },
@@ -15,27 +12,8 @@ const links = [
   { path: "/contact", text: "Contact" },
 ];
 
-const authLinks = [
-  { path: "/user/dashboard", text: "Dashboard" },
-  { path: "/user/profile", text: "Profile" },
-  { path: "/user/settings", text: "Settings" },
-];
-
 function NavBar() {
-  const user = useRecoilValue(UserSelector);
   const [isOpen, setIsOpen] = useState(false);
-
-  const logOutUser = async () => {
-    try {
-      await axios.get(`${import.meta.env.VITE_LOCALHOST}/auth/user/logout`, {
-        withCredentials: true,
-      });
-      window.location.reload("/auth/login-user");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const renderLinks = (links) => {
     return (
       <div
@@ -78,31 +56,21 @@ function NavBar() {
         </button>
       </div>
 
-      {user?.isVerified ? renderLinks(authLinks) : renderLinks(links)}
+      {renderLinks(links)}
 
-      {!user?.isVerified ? (
-        <div className="md:flex gap-3 hidden">
-          <Link to="/auth/register-user">
-            <OutlineButton>Connect</OutlineButton>
-          </Link>
-          <Link to="/auth/login-user">
-            <Button className="bg-secondary">User Login</Button>
-          </Link>
-          <Link to="/auth/login-landlord">
-            <Button className="bg-backgroundTwo hover:bg-slate-800">
-              Landlord Login
-            </Button>
-          </Link>
-        </div>
-      ) : (
-        <div className="md:flex gap-3 hidden">
-          <Link to="/auth/login-user">
-            <Button className="bg-slate-700" onClick={logOutUser}>
-              Logout
-            </Button>
-          </Link>
-        </div>
-      )}
+      <div className="md:flex gap-3 hidden">
+        <Link to="/auth/register-user">
+          <OutlineButton>Connect</OutlineButton>
+        </Link>
+        <Link to="/auth/login-user">
+          <Button className="bg-secondary">User Login</Button>
+        </Link>
+        <Link to="/auth/login-landlord">
+          <Button className="bg-backgroundTwo hover:bg-slate-800">
+            Landlord Login
+          </Button>
+        </Link>
+      </div>
     </nav>
   );
 }
