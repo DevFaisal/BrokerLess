@@ -185,4 +185,15 @@ const getLandlordProfile = async (req, res) => {
   }
 };
 
-export { registerLandlord, loginLandlord, getLandlordProfile };
+// Logout landlord
+const logoutLandlord = async (req, res) => {
+  try {
+    res.clearCookie("Authentication");
+    return res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export { registerLandlord, loginLandlord, getLandlordProfile, logoutLandlord };

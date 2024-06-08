@@ -2,6 +2,8 @@ import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { UserSelector } from "../../store/UserAtom";
+import Navbar from "../Modules/NavBar";
+import UserNavBar from "./User/UserNavBar";
 
 function UserPrivateRoute() {
   const user = useRecoilValue(UserSelector);
@@ -10,6 +12,7 @@ function UserPrivateRoute() {
     <>
       {user?.isVerified ? (
         <>
+          <UserNavBar />
           <Outlet />
         </>
       ) : (

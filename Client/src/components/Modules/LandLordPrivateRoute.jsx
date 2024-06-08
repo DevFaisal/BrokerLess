@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { LandLordSelector } from "../../store/LandLordAtom";
+import LandLordNavBar from "./Landlord/LandLordNavBar";
 
 function LandLordPrivateRoute() {
   const landlord = useRecoilValue(LandLordSelector);
@@ -10,6 +11,7 @@ function LandLordPrivateRoute() {
     <>
       {landlord?.isVerified ? (
         <>
+          <LandLordNavBar />
           <Outlet />
         </>
       ) : (

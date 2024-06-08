@@ -5,6 +5,7 @@ import {
   registerLandlord,
   loginLandlord,
   getLandlordProfile,
+  logoutLandlord,
 } from "../controllers/landlord.controller.js";
 
 const router = Router();
@@ -15,6 +16,9 @@ router.route("/register").post(registerLandlord);
 
 // POST Landlord Login API Endpoint
 router.route("/login").post(loginLandlord);
+
+// GET Landlord Logout API Endpoint
+router.route("/logout").get(isValidLandlord, logoutLandlord);
 
 // GET Landlord Profile API Endpoint
 router.route("/me").get(isValidLandlord, getLandlordProfile);
