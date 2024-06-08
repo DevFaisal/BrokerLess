@@ -23,8 +23,6 @@ import propertyRoute from "./routes/property.route.js";
 import agreementRoute from "./routes/agreement.route.js";
 import verificationRoute from "./routes/verification.route.js";
 
-app.get("/", (req, res) => res.send("Express on Vercel"));
-
 // Routes
 app.use("/auth/user", userRouter);
 app.use("/auth/landlord", landlordRouter);
