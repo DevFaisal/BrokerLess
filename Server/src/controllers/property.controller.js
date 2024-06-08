@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import Validation from "../utils/validation.js";
+import Validation from "../utils/Validation.js";
 import uploadOnCloudinary from "../utils/Cloudinary.js";
 
 const client = new PrismaClient();
