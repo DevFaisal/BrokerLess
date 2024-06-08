@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --env-file .env src/index.js",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "build": "npm run build"
   },
   "author": "Faisal Farooq, Waseem Ahmad , Shahid Manzoor",
   "license": "ISC",
