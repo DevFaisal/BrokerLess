@@ -33,7 +33,7 @@ function UserLogin() {
           withCredentials: true,
         }
       );
-      window.location.reload("/user/dashboard");
+      navigate("/user/dashboard");
       setLoading(false);
       toast.success(response.data.message);
     } catch (error) {
