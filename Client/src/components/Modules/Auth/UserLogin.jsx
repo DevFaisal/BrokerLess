@@ -39,10 +39,10 @@ function UserLogin() {
       );
       setLoading(false);
       toast.success(response.data.message);
-      window.location.reload("/"); // Change this to navigate to the dashboard
+      window.location.reload("/");
     } catch (error) {
       setLoading(false);
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message);
       if (error.response.data.message === "Email not verified") {
         setEmailError(true);
       }
