@@ -12,7 +12,7 @@ app.use(express.static("public"));
 
 app.use(
   cors({
-    origin: "*",  
+    origin: "https://broker-less-fe.vercel.app", 
     credentials: true,
   })
 );
