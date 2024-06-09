@@ -121,6 +121,24 @@ const searchProperty = async (req, res) => {
 };
 
 // ------------------- Landlord Routes -------------------
+
+const getLandlordProperties = async (req, res) => {
+  try {
+    const properties = await client.property.findMany({
+      where: {
+        landlordId: req.user.id,
+      },
+    });
+    if (!properties) {
+      return res.status(404).json({ message: "Properties not found" });
+    }
+
+    res.status(200).json(properties);
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 const createProperty = async (req, res) => {
   const result = Validation.propertySchemaValidation(req.body);
   if (!result.success) {
@@ -128,6 +146,11 @@ const createProperty = async (req, res) => {
       .status(400)
       .send(result.error.errors?.map((error) => error.message));
   }
+  //Check if Image is uploaded
+  if (!req.file) {
+    return res.status(400).json({ message: "Image is required" });
+  }
+
   try {
     //Upload Image on Cloudinary
     const imageUrl = await uploadOnCloudinary(
@@ -210,7 +233,7 @@ const deleteProperty = async (req, res) => {
   }
 };
 
-const getTenants = async (req, res) => {
+const getTenantsOfSpecificProperty = async (req, res) => {
   if (!req.query.id) {
     return res.status(400).json({ message: "Property ID is required" });
   }
@@ -245,14 +268,46 @@ const getTenants = async (req, res) => {
     if (!tenants) {
       return res.status(404).json({ message: "No Tenants Found" });
     }
-    tenants = tenants.map((tenant) => {
-      return {
-        ...tenant,
-        phone: String(tenant.phone),
-      };
-    });
 
     return res.status(200).json(tenants);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+const getAllTenants = async (req, res) => {
+  try {
+    const tenants = await client.landlord.findUnique({
+      where: {
+        id: req.user.id,
+      },
+      select: {
+        properties: {
+          select: {
+            name: true,
+            // Add where clause to get only rented properties
+            tenant: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                phone: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!tenants) {
+      return res.status(404).json({ message: "No Tenants Found" });
+    }
+    const refinedTenants = tenants.properties.filter(
+      (tenant) => tenant.tenant !== null
+    );
+
+    return res.status(200).json(refinedTenants);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -266,5 +321,7 @@ export {
   createProperty,
   updateProperty,
   deleteProperty,
-  getTenants,
+  getTenantsOfSpecificProperty,
+  getLandlordProperties,
+  getAllTenants,
 };

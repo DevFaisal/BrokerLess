@@ -22,6 +22,8 @@ import {
 } from "../pages/Index";
 import Layout from "../layout/Layout";
 import { UserPrivateRoute, LandLordPrivateRoute } from "../components/Index";
+import Properties from "../components/Modules/Landlord/Properties";
+import Tenants from "../components/Modules/Landlord/Tenants";
 
 const RootRouter = () => {
   return (
@@ -64,7 +66,14 @@ const RootRouter = () => {
             </Route>
 
             <Route path="/landlord" element={<LandLordPrivateRoute />}>
-              <Route path="dashboard" element={<LandlordLordDashboardPage />} />
+              <Route path="" element={<LandlordLordDashboardPage />}>
+                <Route path="dashboard" element={<div>Dashboard</div>} />
+                <Route path="properties" element={<Properties />} />
+                <Route path="tenants" element={<Tenants />} />
+                <Route path="payments" element={<div>Payments</div>} />
+                <Route path="maintenance" element={<div>Maintenance</div>} />
+                <Route path="profile" element={<div>Profile</div>} />
+              </Route>
               <Route path="profile" element={<div>Profile</div>} />
               <Route path="settings" element={<div>Settings</div>} />
             </Route>
