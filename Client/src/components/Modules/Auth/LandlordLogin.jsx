@@ -33,7 +33,7 @@ function LandlordLogin() {
         }
       );
       console.log(response);
-      window.location.reload("/landlord/dashboard");
+      window.location.reload("/");
 
       setLoading(false);
       toast.success(response.data.message);

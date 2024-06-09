@@ -176,15 +176,15 @@ const loginUser = async (req, res) => {
 
     const cookieOptions = {
       httpOnly: true,
-      secure: false,
-      sameSite: "none",
+      secure: true,
+      sameSite: "lax",
       maxAge: 3600000,
     };
 
     res.cookie("Authentication", `Bearer ${token}`, cookieOptions);
 
     return res.status(200).json({
-      message: "Login successful",
+      message: "Logged in successfully",
     });
   } catch (error) {
     console.log(error);

@@ -37,7 +37,7 @@ const FetchUser = () => {
       setUser(user);
     };
     fetchUser();
-  }, []);
+  }, [UserAtom]);
 
   return null;
 };
