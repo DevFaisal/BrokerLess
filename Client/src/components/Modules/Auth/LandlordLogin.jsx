@@ -54,10 +54,11 @@ function LandlordLogin() {
         { email: document.getElementById("email").value }
       );
       console.log(response);
-      toast.success(response.data.message);
+      // toast.success(response.data.message);
       setEmailError(false);
     } catch (error) {
-      toast.error(error.response.data.message);
+      console.error(error);
+      // toast.error(error.response.data.message);
     }
   };
 
