@@ -32,36 +32,25 @@ const getPropertyById = async (req, res) => {
         id: req.query.id,
       },
       select: {
-        id: true,
         name: true,
         description: true,
+        imageUrl: true,
         rent: true,
         status: true,
-        imageUrl: true,
-        addressId: true,
-        landlordId: true,
-        PropertyAddress: {
+        tenant: {
           select: {
-            street: true,
-            city: true,
-            state: true,
-            zip: true,
-            country: true,
-          },
-        },
-        landlord: {
-          select: {
+            id: true,
             name: true,
             email: true,
             phone: true,
           },
         },
+        createdAt: true,
       },
     });
     if (!property) {
       return res.status(404).json({ message: "Property not found" });
     }
-
     res.status(200).json(property);
   } catch (error) {
     console.log(error);

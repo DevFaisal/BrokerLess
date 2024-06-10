@@ -1,7 +1,8 @@
 import React from "react";
+import { UserDashboard } from "../../../components/Index";
 
 function UserDashboardPage() {
-  return <div>UserDashboardPage</div>;
+  return <UserDashboard />;
 }
 
 export default UserDashboardPage;

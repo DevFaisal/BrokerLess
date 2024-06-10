@@ -22,8 +22,11 @@ import {
 } from "../pages/Index";
 import Layout from "../layout/Layout";
 import { UserPrivateRoute, LandLordPrivateRoute } from "../components/Index";
-import Properties from "../components/Modules/Landlord/Properties";
+import Properties from "../components/Modules/Landlord/Properties/Properties";
 import Tenants from "../components/Modules/Landlord/Tenants";
+import UserDashboardPage from "../pages/Auth/User/UserDashboardPage";
+import PropertiesPage from "../components/Modules/PropertiesWrapper";
+import Property from "../components/Modules/Landlord/Properties/Property";
 
 const RootRouter = () => {
   return (
@@ -32,13 +35,13 @@ const RootRouter = () => {
         <Router>
           <Toaster position="bottom-center" />
           <Routes>
+            //GENERAL ROUTES
             <Route path="/" element={<Layout />}>
               <Route index element={<HomePage />} />
               <Route path="about" element={<AboutPage />} />
               <Route path="services" element={<ServicesPage />} />
               <Route path="contact" element={<ContactPage />} />
             </Route>
-
             <Route path="/auth" element={<Layout />}>
               <Route path="register-user" element={<UserRegistrationPage />} />
               <Route path="login-user" element={<UserLoginPage />} />
@@ -64,11 +67,14 @@ const RootRouter = () => {
                 element={<div>LL Reset Password</div>}
               />
             </Route>
-
+            //LANDLORD ROUTES
             <Route path="/landlord" element={<LandLordPrivateRoute />}>
               <Route path="" element={<LandlordLordDashboardPage />}>
                 <Route path="dashboard" element={<div>Dashboard</div>} />
-                <Route path="properties" element={<Properties />} />
+                <Route path="properties" element={<PropertiesPage />}>
+                  <Route index element={<Properties />} />
+                  <Route path=":propertyId" element={<Property />} />
+                </Route>
                 <Route path="tenants" element={<Tenants />} />
                 <Route path="payments" element={<div>Payments</div>} />
                 <Route path="maintenance" element={<div>Maintenance</div>} />
@@ -77,13 +83,16 @@ const RootRouter = () => {
               <Route path="profile" element={<div>Profile</div>} />
               <Route path="settings" element={<div>Settings</div>} />
             </Route>
-
+            //USER ROUTES
             <Route path="/user" element={<UserPrivateRoute />}>
-              <Route path="dashboard" element={<div>Dashboard</div>} />
-              <Route path="profile" element={<div>Profile</div>} />
-              <Route path="settings" element={<div>Settings</div>} />
+              <Route path="" element={<UserDashboardPage />}>
+                <Route path="dashboard" element={<div>Dashboard</div>} />
+                <Route path="properties" element={<h1>Prop</h1>} />
+                <Route path="payments" element={<div>Payments</div>} />
+                <Route path="maintenance" element={<div>Maintenance</div>} />
+                <Route path="profile" element={<div>Profile</div>} />
+              </Route>
             </Route>
-
             <Route
               path="/email-verification/:verificationToken"
               element={<EmailVerificationPage />}

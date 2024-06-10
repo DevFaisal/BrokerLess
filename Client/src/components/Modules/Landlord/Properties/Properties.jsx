@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { School } from "lucide-react";
-import DashboardWrapper from "../DashboardWrapper";
+import { Link } from "react-router-dom";
 
 function Properties() {
   const [properties, setProperties] = useState([]);
@@ -36,7 +36,8 @@ function Properties() {
   );
 
   const PropCard = ({ property }) => (
-    <div
+    <Link
+      to={`/landlord/properties/${property.id}`}
       className="w-fit h-80 flex flex-col justify-center ring-1 gap-1 ring-gray-300 items-start bg-gradient-to-br from-slate-50 to-slate-100 m-4 p-4 rounded-lg shadow-lg 
       hover:shadow-xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105"
     >
@@ -61,7 +62,7 @@ function Properties() {
       >
         {property.status}
       </p>
-    </div>
+    </Link>
   );
 
   return (

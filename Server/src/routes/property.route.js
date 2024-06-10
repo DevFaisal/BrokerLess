@@ -23,7 +23,7 @@ const client = new PrismaClient();
 router.route("/").get(getAllProperties);
 
 // GET Request to get a property by ID
-router.route("/prop").get(getPropertyById);
+router.route("/prop").get(isValidLandlord, getPropertyById); 
 
 // GET Request to get a property by Address
 router.route("/search").get(searchProperty);
@@ -43,7 +43,9 @@ router.route("/update").put(isValidLandlord, updateProperty);
 router.route("/delete").delete(isValidLandlord, deleteProperty);
 
 // GET List of TENANTS for a specific property
-router.route("/tenants/propertyId").get(isValidLandlord, getTenantsOfSpecificProperty);
+router
+  .route("/tenants/propertyId")
+  .get(isValidLandlord, getTenantsOfSpecificProperty);
 
 //GET all tenants of landlord
 router.route("/tenants").get(isValidLandlord, getAllTenants);

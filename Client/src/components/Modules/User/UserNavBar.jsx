@@ -57,7 +57,7 @@ function UserNavBar() {
   return (
     <nav className="text-black flex justify-between items-center p-3 px-10">
       <div>
-        <img src={logo} alt="Logo" />
+        <img width={100} src={logo} alt="Logo" />
       </div>
 
       <div className="md:hidden">
