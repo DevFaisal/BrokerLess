@@ -10,17 +10,18 @@ datasource db {
 
 // USER MODEL
 model User {
-  id                String        @id @default(cuid())
+  id                String              @id @default(cuid())
   name              String
-  email             String        @unique
+  email             String              @unique
   password          String
-  phone             String        @unique
-  isVerified        Boolean       @default(false)
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
-  verificationToken String?
+  phone             String              @unique
+  isVerified        Boolean             @default(false)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
   Agreement         Agreement[]
   UserAddress       UserAddress[]
+  verificationToken verificationToken[]
+  Property          Property[]
 }
 
 // USER ADDRESS MODEL
@@ -39,15 +40,17 @@ model UserAddress {
 
 // LANDLORD MODEL
 model Landlord {
-  id              String            @id @default(cuid())
-  name            String
-  email           String            @unique
-  password        String
-  phone           String            @unique
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  properties      Property[]
-  Landlordaddress Landlordaddress[]
+  id                String              @id @default(cuid())
+  name              String
+  email             String              @unique
+  password          String
+  phone             String              @unique
+  isVerified        Boolean             @default(false)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  properties        Property[]
+  Landlordaddress   Landlordaddress[]
+  verificationToken verificationToken[]
 }
 
 // LANDLORD ADDRESS MODEL
@@ -72,12 +75,14 @@ model Property {
   imageUrl        String?           @default("https://via.placeholder.com/150")
   rent            String
   landlordId      String
+  tenantId        String?
   status          PropertyStatus    @default(AVAILABLE)
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   landlord        Landlord          @relation(fields: [landlordId], references: [id], onDelete: Cascade)
   PropertyAddress PropertyAddress[]
   Agreement       Agreement[]
+  tenant          User?             @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 }
 
 enum PropertyStatus {
@@ -122,4 +127,15 @@ enum AgreementStatus {
   DECLINED
   APPROVED
   CANCELLED
+}
+
+model verificationToken {
+  id         String    @id @default(cuid())
+  token      String
+  userId     String?
+  landlordId String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  User       User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Landlord   Landlord? @relation(fields: [landlordId], references: [id], onDelete: Cascade)
 }

@@ -11,11 +11,10 @@ function FormInput({
 }) {
   return (
     <div>
-      <H3 className="text-center mb-4">{Heading}</H3>
-      <span className="h-[1px] w-auto bg-background mb-5" />
-      <H4>{Subheading}</H4>
+      <H3 className="text-center mt-2 mb-5">{Heading}</H3>
+      <H4 className="text-center text-gray-500 pb-5">{Subheading}</H4>
       {Inputs.map((input, index) => (
-        <div key={index}>
+        <div key={index} className={className}>
           <label className="block md:font-semibold text-black">
             {input.label}
           </label>

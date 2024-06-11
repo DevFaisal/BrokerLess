@@ -9,6 +9,8 @@ import UserLoginPage from "../pages/Auth/UserLoginPage";
 import LandLordRegistrationPage from "../pages/Auth/LandLordRegistrationPage";
 import ForgetPasswordPage from "../pages/Auth/ForgetPasswordPage";
 import ResetPasswordPage from "../pages/Auth/ResetPasswordPage";
+import LandlordLoginPage from "./Auth/LandlordLoginPage";
+import LandlordLordDashboardPage from "./Auth/Landlord/LandLordDashboardPage";
 
 export {
   HomePage,
@@ -22,4 +24,6 @@ export {
   LandLordRegistrationPage,
   ForgetPasswordPage,
   ResetPasswordPage,
+  LandlordLoginPage,
+  LandlordLordDashboardPage,
 };

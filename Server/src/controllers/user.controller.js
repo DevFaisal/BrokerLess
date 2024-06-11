@@ -5,6 +5,7 @@ import Validation from "../utils/Validation.js";
 import verificationEmail from "../utils/verificationEmail.js";
 import z from "zod";
 import resetPasswordEmail from "../utils/resetPasswordEmail.js";
+import CookieParser from "cookie-parser";
 
 const prisma = new PrismaClient();
 
@@ -39,16 +40,16 @@ const registerUser = async (req, res) => {
       process.env.JWT_SECRET
     );
 
-    const mail = await verificationEmail(
-      req.body.email,
-      verificationToken,
-      req.body.name
-    );
-    if (mail.error) {
-      return res.status(500).json({
-        message: "error: " + mail.error.message,
-      });
-    }
+    // const mail = await verificationEmail(
+    //   req.body.email,
+    //   verificationToken,
+    //   req.body.name
+    // );
+    // if (mail.error) {
+    //   return res.status(500).json({
+    //     message: "error: " + mail.error.message,
+    //   });
+    // }
     //Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -60,7 +61,12 @@ const registerUser = async (req, res) => {
         email: req.body.email,
         password: hashedPassword,
         phone: req.body.phone,
-        verificationToken: verificationToken,
+        isVerified: true, // Change this to false to enable email verification
+        verificationToken: {
+          create: {
+            token: verificationToken,
+          },
+        },
       },
     });
 
@@ -70,64 +76,6 @@ const registerUser = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json("Internal Server Error");
-  }
-};
-
-const verifyEmail = async (req, res) => {
-  const { verificationToken } = req.query;
-  const email = jwt.verify(
-    verificationToken,
-    process.env.JWT_SECRET,
-    (error, decoded) => {
-      if (error) {
-        return res.status(400).json({
-          message: "Invalid Token or Token expired",
-        });
-      }
-      if (decoded) {
-        return decoded.email;
-      }
-    }
-  );
-  /* Here we are checking if the email is valid or not because if the token is expired
-  it sends the server error data which can become true in if-else condition so we are
-  checking weather it is email type or not */
-  if (!z.string().email().safeParse(email).success) {
-    // Here i am returning without sending any response because
-    //the error message is already sent in the above code
-    return;
-  }
-  try {
-    const user = await prisma.user.findFirst({
-      where: {
-        email: email,
-      },
-    });
-    if (!user) {
-      return res.status(404).json({
-        message: "User not found",
-      });
-    }
-    if (user.isVerified) {
-      return res.status(400).json({
-        message: "Email already verified",
-      });
-    }
-    await prisma.user.update({
-      where: {
-        email: user.email,
-      },
-      data: {
-        isVerified: true,
-        verificationToken: "",
-      },
-    });
-    return res.status(200).json({
-      message: "Email verified successfully",
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -169,7 +117,11 @@ const resendVerificationEmail = async (req, res) => {
         email: email,
       },
       data: {
-        verificationToken: verificationToken,
+        verificationToken: {
+          create: {
+            token: verificationToken,
+          },
+        },
       },
     });
 
@@ -177,7 +129,7 @@ const resendVerificationEmail = async (req, res) => {
       message: "Verification email sent successfully",
     });
   } catch (error) {
-    return res.status(500).json("Internal Server Error");
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -222,10 +174,17 @@ const loginUser = async (req, res) => {
 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
 
-    res.header("Authentication", `Bearer ${token}`);
+    const cookieOptions = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax",
+      maxAge: 3600000,
+    };
+
+    res.cookie("Authentication", `Bearer ${token}`, cookieOptions);
 
     return res.status(200).json({
-      message: "Login successful",
+      message: "Logged in successfully",
     });
   } catch (error) {
     console.log(error);
@@ -235,7 +194,7 @@ const loginUser = async (req, res) => {
 
 const logoutUser = async (req, res) => {
   try {
-    res.header("Authentication", "");
+    res.clearCookie("Authentication");
     return res.status(200).json({
       message: "Logout successful",
     });
@@ -416,15 +375,16 @@ const userProfile = async (req, res) => {
         name: true,
         email: true,
         phone: true,
-        UserAddress: {
-          select: {
-            street: true,
-            city: true,
-            state: true,
-            zip: true,
-            country: true,
-          },
-        },
+        isVerified: true,
+        // UserAddress: {
+        //   select: {
+        //     street: true,
+        //     city: true,
+        //     state: true,
+        //     zip: true,
+        //     country: true,
+        //   },
+        // },
       },
     });
 
@@ -497,7 +457,6 @@ export {
   userProfile,
   updateUserProfile,
   refreshToken,
-  verifyEmail,
   resendVerificationEmail,
   forgetPassword,
   resetPassword,

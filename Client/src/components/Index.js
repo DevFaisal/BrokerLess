@@ -14,6 +14,14 @@ import H1 from "./Inputs/H1";
 import H2 from "./Inputs/H2";
 import H3 from "./Inputs/H3";
 import H4 from "./Inputs/H4";
+import P from "./Inputs/P";
+import Protected from "./Modules/Auth/Protected";
+import Loading from "./Modules/Loading";
+import LandlordLogin from "./Modules/Auth/LandlordLogin";
+import UserDashboard from "./Modules/User/UserDashboard";
+import LandLordDashboard from "./Modules/Landlord/LandLordDashboard";
+import UserPrivateRoute from "./Modules/UserPrivateRoute";
+import LandLordPrivateRoute from "./Modules/LandLordPrivateRoute";
 
 export {
   EmailVerification,
@@ -32,4 +40,12 @@ export {
   H2,
   H3,
   H4,
+  P,
+  Protected,
+  Loading,
+  LandlordLogin,
+  UserDashboard,
+  LandLordDashboard,
+  UserPrivateRoute,
+  LandLordPrivateRoute,
 };

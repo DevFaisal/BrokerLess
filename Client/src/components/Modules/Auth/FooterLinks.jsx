@@ -5,13 +5,13 @@ function FooterLinks({ Links }) {
   return (
     <div className="text-center text-sm py-4 md:text-md font-semibold text-black pt-5">
       {Links.map((link, index) => (
-        <p>
+        <p key={index}>
           {" "}
           {link.text}
           <Link
             key={index}
             to={link.link}
-            className="text-black hover:text-green-600"
+            className="text-green-600 pl-2 hover:text-green-500"
           >
             {link.linkText}
           </Link>

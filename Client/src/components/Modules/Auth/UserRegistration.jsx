@@ -93,6 +93,7 @@ function UserRegistration() {
           <Button
             className={"flex justify-center w-full mt-5 "}
             onClick={handleSubmit(onSubmit)}
+            disabled={loading}
           >
             {loading ? (
               <LoaderCircle size={20} className="text-white animate-spin" />

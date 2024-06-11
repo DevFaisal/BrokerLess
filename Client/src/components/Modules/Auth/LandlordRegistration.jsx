@@ -1,35 +1,56 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Button, Container, FooterLinks, FormInput } from "../../Index";
-
-
+import Validation from "../../../utils/Validation";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { LoaderCircle } from "lucide-react";
 
 function LandLordRegistration() {
+  const [loading, setLoading] = React.useState(false);
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({
     defaultValues: {
-      full_name: "",
+      name: "",
       email: "",
       password: "",
-      phone_number: "",
-      street_address: "",
+      phone: "",
+      street: "",
       city: "",
       state: "",
-      zip_code: "",
+      zip: "",
       country: "",
     },
   });
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const { error } = Validation.landlordRegistration(data);
+    if (error) {
+      return toast.error(error.errors[0].message);
+    }
+    setLoading(true);
+    const response = await axios
+      .post(`${import.meta.env.VITE_LOCALHOST}/auth/Landlord/register`, data)
+      .then((res) => {
+        toast.success(res.data.message);
+        return res;
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+        return error;
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   const Inputs = [
     {
       label: "Full Name",
       type: "text",
-      name: "full_name",
+      name: "name",
       placeholder: "Enter your full name",
       required: true,
     },
@@ -50,14 +71,14 @@ function LandLordRegistration() {
     {
       label: "Phone Number",
       type: "tel",
-      name: "phone_number",
+      name: "phone",
       placeholder: "Enter your phone number",
       required: true,
     },
     {
       label: "Street Address",
       type: "text",
-      name: "street_address",
+      name: "street",
       placeholder: "Enter your street address",
       required: true,
     },
@@ -78,7 +99,7 @@ function LandLordRegistration() {
     {
       label: "Zip Code",
       type: "text",
-      name: "zip_code",
+      name: "zip",
       placeholder: "Enter your zip code",
       required: true,
     },
@@ -105,11 +126,22 @@ function LandLordRegistration() {
           Inputs={Inputs}
           register={register}
           errors={errors}
-          className={"grid grid-cols-2 gap-2"}
+          className={"grid grid-cols-2 gap-2  "}
           Heading={"Landlord Registration"}
           Subheading={"Register as landlord"}
         />
-        <Button onClick={handleSubmit(onSubmit)}>Sign Up</Button>
+
+        <Button
+          className={"flex justify-center w-full mt-5 "}
+          onClick={handleSubmit(onSubmit)}
+          disabled={loading}
+        >
+          {loading ? (
+            <LoaderCircle size={20} className="text-white animate-spin" />
+          ) : (
+            "Register"
+          )}
+        </Button>
         <FooterLinks Links={FooterLink} />
       </form>
     </Container>
