@@ -4,10 +4,12 @@ import { LoaderCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Button, Container, FooterLinks, FormInput } from "../../Index";
+import { useNavigate } from "react-router-dom";
 
 function UserLogin() {
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -35,7 +37,8 @@ function UserLogin() {
       console.log("API Response:", response);
       setLoading(false);
       toast.success(response.data.message);
-      window.location.reload("/");
+      navigate("/");
+      
     } catch (error) {
       console.error("Error Details:", error);
       setLoading(false);

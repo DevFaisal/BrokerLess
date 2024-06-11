@@ -32,8 +32,8 @@ function LandlordLogin() {
           withCredentials: true,
         }
       );
-      console.log(response);
-      window.location.reload("/");
+      navigate("/");
+      
 
       setLoading(false);
       toast.success(response.data.message);
