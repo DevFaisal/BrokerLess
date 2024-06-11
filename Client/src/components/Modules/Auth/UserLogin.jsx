@@ -38,9 +38,11 @@ function UserLogin() {
         }
       );
       setLoading(false);
+      console.log(response);
       toast.success(response.data.message);
       window.location.reload("/");
     } catch (error) {
+      console.log(error);
       setLoading(false);
       toast.error(error.response?.data?.message);
       if (error.response.data.message === "Email not verified") {
