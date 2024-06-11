@@ -1,7 +1,6 @@
 {
   "version": 2,
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
-
+  "rewrites": [{ "source": "/(.*)", "destination": "/api" }],
   "headers": [
     {
       "source": "/(.*)",
@@ -17,6 +16,16 @@
           "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
         }
       ]
+    }
+  ],
+  "routes": [
+    {
+      "source": "/auth/user/register",
+      "destination": "/api"
+    },
+    {
+      "source": "*",
+      "destination": "/api"
     }
   ]
 }
