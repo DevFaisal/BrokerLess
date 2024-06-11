@@ -107,7 +107,6 @@ const Validation = {
       rent: z
         .string()
         .max(10, { message: "Rent must be at most 10 characters long" }),
-      status: z.string(),
     });
     return schema.safeParse(data);
   },
@@ -124,7 +123,9 @@ const Validation = {
         .max(100, {
           message: "Description must be at most 100 characters long",
         }),
-      rent: z.number(),
+      rent: z
+        .string()
+        .max(10, { message: "Rent must be at most 10 characters long" }),
     });
     return schema.safeParse(data);
   },

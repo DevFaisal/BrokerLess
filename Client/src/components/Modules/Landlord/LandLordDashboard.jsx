@@ -2,6 +2,7 @@ import {
   BookUser,
   Construction,
   HandCoins,
+  Mailbox,
   School,
   UserRound,
 } from "lucide-react";
@@ -24,9 +25,9 @@ function LandLordDashboard() {
       icon: <BookUser />,
     },
     {
-      name: "Payments",
-      path: "/landlord/payments",
-      icon: <HandCoins />,
+      name: "Applications",
+      path: "/landlord/applications",
+      icon: <Mailbox />,
     },
     {
       name: "Maintenance",
@@ -49,6 +50,7 @@ function LandLordDashboard() {
           username={landlord?.name}
           links={links}
           heading={"Landlord"}
+          credentials={"landlord"}
         >
           <Outlet />
         </DashboardWrapper>

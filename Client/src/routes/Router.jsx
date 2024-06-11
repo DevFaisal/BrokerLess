@@ -27,6 +27,8 @@ import Tenants from "../components/Modules/Landlord/Tenants";
 import UserDashboardPage from "../pages/Auth/User/UserDashboardPage";
 import PropertiesPage from "../components/Modules/PropertiesWrapper";
 import Property from "../components/Modules/Landlord/Properties/Property";
+import AddProperty from "../components/Modules/Landlord/Properties/AddProperty";
+import AllProperties from "../components/Modules/User/AllProperties";
 
 const RootRouter = () => {
   return (
@@ -74,6 +76,7 @@ const RootRouter = () => {
                 <Route path="properties" element={<PropertiesPage />}>
                   <Route index element={<Properties />} />
                   <Route path=":propertyId" element={<Property />} />
+                  <Route path="add" element={<AddProperty />} />
                 </Route>
                 <Route path="tenants" element={<Tenants />} />
                 <Route path="payments" element={<div>Payments</div>} />
@@ -87,7 +90,7 @@ const RootRouter = () => {
             <Route path="/user" element={<UserPrivateRoute />}>
               <Route path="" element={<UserDashboardPage />}>
                 <Route path="dashboard" element={<div>Dashboard</div>} />
-                <Route path="properties" element={<h1>Prop</h1>} />
+                <Route path="properties" element={<AllProperties />} />
                 <Route path="payments" element={<div>Payments</div>} />
                 <Route path="maintenance" element={<div>Maintenance</div>} />
                 <Route path="profile" element={<div>Profile</div>} />

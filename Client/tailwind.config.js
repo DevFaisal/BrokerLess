@@ -22,6 +22,11 @@ export default {
         backgroundTwo: "#52796f",
         backgroundThree: "#264653",
       },
+      fontSize: {
+        "2xs": ".625rem",
+        "4xs": ".5rem",
+        "7xl": "5rem",
+      },
     },
   },
   plugins: [

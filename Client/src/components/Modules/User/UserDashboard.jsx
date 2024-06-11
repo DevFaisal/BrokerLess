@@ -33,7 +33,12 @@ function UserDashboard() {
 
   return (
     <>
-      <DashboardWrapper username={user?.name} links={links} heading={"User"}>
+      <DashboardWrapper
+        username={user?.name}
+        links={links}
+        heading={"User"}
+        credentials={"user"}
+      >
         <Outlet />
       </DashboardWrapper>
     </>

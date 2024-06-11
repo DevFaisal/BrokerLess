@@ -197,4 +197,6 @@ const logoutLandlord = async (req, res) => {
   }
 };
 
+
+
 export { registerLandlord, loginLandlord, getLandlordProfile, logoutLandlord };

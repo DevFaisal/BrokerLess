@@ -25,7 +25,7 @@ router.route("/resend-verification-email").post(resendVerificationEmail);
 router.route("/login").post(loginUser);
 
 // POST User Logout API Endpoint
-router.route("/logout").get(Authentication, logoutUser);
+router.route("/logout").get(Authentication, logoutUser); //http://localhost:5000/auth/user/logout
 
 // POST User forgot password API Endpoint
 router.route("/forgot-password").post(forgetPassword);

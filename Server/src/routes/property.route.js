@@ -20,7 +20,7 @@ const client = new PrismaClient();
 // ------------------- Property Routes -------------------
 
 //GET Request to get all properties
-router.route("/").get(getAllProperties);
+router.route("/").get(getAllProperties); //http://localhost:5000/api/property
 
 // GET Request to get a property by ID
 router.route("/prop").get(isValidLandlord, getPropertyById); 
@@ -37,10 +37,10 @@ router.route("/landlord").get(isValidLandlord, getLandlordProperties);
 router.route("/").post(isValidLandlord, upload.single("Image"), createProperty);
 
 // PUT Request to update a property by Landlord only
-router.route("/update").put(isValidLandlord, updateProperty);
+router.route("/update").put(isValidLandlord, updateProperty); //http://localhost:5000/api/property/update
 
 // DELETE Request to delete a property by Landlord only
-router.route("/delete").delete(isValidLandlord, deleteProperty);
+router.route("/").delete(isValidLandlord, deleteProperty); 
 
 // GET List of TENANTS for a specific property
 router

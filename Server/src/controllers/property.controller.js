@@ -7,15 +7,7 @@ const client = new PrismaClient();
 // ------------------- Property Routes -------------------
 const getAllProperties = async (req, res) => {
   try {
-    const properties = await client.property.findMany({
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        rent: true,
-        status: true,
-      },
-    });
+    const properties = await client.property.findMany();
     res.status(200).json(properties);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
@@ -179,9 +171,16 @@ const createProperty = async (req, res) => {
 };
 
 const updateProperty = async (req, res) => {
-  const result = Validation.UpdatePropertySchemaValidation(req.body);
+  const data = {
+    id: req.body.id,
+    name: req.body.name,
+    description: req.body.description,
+    rent: String(req.body.rent),
+  };
+  const result = Validation.UpdatePropertySchemaValidation(data);
+
   if (!result.success) {
-    return res.status(400).json({ message: "Invalid Input" });
+    return res.status(400).json({ message: result.error.errors });
   }
   try {
     const property = await client.property.update({
@@ -208,7 +207,7 @@ const deleteProperty = async (req, res) => {
   try {
     const deletedProperty = await client.property.delete({
       where: {
-        id: req.body.id,
+        id: req.query.id,
       },
     });
 

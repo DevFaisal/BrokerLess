@@ -12,7 +12,6 @@ function UserPrivateRoute() {
     <>
       {user?.isVerified ? (
         <>
-          <UserNavBar />
           <Outlet />
         </>
       ) : (
