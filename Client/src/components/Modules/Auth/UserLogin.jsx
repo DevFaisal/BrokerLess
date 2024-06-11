@@ -23,6 +23,7 @@ function UserLogin() {
 
   const onSubmit = async (data) => {
     setLoading(true);
+    console.log("Form Data Submitted:", data);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_LOCALHOST}/auth/user/login`,
@@ -31,16 +32,22 @@ function UserLogin() {
           withCredentials: true,
         }
       );
+      console.log("API Response:", response);
       setLoading(false);
-      console.log(response);
       toast.success(response.data.message);
       window.location.reload("/");
     } catch (error) {
-      console.log(error);
+      console.error("Error Details:", error);
       setLoading(false);
-      toast.error(error.response?.data?.message);
-      if (error.response.data.message === "Email not verified") {
-        setEmailError(true);
+      if (error.response && error.response.data) {
+        toast.error(
+          error.response.data.message || "An unexpected error occurred"
+        );
+        if (error.response.data.message === "Email not verified") {
+          setEmailError(true);
+        }
+      } else {
+        toast.error("Network error or server not responding");
       }
     }
   };
