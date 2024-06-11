@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { LoaderCircle } from "lucide-react";
 import toast from "react-hot-toast";
@@ -37,7 +37,8 @@ function UserLogin() {
       console.log("API Response:", response);
       setLoading(false);
       toast.success(response.data.message);
-      navigate("/user/dashboard");
+
+      window.location.reload("/user/dashboard");
     } catch (error) {
       console.error("Error Details:", error);
       setLoading(false);

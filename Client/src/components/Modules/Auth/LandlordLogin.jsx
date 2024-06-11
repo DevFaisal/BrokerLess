@@ -32,11 +32,9 @@ function LandlordLogin() {
           withCredentials: true,
         }
       );
-      navigate("/");
-      
-
       setLoading(false);
       toast.success(response.data.message);
+      window.location.reload("/landlord/dashboard");
     } catch (error) {
       setLoading(false);
       toast.error(error.response?.data?.message);
