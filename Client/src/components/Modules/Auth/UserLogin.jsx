@@ -37,8 +37,7 @@ function UserLogin() {
       console.log("API Response:", response);
       setLoading(false);
       toast.success(response.data.message);
-      navigate("/");
-      
+      navigate("/user/dashboard");
     } catch (error) {
       console.error("Error Details:", error);
       setLoading(false);

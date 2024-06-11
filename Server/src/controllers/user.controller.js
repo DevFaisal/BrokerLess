@@ -5,7 +5,7 @@ import Validation from "../utils/Validation.js";
 import verificationEmail from "../utils/verificationEmail.js";
 import z from "zod";
 import resetPasswordEmail from "../utils/resetPasswordEmail.js";
-import CookieParser from "cookie-parser";
+
 
 const prisma = new PrismaClient();
 
