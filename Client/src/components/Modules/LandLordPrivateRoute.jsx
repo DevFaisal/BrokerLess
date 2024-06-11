@@ -12,7 +12,6 @@ function LandLordPrivateRoute() {
     <>
       {landlord?.isVerified ? (
         <>
-          <LandLordNavBar />
           <Outlet />
         </>
       ) : (

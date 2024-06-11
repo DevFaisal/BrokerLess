@@ -18,7 +18,7 @@ router.route("/register").post(registerLandlord);
 router.route("/login").post(loginLandlord);
 
 // GET Landlord Logout API Endpoint
-router.route("/logout").get(isValidLandlord, logoutLandlord);
+router.route("/logout").get(isValidLandlord, logoutLandlord); //http://localhost:5000/api/landlord/logout
 
 // GET Landlord Profile API Endpoint
 router.route("/me").get(isValidLandlord, getLandlordProfile);
