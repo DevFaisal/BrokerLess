@@ -6,6 +6,7 @@ const route = Router();
 const prisma = new PrismaClient();
 
 const generateAgreement = async (req, res) => {
+  console.log(req.body);
   const result = Validation.agreementSchemaValidation(req.body);
   if (!result.success) {
     return res
@@ -30,8 +31,8 @@ const generateAgreement = async (req, res) => {
       data: {
         propertyId: req.body.propertyId,
         tenantId: req.user.id,
-        startDate: req.body.startDate, //TODO: Change to Date
-        endDate: req.body.endDate, //TODO: Change to Date
+        startDate: new Date(req.body.startDate).toISOString(),
+        endDate: new Date(req.body.endDate).toISOString(),
         rent: req.body.rent,
         status: "PENDING",
       },

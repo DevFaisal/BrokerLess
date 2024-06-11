@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function PropCard({ property }) {
+function PropCard({ property, to }) {
   return (
     <Link
-      to={`/landlord/properties/${property.id}`}
+      to={to}
       className="max-w-80 max-h-80 flex flex-col justify-center ring-1 ring-gray-300 items-start m-3  rounded-md shadow-lg 
       hover:shadow-xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105"
     >

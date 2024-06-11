@@ -22,7 +22,7 @@ function DashboardWrapper({ heading, username, children, links, credentials }) {
   return (
     <>
       <div className="w-full h-screen flex justify-start items-center ">
-        <aside className="w-1/5 h-screen bg-backgroundThree flex flex-col justify-start items-start p-4 shadow-l-lg">
+        <aside className="w-1/5 h-screen bg-[#006d77] flex flex-col justify-start items-start p-4 shadow-l-lg">
           <div className="flex flex-col  p-2 w-full">
             <div className="flex">
               <h1 className="text-md md:text-3xl font-bold text-white">
@@ -40,7 +40,7 @@ function DashboardWrapper({ heading, username, children, links, credentials }) {
                 key={index}
                 to={link.path}
                 className={({ isActive }) => {
-                  return `w-full text-base p-3 my-2 text-white hover:text-black hover:bg-white rounded-lg ${isActive ? "bg-black" : ""}`;
+                  return `w-4/2 text-base p-3 my-2 text-white hover:text-black hover:bg-white mx-2 rounded-lg ${isActive ? "bg-[#cbf3f0] text-[#132a13]" : ""}`;
                 }}
               >
                 <p className="flex gap-2">

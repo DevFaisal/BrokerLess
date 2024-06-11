@@ -132,8 +132,8 @@ const Validation = {
   agreementSchemaValidation: (data) => {
     const schema = z.object({
       propertyId: z.string(),
-      startDate: z.string(), // TODO: Change to Date
-      endDate: z.string(), // TODO: Change to Date
+      startDate: z.string(),
+      endDate: z.string(),
       rent: z.number(),
     });
     return schema.safeParse(data);

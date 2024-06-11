@@ -28,7 +28,11 @@ function Properties() {
     <div className="flex flex-col overflow-hidden items-center">
       <div className="grid grid-flow-row-dense grid-cols-4 gap-1 w-full h-[50rem] pb-10 shadow-lg overflow-y-scroll">
         {element?.map((property, index) => (
-          <PropCard key={index} property={property} />
+          <PropCard
+            key={index}
+            property={property}
+            to={`/landlord/properties/${property.id}`}
+          />
         ))}
       </div>
     </div>

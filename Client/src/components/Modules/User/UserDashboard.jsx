@@ -3,7 +3,13 @@ import DashboardWrapper from "../DashboardWrapper";
 import { Outlet } from "react-router-dom";
 import { UserSelector } from "../../../store/UserAtom";
 import { useRecoilValue } from "recoil";
-import { School, HandCoins, Construction, UserRound } from "lucide-react";
+import {
+  School,
+  HandCoins,
+  Construction,
+  UserRound,
+  Inbox,
+} from "lucide-react";
 
 function UserDashboard() {
   const user = useRecoilValue(UserSelector);
@@ -15,9 +21,9 @@ function UserDashboard() {
       icon: <School />,
     },
     {
-      name: "Payments",
-      path: "/user/payments",
-      icon: <HandCoins />,
+      name: "Requests",
+      path: "/user/request",
+      icon: <Inbox />,
     },
     {
       name: "Maintenance",
