@@ -1,17 +1,11 @@
 import React, { useState } from "react";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { LoaderCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Button, Container, FooterLinks, FormInput } from "../../Index";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import FetchUser, { UserAtom } from "../../../store/UserAtom";
-import { useSetRecoilState } from "recoil";
 
 function UserLogin() {
-  const setUser = useSetRecoilState(UserAtom);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const {
