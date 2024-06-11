@@ -114,9 +114,9 @@ function Property() {
         />
       )}
       <div className="flex flex-col my-4 p-3 gap-4 items-center justify-center w-full h-full">
-        <div className="overflow-hidden w-1/2 rounded-lg shadow-lg">
+        <div className="overflow-hidden h-1/2 w-1/2 rounded-lg shadow-lg">
           <img
-            className="object-cover w-fit rounded-lg"
+            className="object-contain w-[700px] h-[500px] rounded-lg"
             src={property?.imageUrl}
             alt="Image"
           />

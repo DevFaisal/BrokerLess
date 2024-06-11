@@ -1,8 +1,9 @@
 import React from "react";
-import { Container } from "../Index";
+import { Container, H1, H3, H4 } from "../Index";
 import { NavLink } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import axios from "axios";
+import logo from "../../assets/logos/logowhite.svg";
 
 function DashboardWrapper({ heading, username, children, links, credentials }) {
   const logOut = async () => {
@@ -22,9 +23,17 @@ function DashboardWrapper({ heading, username, children, links, credentials }) {
     <>
       <div className="w-full h-screen flex justify-start items-center ">
         <aside className="w-1/5 h-screen bg-backgroundThree flex flex-col justify-start items-start p-4 shadow-l-lg">
-          <h1 className="text-md md:text-3xl font-bold text-white my-2 text-center  w-full p-2">
-            {heading}
-          </h1>
+          <div className="flex flex-col  p-2 w-full">
+            <div className="flex">
+              <h1 className="text-md md:text-3xl font-bold text-white">
+                Brokerless
+              </h1>
+            </div>
+            <p className="text-2xs  text-white">Room rental made easy</p>
+            {/* <h1 className="text-md md:text-3xl font-bold self-start text-white my-2 text-center  w-full p-2">
+              {heading}
+            </h1> */}
+          </div>
           <div className="flex flex-col gap-2 w-full h-full overflow-y-auto">
             {links.map((link, index) => (
               <NavLink
