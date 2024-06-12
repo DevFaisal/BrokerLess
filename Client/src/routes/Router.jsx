@@ -19,20 +19,23 @@ import {
   ResetPasswordPage,
   LandlordLoginPage,
   LandlordLordDashboardPage,
+  Properties,
+  UserDashboardPage,
+  PropertyInfo,
+  UserRequests,
+  ApplicationsPage,
 } from "../pages/Index";
 import Layout from "../layout/Layout";
-import { UserPrivateRoute, LandLordPrivateRoute } from "../components/Index";
-import Properties from "../components/Modules/Landlord/Properties/Properties";
-import Tenants from "../components/Modules/Landlord/Tenants";
-import UserDashboardPage from "../pages/Auth/User/UserDashboardPage";
-import UserPropertiesWrapper from "../components/Modules/UserPropertiesWrapper";
-import LandLordPropertiesWrapper from "../components/Modules/LandLordPropertiesWrapper";
-import Property from "../components/Modules/Landlord/Properties/Property";
-import AddProperty from "../components/Modules/Landlord/Properties/AddProperty";
-import AllProperties from "../components/Modules/User/AllProperties";
-import PropertyInfo from "../pages/Auth/User/PropertyInfo";
-import UserRequests from "../pages/Auth/User/UserRequests";
-import ApplicationsPage from "../pages/Auth/Landlord/ApplicationsPage";
+import {
+  UserPrivateRoute,
+  LandLordPrivateRoute,
+  Tenants,
+  LandLordPropertiesWrapper,
+  Property,
+  AddProperty,
+  AllProperties,
+  UserPropertiesWrapper,
+} from "../components/Index";
 
 const RootRouter = () => {
   return (
@@ -41,7 +44,7 @@ const RootRouter = () => {
         <Router>
           <Toaster position="bottom-center" />
           <Routes>
-            //GENERAL ROUTES
+            {/* GENERAL ROUTES */}
             <Route path="/" element={<Layout />}>
               <Route index element={<HomePage />} />
               <Route path="about" element={<AboutPage />} />
@@ -73,7 +76,7 @@ const RootRouter = () => {
                 element={<div>LL Reset Password</div>}
               />
             </Route>
-            //LANDLORD ROUTES
+            {/* LANDLORD ROUTES */}
             <Route path="/landlord" element={<LandLordPrivateRoute />}>
               <Route path="" element={<LandlordLordDashboardPage />}>
                 <Route path="dashboard" element={<div>Dashboard</div>} />
@@ -93,7 +96,7 @@ const RootRouter = () => {
               <Route path="profile" element={<div>Profile</div>} />
               <Route path="settings" element={<div>Settings</div>} />
             </Route>
-            //USER ROUTES
+            {/* USER ROUTES */}
             <Route path="/user" element={<UserPrivateRoute />}>
               <Route path="" element={<UserDashboardPage />}>
                 <Route path="dashboard" element={<div>Dashboard</div>} />

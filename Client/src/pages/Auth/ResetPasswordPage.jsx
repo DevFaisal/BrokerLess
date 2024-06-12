@@ -1,6 +1,6 @@
 import React from "react";
-import { AuthContainer } from "../../components/Index";
-import ResetPassword from "../../components/Modules/Auth/ResetPassword";
+import { ResetPassword, AuthContainer } from "../../components/Index";
+
 import { logo } from "../../assets/Index";
 
 function ResetPasswordPage() {

@@ -1,6 +1,5 @@
 import React from "react";
-import AuthContainer from "../../components/Containers/AuthContainer";
-import { LandLordRegistration } from "../../components/Index";
+import { AuthContainer, LandLordRegistration } from "../../components/Index";
 import { logo } from "../../assets/Index";
 
 function LandLordRegistrationPage() {

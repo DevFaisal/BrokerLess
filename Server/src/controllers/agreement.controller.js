@@ -210,23 +210,26 @@ const getAgreements = async (req, res) => {
 };
 
 const getAgreementDate = async (req, res) => {
+  if (!req.query.id) {
+    return res.status(400).json({ message: "Property ID is required" });
+  }
   try {
-    const agreement = await prisma.agreement.findMany({
+    const agreements = await prisma.agreement.findMany({
       where: {
-        propertyId: req.body.propertyId,
+        propertyId: req.query.id,
       },
       select: {
         startDate: true,
         endDate: true,
       },
     });
-
-    if (!agreement) {
+    if (agreements.length === 0) {
       return res.status(404).json({ message: "No agreement found" });
     }
-    return res.status(200).json(agreement);
+
+    return res.status(200).json(agreements);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };

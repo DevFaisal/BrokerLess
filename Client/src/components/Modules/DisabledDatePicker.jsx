@@ -10,11 +10,15 @@ const DisabledDatePicker = ({ dateRanges, onChange, selected }) => {
     if (date < today) {
       return true;
     }
-    return dateRanges.some((range) => {
-      const start = new Date(range.startDate);
-      const end = new Date(range.endDate);
-      return date >= start && date <= end;
-    });
+    if (dateRanges === null) {
+      return false;
+    } else {
+      return dateRanges.some((range) => {
+        const start = new Date(range.startDate);
+        const end = new Date(range.endDate);
+        return date >= start && date <= end;
+      });
+    }
   };
 
   return (

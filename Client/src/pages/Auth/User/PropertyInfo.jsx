@@ -1,27 +1,25 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Button } from "../../../components/Index";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import "react-datepicker/dist/react-datepicker.css";
-import DisabledDatePicker from "../../../components/DisabledDatePicker";
+import { Button, DisabledDatePicker } from "../../../components/Index";
 
 function PropertyInfo() {
-  const [selectedDate, setSelectedDate] = useState({
-    startDate: null,
-    endDate: null,
-  });
+  const [selectedDate, setSelectedDate] = useState([]);
   const { propertyId } = useParams();
   const [property, setProperty] = useState(null);
-  const [agreementDate, setAgreementDate] = useState(new Date());
+  const [agreementDate, setAgreementDate] = useState(null);
 
   useEffect(() => {
     const fetchProperty = async () => {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_LOCALHOST}/api/property/info?id=${propertyId}`,
-          { withCredentials: true }
+          {
+            withCredentials: true,
+            data: {},
+          }
         );
         setProperty(response.data);
       } catch (error) {
@@ -29,23 +27,23 @@ function PropertyInfo() {
       }
     };
 
-    const fetchAgreementDate = async () => {
+    const fetchAgreementDate = async (propertyId) => {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_LOCALHOST}/api/agreement/date`,
-          {
-            withCredentials: true,
-            data: { propertyId },
-          }
+          { withCredentials: true, params: { id: propertyId } }
         );
+        if (response.status === 404 || response.status === 500) {
+          return toast.error(response.data.message);
+        }
         setAgreementDate(response.data);
       } catch (error) {
-        console.error(error);
+        return;
       }
     };
 
     fetchProperty();
-    fetchAgreementDate();
+    fetchAgreementDate(propertyId);
   }, [propertyId]);
 
   const {
@@ -67,7 +65,7 @@ function PropertyInfo() {
       return toast.error("Please fill all the fields");
     }
 
-    const minAgreementPeriod = 30 * 24 * 60 * 60 * 1000;
+    const minAgreementPeriod = 29 * 24 * 60 * 60 * 1000;
     if (
       new Date(data.endDate) - new Date(data.startDate) <=
       minAgreementPeriod

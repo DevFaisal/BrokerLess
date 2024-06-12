@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Trash2Icon } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import AlertDialog from "../../../components/ui/AlertDialog";
+import { AlertDialog } from "../../../components/Index";
 
 function UserRequests() {
   const [requests, setRequests] = useState([]);
@@ -29,7 +29,6 @@ function UserRequests() {
         }
       );
       setRequests(response.data);
-      console.log(response.data);
     };
 
     fetchAllUserRequests();
@@ -37,7 +36,7 @@ function UserRequests() {
 
   return (
     <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-      <h1 className="text-xl font-bold">User Requests</h1>
+      <h1 className="text-xl py-2 mt-4 font-bold">User Requests</h1>
       <div className="w-full flex flex-col items-center justify-center mt-10">
         {requests?.map((request) => (
           <RequestCard

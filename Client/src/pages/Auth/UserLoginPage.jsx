@@ -1,7 +1,6 @@
 import React from "react";
 import { logo } from "../../assets/Index";
-import AuthContainer from "../../components/Containers/AuthContainer";
-import { UserLogin } from "../../components/Index";
+import { AuthContainer, UserLogin } from "../../components/Index";
 
 function UserLoginPage() {
   const text = [

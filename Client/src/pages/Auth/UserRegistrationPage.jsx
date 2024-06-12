@@ -1,6 +1,5 @@
 import React from "react";
-import AuthContainer from "../../components/Containers/AuthContainer";
-import { UserRegistration } from "../../components/Index";
+import { AuthContainer, UserRegistration } from "../../components/Index";
 import { logo } from "../../assets/Index";
 
 function UserRegistrationPage() {
