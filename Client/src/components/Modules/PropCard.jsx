@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function PropCard({ property }) {
+function PropCard({ property, to }) {
   return (
     <Link
-      to={`/landlord/properties/${property.id}`}
+      to={to}
       className="max-w-80 max-h-80 flex flex-col justify-center ring-1 ring-gray-300 items-start m-3  rounded-md shadow-lg 
       hover:shadow-xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105"
     >
-      <div className="overflow-hidden rounded-t-lg">
+      <div className="overflow-hidden flex justify-center items-center bg-red-400 w-full h-96 rounded-t-md">
         <img
-          className=" object-cover h-48 w-96"
+          className=" object-cover w-full h-full rounded-t-md"
           src={property.imageUrl}
           alt="Property"
         />
@@ -21,7 +21,7 @@ function PropCard({ property }) {
           {property.description}
         </p>
         <p className="text-sm font-semibold text-black">
-          ₹{property.rent}
+          {INRformat(parseInt(property.rent))}
           <span className="text-xs font-light text-gray-700">/ Month</span>
         </p>
         <p
@@ -41,3 +41,15 @@ function PropCard({ property }) {
 }
 
 export default PropCard;
+
+//Function for comma in Indian Currency
+export function INRformat(number) {
+  return number
+    .toLocaleString("en-IN", {
+      style: "currency",
+      currency: "INR",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2,
+    })
+    .replace(/\.00$/, "");
+}

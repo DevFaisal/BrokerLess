@@ -111,8 +111,8 @@ model Agreement {
   id         String          @id @default(cuid())
   propertyId String
   tenantId   String
-  status     AgreementStatus @default(INACTIVE)
-  startDate  String //Change to Date later
+  status     AgreementStatus @default(PENDING)
+  startDate  DateTime
   endDate    String //Change to Date later
   rent       Int
   createdAt  DateTime        @default(now())

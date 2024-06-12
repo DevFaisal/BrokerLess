@@ -302,6 +302,50 @@ const getAllTenants = async (req, res) => {
   }
 };
 
+// ------------------- Tenant Routes -------------------
+const getPropertyByIdToTenant = async (req, res) => {
+  if (!req.query.id) {
+    return res.status(400).json({ message: "Property ID is required" });
+  }
+  try {
+    let property = await client.property.findUnique({
+      where: {
+        id: req.query.id,
+      },
+      select: {
+        name: true,
+        description: true,
+        imageUrl: true,
+        rent: true,
+        status: true,
+        landlord: {
+          select: {
+            name: true,
+            email: true,
+            phone: true,
+          },
+        },
+        PropertyAddress: {
+          select: {
+            street: true,
+            city: true,
+            state: true,
+            zip: true,
+            country: true,
+          },
+        },
+      },
+    });
+    if (!property) {
+      return res.status(404).json({ message: "Property not found" });
+    }
+    res.status(200).json(property);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 export {
   getAllProperties,
   getPropertyById,
@@ -312,4 +356,5 @@ export {
   getTenantsOfSpecificProperty,
   getLandlordProperties,
   getAllTenants,
+  getPropertyByIdToTenant,
 };

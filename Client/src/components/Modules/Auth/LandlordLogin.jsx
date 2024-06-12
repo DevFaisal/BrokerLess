@@ -32,11 +32,9 @@ function LandlordLogin() {
           withCredentials: true,
         }
       );
-      console.log(response);
-      window.location.reload("/");
-
       setLoading(false);
       toast.success(response.data.message);
+      window.location.reload("/landlord/dashboard");
     } catch (error) {
       setLoading(false);
       toast.error(error.response?.data?.message);
@@ -54,11 +52,11 @@ function LandlordLogin() {
         { email: document.getElementById("email").value }
       );
       console.log(response);
-      // toast.success(response.data.message);
+      toast.success(response.data.message);
       setEmailError(false);
     } catch (error) {
       console.error(error);
-      // toast.error(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
 

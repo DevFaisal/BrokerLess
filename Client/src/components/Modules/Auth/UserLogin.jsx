@@ -1,19 +1,15 @@
-import React, { useState } from "react";
-import { set, useForm } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { LoaderCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Button, Container, FooterLinks, FormInput } from "../../Index";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import FetchUser, { UserAtom } from "../../../store/UserAtom";
-import { useSetRecoilState } from "recoil";
 
 function UserLogin() {
-  const setUser = useSetRecoilState(UserAtom);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -29,6 +25,7 @@ function UserLogin() {
 
   const onSubmit = async (data) => {
     setLoading(true);
+    console.log("Form Data Submitted:", data);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_LOCALHOST}/auth/user/login`,
@@ -37,14 +34,23 @@ function UserLogin() {
           withCredentials: true,
         }
       );
+      console.log("API Response:", response);
       setLoading(false);
       toast.success(response.data.message);
-      window.location.reload("/");
+
+      window.location.reload("/user/dashboard");
     } catch (error) {
+      console.error("Error Details:", error);
       setLoading(false);
-      toast.error(error.response?.data?.message);
-      if (error.response.data.message === "Email not verified") {
-        setEmailError(true);
+      if (error.response && error.response.data) {
+        toast.error(
+          error.response.data.message || "An unexpected error occurred"
+        );
+        if (error.response.data.message === "Email not verified") {
+          setEmailError(true);
+        }
+      } else {
+        toast.error("Network error or server not responding");
       }
     }
   };

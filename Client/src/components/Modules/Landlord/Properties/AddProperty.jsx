@@ -103,6 +103,7 @@ function AddProperty() {
 
     const response = await axios(config)
       .then((res) => {
+        console.log(res);
         if (res.status === 200) {
           toast.success("Property Added Successfully");
           navigate("/landlord/properties");

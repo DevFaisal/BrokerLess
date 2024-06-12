@@ -27,7 +27,7 @@ import verificationRoute from "./routes/verification.route.js";
 // Routes
 app.use("/auth/user", userRouter);
 app.use("/auth/landlord", landlordRouter);
-app.use("/api/property", propertyRoute);
+app.use("/api/property", propertyRoute); 
 app.use("/api/agreement", agreementRoute);
 app.use("/api/verification", verificationRoute);
 

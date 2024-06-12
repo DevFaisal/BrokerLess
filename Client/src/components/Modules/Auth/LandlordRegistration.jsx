@@ -5,9 +5,11 @@ import Validation from "../../../utils/Validation";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { LoaderCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function LandLordRegistration() {
   const [loading, setLoading] = React.useState(false);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -36,9 +38,10 @@ function LandLordRegistration() {
       .post(`${import.meta.env.VITE_LOCALHOST}/auth/Landlord/register`, data)
       .then((res) => {
         toast.success(res.data.message);
-        return res;
+        navigate("/auth/login-landlord");
       })
       .catch((error) => {
+        console.error(error);
         toast.error(error.response.data.message);
         return error;
       })
