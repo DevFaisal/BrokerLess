@@ -7,6 +7,9 @@ import {
   generateAgreement,
   getAgreements,
   approveAgreement,
+  getTenantAgreement,
+  deleteAgreement,
+  getAgreementDate,
 } from "../controllers/agreement.controller.js";
 
 const router = Router();
@@ -17,8 +20,14 @@ const prisma = new PrismaClient();
 // POST Request to create a new Agreement
 router.route("/generate").post(Authentication, generateAgreement);
 
+//GET Agreement of a Specific Tenant
+router.route("/tenant").get(Authentication, getTenantAgreement);
 
+//DELETE Agreement of a Specific Tenant
+router.route("/tenant").delete(Authentication, deleteAgreement);
 
+//GET Agreement Date of a Specific Property
+router.route("/date").get(Authentication, getAgreementDate);
 
 //------------Agreement Landlord Routes------------
 

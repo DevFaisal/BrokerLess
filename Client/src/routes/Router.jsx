@@ -31,6 +31,8 @@ import Property from "../components/Modules/Landlord/Properties/Property";
 import AddProperty from "../components/Modules/Landlord/Properties/AddProperty";
 import AllProperties from "../components/Modules/User/AllProperties";
 import PropertyInfo from "../pages/Auth/User/PropertyInfo";
+import UserRequests from "../pages/Auth/User/UserRequests";
+import ApplicationsPage from "../pages/Auth/Landlord/ApplicationsPage";
 
 const RootRouter = () => {
   return (
@@ -84,7 +86,7 @@ const RootRouter = () => {
                   <Route path="add" element={<AddProperty />} />
                 </Route>
                 <Route path="tenants" element={<Tenants />} />
-                <Route path="payments" element={<div>Payments</div>} />
+                <Route path="applications" element={<ApplicationsPage />} />
                 <Route path="maintenance" element={<div>Maintenance</div>} />
                 <Route path="profile" element={<div>Profile</div>} />
               </Route>
@@ -99,7 +101,7 @@ const RootRouter = () => {
                   <Route index element={<AllProperties />} />
                   <Route path=":propertyId" element={<PropertyInfo />} />
                 </Route>
-                <Route path="payments" element={<div>Payments</div>} />
+                <Route path="request" element={<UserRequests />} />
                 <Route path="maintenance" element={<div>Maintenance</div>} />
                 <Route path="profile" element={<div>Profile</div>} />
               </Route>
