@@ -1,0 +1,141 @@
+// This is your Prisma schema file,
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// USER MODEL
+model User {
+  id                String              @id @default(cuid())
+  name              String
+  email             String              @unique
+  password          String
+  phone             String              @unique
+  isVerified        Boolean             @default(false)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  Agreement         Agreement[]
+  UserAddress       UserAddress[]
+  verificationToken verificationToken[]
+  Property          Property[]
+}
+
+// USER ADDRESS MODEL
+model UserAddress {
+  id        String   @id @default(cuid())
+  street    String
+  city      String
+  state     String
+  zip       String
+  country   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?
+}
+
+// LANDLORD MODEL
+model Landlord {
+  id                String              @id @default(cuid())
+  name              String
+  email             String              @unique
+  password          String
+  phone             String              @unique
+  isVerified        Boolean             @default(false)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  properties        Property[]
+  Landlordaddress   Landlordaddress[]
+  verificationToken verificationToken[]
+}
+
+// LANDLORD ADDRESS MODEL
+model Landlordaddress {
+  id         String    @id @default(cuid())
+  street     String
+  city       String
+  state      String
+  zip        String
+  country    String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Landlord   Landlord? @relation(fields: [landlordId], references: [id], onDelete: Cascade)
+  landlordId String?
+}
+
+// PROPERTY MODEL
+model Property {
+  id              String            @id @default(cuid())
+  name            String
+  description     String
+  imageUrl        String?           @default("https://via.placeholder.com/150")
+  rent            String
+  landlordId      String
+  tenantId        String?
+  status          PropertyStatus    @default(AVAILABLE)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  landlord        Landlord          @relation(fields: [landlordId], references: [id], onDelete: Cascade)
+  PropertyAddress PropertyAddress[]
+  Agreement       Agreement[]
+  tenant          User?             @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+}
+
+enum PropertyStatus {
+  AVAILABLE
+  RENTED
+  MAINTENANCE
+  UNAVAILABLE
+}
+
+// PROPERTY ADDRESS MODEL
+model PropertyAddress {
+  id         String    @id @default(cuid())
+  street     String
+  city       String
+  state      String
+  zip        String
+  country    String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Property   Property? @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  propertyId String?
+}
+
+// AGREEMENT MODEL
+model Agreement {
+  id         String          @id @default(cuid())
+  propertyId String
+  tenantId   String
+  status     AgreementStatus @default(PENDING)
+  startDate  DateTime
+  endDate    String //Change to Date later
+  rent       Int
+  createdAt  DateTime        @default(now())
+  Property   Property        @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  User       User            @relation(fields: [tenantId], references: [id])
+}
+
+enum AgreementStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+  DECLINED
+  APPROVED
+  CANCELLED
+}
+
+model verificationToken {
+  id         String    @id @default(cuid())
+  token      String
+  userId     String?
+  landlordId String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  User       User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Landlord   Landlord? @relation(fields: [landlordId], references: [id], onDelete: Cascade)
+}

@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "@prisma/client": "^5.15.0",
     "cloudinary": "^2.2.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.15.0"
   }
 }
