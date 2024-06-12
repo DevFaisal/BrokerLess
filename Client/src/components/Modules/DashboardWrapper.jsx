@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, H1, H3, H4 } from "../Index";
 import { NavLink } from "react-router-dom";
-import { LogOut } from "lucide-react";
+import { AlignJustify, LogOut } from "lucide-react";
 import axios from "axios";
 import logo from "../../assets/logos/logowhite.svg";
 
@@ -19,10 +19,20 @@ function DashboardWrapper({ heading, username, children, links, credentials }) {
     }
   };
 
+  const [menu, setMenu] = useState(false);
+
+  function toggleMenu() {
+    setMenu(!menu);
+  }
+
   return (
     <>
       <div className="w-full h-screen flex justify-start items-center ">
-        <aside className="w-1/5 h-screen bg-[#006d77] flex flex-col justify-start items-start p-4 shadow-l-lg">
+        <aside
+          className={`${menu ? "hidden" : "flex"} w-1/5 h-screen bg-[#006d77] flex-col justify-start items-start p-4 shadow-l-lg
+        animate-slideRight
+          `}
+        >
           <div className="flex flex-col  p-2 w-full">
             <div className="flex">
               <h1 className="text-md md:text-3xl font-bold text-white">
@@ -56,7 +66,12 @@ function DashboardWrapper({ heading, username, children, links, credentials }) {
           </button>
         </aside>
 
-        <aside className="w-full h-screen flex flex-col p-4">
+        <aside className={`w-full h-screen flex flex-col p-4 `}>
+          <div>
+            <button onClick={toggleMenu}>
+              <AlignJustify />
+            </button>
+          </div>
           {/* <div className="flex my-2 bg-gradient-to-r from-slate-50 to-slate-100 p-4 rounded-lg shadow-lg">
               <h1 className="text-base font-bold text-black ml-2">
                 Welcome <span className="text-violet-500">{username}</span>

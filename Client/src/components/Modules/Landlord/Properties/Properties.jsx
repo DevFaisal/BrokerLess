@@ -26,7 +26,7 @@ function Properties() {
 
   const ElementCard = ({ element }) => (
     <div className="flex flex-col overflow-hidden items-center">
-      <div className="grid grid-flow-row-dense grid-cols-4 gap-1 w-full h-[50rem] pb-10 shadow-lg overflow-y-scroll">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-1 w-full h-[50rem] pb-10 shadow-lg overflow-y-scroll">
         {element?.map((property, index) => (
           <PropCard
             key={index}
