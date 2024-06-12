@@ -12,7 +12,6 @@ import ResetPasswordPage from "../pages/Auth/ResetPasswordPage";
 import LandlordLoginPage from "./Auth/LandlordLoginPage";
 import LandlordLordDashboardPage from "./Auth/Landlord/LandLordDashboardPage";
 import UserDashboardPage from "./Auth/User/UserDashboardPage";
-import ApplicationPage from "./Auth/Landlord/ApplicationsPage";
 import UserRequests from "./Auth/User/UserRequests";
 import PropertyInfo from "./Auth/User/PropertyInfo";
 import ApplicationsPage from "./Auth/Landlord/ApplicationsPage";
@@ -31,7 +30,7 @@ export {
   LandlordLoginPage,
   LandlordLordDashboardPage,
   UserDashboardPage,
-  ApplicationPage,
+  ApplicationsPage,
   UserRequests,
   PropertyInfo,
 };
