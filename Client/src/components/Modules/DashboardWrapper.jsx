@@ -50,7 +50,7 @@ function DashboardWrapper({ heading, username, children, links, credentials }) {
                 key={index}
                 to={link.path}
                 className={({ isActive }) => {
-                  return `w-4/2 text-base p-3 my-2 text-white hover:text-black hover:bg-white mx-2 rounded-lg ${isActive ? "bg-[#cbf3f0] text-[#132a13]" : ""}`;
+                  return `w-4/2 text-base p-3 my-2 text-white hover:text-black hover:bg-white mx-2 rounded-lg ${isActive ? "bg-[#cbf3f0] text-slate-800" : ""}`;
                 }}
               >
                 <p className="flex gap-2">

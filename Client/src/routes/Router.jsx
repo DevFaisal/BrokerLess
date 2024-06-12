@@ -104,7 +104,7 @@ const RootRouter = () => {
                   <Route index element={<AllProperties />} />
                   <Route path=":propertyId" element={<PropertyInfo />} />
                 </Route>
-                <Route path="request" element={<UserRequests />} />
+                <Route path="requests" element={<UserRequests />} />
                 <Route path="maintenance" element={<div>Maintenance</div>} />
                 <Route path="profile" element={<div>Profile</div>} />
               </Route>

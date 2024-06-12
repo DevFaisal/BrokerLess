@@ -1,4 +1,10 @@
-import { atom, selector, useRecoilState, useSetRecoilState } from "recoil";
+import {
+  atom,
+  selector,
+  selectorFamily,
+  useRecoilState,
+  useSetRecoilState,
+} from "recoil";
 import axios from "axios";
 import { useEffect } from "react";
 
@@ -43,3 +49,18 @@ const FetchUser = () => {
 };
 
 export default FetchUser;
+
+export const fetchAllUserRequests = selectorFamily({
+  key: "fetchAllUserRequests",
+  get:
+    () =>
+    async ({ get }) => {
+      const response = await axios.get(
+        `${import.meta.env.VITE_LOCALHOST}/api/agreement/tenant`,
+        {
+          withCredentials: true,
+        }
+      );
+      return response.data;
+    },
+});

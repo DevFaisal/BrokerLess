@@ -10,7 +10,7 @@ const DisabledDatePicker = ({ dateRanges, onChange, selected }) => {
     if (date < today) {
       return true;
     }
-    if (dateRanges === null) {
+    if (dateRanges?.response?.status === 404) {
       return false;
     } else {
       return dateRanges.some((range) => {

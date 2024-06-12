@@ -22,7 +22,7 @@ function UserDashboard() {
     },
     {
       name: "Requests",
-      path: "/user/request",
+      path: "/user/requests",
       icon: <Inbox />,
     },
     {
