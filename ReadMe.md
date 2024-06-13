@@ -1,41 +1,69 @@
 # BrokerLess (Room Rental Project)
 
-This project is the final year project for MCA. It aims to connect tenants with landlords in a broker-less manner.
+BrokerLess is a final year project for MCA, designed to facilitate direct connections between tenants and landlords, eliminating the need for brokers.
 
-## Students
+## Team Members
 
 1. Faisal Farooq
 2. Shahid Manzoor
 3. Waseem Ahmad
 
-## Supervision
+## Supervisor
 
-This project is being supervised by Mr. Aijaz Kumar Sir.
-## Steps to Configure the Project Locally
+This project is under the guidance of Mr. Aijaz Kumar Sir.
 
-1. Clone the project repository using the following command:
-    ```
+## Technologies Used
+
+- **Frontend**: React, Tailwind CSS, Shadcn components
+- **Backend**: Node.js, Express.js, Prisma ORM, PostgreSQL
+- **Authentication**: Robust authentication system with separate logins for landlords and users
+
+## Getting Started
+
+### Setting up the Frontend
+
+1. **Clone the Repository**: 
+
+    ```bash
     git clone https://github.com/DevFaisal/BrokerLess
     ```
 
-2. Open a terminal and navigate to the `Server` folder using the following command:
-    ```
-    cd Server
+2. **Navigate to the Client Folder**: 
+
+    ```bash
+    cd BrokerLess/Client
     ```
 
-3. Install the project dependencies by running the following command:
-    ```
+3. **Install Dependencies**: 
+
+    ```bash
     npm install
     ```
 
-4. Create a `.env` file in the `Server` folder and copy the contents from the `.env.sample` file.
+4. **Start the Development Server**: 
 
-5. Update the necessary environment variables in the `.env` file, such as the DB URL.
-
-6. Start the development server by running the following command:
-    ```
+    ```bash
     npm run dev
     ```
 
-Now you have successfully configured the project locally. You can proceed with further development or testing.
+### Setting up the Backend
 
+1. **Navigate to the Server Folder**: 
+
+    ```bash
+    cd ../Server
+    ```
+
+2. **Install Dependencies**: 
+
+    ```bash
+    npm install
+    ```
+
+3. **Start the Development Server**: 
+
+    ```bash
+    npm run dev
+    ```
+
+You have successfully configured the project locally. You can now proceed with further development or testing.

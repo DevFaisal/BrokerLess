@@ -1,6 +1,5 @@
 import React from "react";
-import EmailVerification from "../../components/Modules/Auth/EmailVerification";
-import { AuthContainer } from "../../components/Index";
+import { EmailVerification, AuthContainer } from "../../components/Index";
 import { logo } from "../../assets/Index";
 
 function EmailVerificationPage() {

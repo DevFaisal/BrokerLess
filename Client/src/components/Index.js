@@ -19,9 +19,20 @@ import Protected from "./Modules/Auth/Protected";
 import Loading from "./Modules/Loading";
 import LandlordLogin from "./Modules/Auth/LandlordLogin";
 import UserDashboard from "./Modules/User/UserDashboard";
+import ResetPassword from "./Modules/Auth/ResetPassword";
 import LandLordDashboard from "./Modules/Landlord/LandLordDashboard";
 import UserPrivateRoute from "./Modules/UserPrivateRoute";
 import LandLordPrivateRoute from "./Modules/LandLordPrivateRoute";
+import AlertDialog from "./ui/AlertDialog";
+import DashboardWrapper from "./Modules/DashboardWrapper";
+import DisabledDatePicker from "./Modules/DisabledDatePicker";
+import Tenants from "./Modules/Landlord/Tenants";
+import Properties from "./Modules/Landlord/Properties/Properties";
+import Property from "./Modules/Landlord/Properties/Property";
+import AddProperty from "./Modules/Landlord/Properties/AddProperty";
+import UserPropertiesWrapper from "./Modules/UserPropertiesWrapper";
+import LandLordPropertiesWrapper from "./Modules/LandLordPropertiesWrapper";
+import AllProperties from "./Modules/User/AllProperties";
 
 export {
   EmailVerification,
@@ -43,9 +54,20 @@ export {
   P,
   Protected,
   Loading,
+  ResetPassword,
   LandlordLogin,
   UserDashboard,
   LandLordDashboard,
   UserPrivateRoute,
   LandLordPrivateRoute,
+  AlertDialog,
+  DashboardWrapper,
+  DisabledDatePicker,
+  Tenants,
+  Properties,
+  Property,
+  AddProperty,
+  UserPropertiesWrapper,
+  LandLordPropertiesWrapper,
+  AllProperties,
 };
