@@ -52,8 +52,8 @@ function PropertyInfo() {
         `${import.meta.env.VITE_LOCALHOST}/api/agreement/generate`,
         {
           propertyId,
-          startDate: new Date(data.startDate),
-          endDate: new Date(data.endDate),
+          startDate: data.startDate,
+          endDate: data.endDate,
           rent: parseInt(property.contents.rent),
         },
         { withCredentials: true }
