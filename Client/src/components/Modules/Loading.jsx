@@ -1,15 +1,22 @@
 import React from "react";
 import { Container } from "../Index";
 import { LoaderCircle } from "lucide-react";
+import logo from "../../assets/logos/logo.svg";
 
 function Loading() {
   return (
-    <Container>
-      <div className="flex flex-col justify-center items-center h-screen">
-        <p className="text-md font-semibold text-black">Loading...</p>
-        <LoaderCircle strokeWidth={1} size={90} color="gray" className="animate-spin" />
+    <main>
+      <div
+        className="fixed top-0 left-0 w-full h-1 
+        bg-gradient-to-r from-blue-500 via-blue-400 to-blue-300
+        ring-1 ring-blue-500 z-50 flex justify-center items-center
+      animate-pulse
+      "
+      />
+      <div className="flex justify-center items-start mt-96 h-screen">
+        <LoaderCircle className="text-blue-500 w-96 h-20 animate-spin" />
       </div>
-    </Container>
+    </main>
   );
 }
 
