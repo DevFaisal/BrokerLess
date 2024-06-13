@@ -9,6 +9,7 @@ import { Container, H2, PageFooter } from "../components/Index";
 import { LayoutGrid } from "../utils/layout-grid";
 import { TextGenerateEffect } from "../utils/text-generate-effect";
 import { InfiniteMovingCards } from "../utils/infinite-moving-cards";
+import { ButtonMove } from "../utils/moving-border";
 
 function HomePage() {
   const words = ["Rooms", "Houses", "Apartments", "Offices", "Spaces"];
@@ -132,9 +133,7 @@ function HomePage() {
   const word = `With Brokerless, you can rent a room without paying any broker fees. Save time and money by renting directly from the owner Discover Brokerless. Rent rooms broker-free. Save time and money with direct owner connections. Rent smarter with Brokerless Renting a room has never been easier. With Brokerless, you can find a room that suits your needs and budget without the hassle of brokers`;
 
   return (
-    <div
-    className="h-screen"
-    >
+    <div className="h-screen">
       <div>
         <div className="grid grid-cols-1 md:grid-cols-2  gap-10 items-center px-5 md:px-20 pt-20 h-screen w-full">
           <div className="flex flex-col gap-4  w-fit">
@@ -154,13 +153,14 @@ function HomePage() {
               Discover Brokerless. Rent rooms broker-free. Save time and money
               with direct owner connections. Rent smarter with Brokerless
             </p>
-            <Button
-              className={
-                "w-30 md:w-40 md:px-2 md:py-3  bg-primary  text-white  hover:bg-secondary transition duration-700 ease-in-out hover:scale-110 transform"
-              }
-            >
-              <Link to="/auth/login-user">Get Started</Link>
-            </Button>
+            <Link to={`/auth/login-user`}>
+              <ButtonMove
+                borderRadius="1.75rem"
+                className="bg-primary text-white  border-neutral-400 text-base font-semibold"
+              >
+                <span>Get Started</span>
+              </ButtonMove>
+            </Link>
           </div>
           <div className="hidden 2xl:flex ">
             <img
@@ -184,9 +184,10 @@ function HomePage() {
           items={testimonials}
           direction="right"
           speed="slow"
+          className="w-full p-10"
         />
       </div>
-
+      <div></div>
       <PageFooter />
     </div>
   );
