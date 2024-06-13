@@ -27,7 +27,9 @@ const Layout = () => {
       >
         {!authState ? (
           <>
-            <NavBar /> <Outlet /> <PageFooter />
+            <NavBar />
+            <Outlet />
+            {/* <PageFooter /> */}
           </>
         ) : (
           <Navigate
