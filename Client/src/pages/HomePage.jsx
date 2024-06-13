@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { FlipWords } from "../utils/flip-words";
 import H1 from "../components/Inputs/H1";
 import H3 from "../components/Inputs/H3";
-import { Container, H2, PageFooter } from "../components/Index";
+import { Container, H2, Loading, PageFooter } from "../components/Index";
 import { LayoutGrid } from "../utils/layout-grid";
 import { TextGenerateEffect } from "../utils/text-generate-effect";
 import { InfiniteMovingCards } from "../utils/infinite-moving-cards";
@@ -113,19 +113,19 @@ function HomePage() {
     },
     {
       quote: "Renting a room has never been easier.",
-      name: "Brokerless",
+      name: "Brokerless Admin",
       title: "Team Brokerless",
     },
     {
       quote:
         "Customer satisfaction is our top priority. We provide you with the best rooms at the best prices. Renting a room has never been easier.",
-      name: "Brokerless",
+      name: "Brokerless User",
       title: "Team Brokerless",
     },
     {
       quote:
         "With Brokerless, you can rent a room without paying any broker fees. Save time and money by renting directly from the owner.",
-      name: "Brokerless",
+      name: "Brokerless New User ",
       title: "Team Brokerless",
     },
   ];
