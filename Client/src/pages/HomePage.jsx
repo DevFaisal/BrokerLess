@@ -121,7 +121,7 @@ function HomePage() {
 
   return (
     <div className="h-screen bg-background-image-2 bg-cover bg-center bg-no-repeat bg-fixed bg-opacity-50">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center px-5 md:px-20 pt-20 h-screen w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center md:pb-0 pb-52 px-5 md:px-20 pt-20 h-screen w-full">
         <div className="flex flex-col gap-4 w-fit">
           <div className="flex flex-col gap-2">
             <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-emerald-500 to-emerald-900 bg-clip-text text-transparent">
