@@ -167,8 +167,8 @@ function HomePage() {
 
         <LayoutGrid cards={Cards} />
       </section>
-      <section className="bg-background-image-2 bg-cover bg-center bg-no-repeat bg-fixed bg-opacity-50 h-screen w-full flex flex-col justify-center items-center">
-        <div className="h-[40rem] rounded-md flex flex-col antialiased bg-none items-center justify-center relative overflow-hidden">
+      <section className="bg-background-image-2 bg-cover bg-center bg-no-repeat bg-fixed bg-opacity-50 h-screen flex flex-col justify-center w-96 items-center overflow-hidden">
+        <div className="h-[40rem] rounded-md flex flex-col antialiased bg-none items-center justify-center relative ">
           <h1 className="text-5xl font-bold text-center my-4 text-slate-700">
             Testimonials
           </h1>
