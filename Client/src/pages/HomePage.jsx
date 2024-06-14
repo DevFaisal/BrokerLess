@@ -13,59 +13,48 @@ import { ButtonMove } from "../utils/moving-border";
 
 function HomePage() {
   const words = ["Rooms", "Houses", "Apartments", "Offices", "Spaces"];
-  const SkeletonOne = () => {
-    return (
-      <div>
-        <p className="font-bold text-4xl text-white">Easy Room Renting</p>
-        <p className="font-normal text-base text-white"></p>
-        <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
-          Renting a room has never been easier. With Brokerless, you can find a
-          room that suits your needs and budget without the hassle of brokers.
-        </p>
-      </div>
-    );
-  };
 
-  const SkeletonTwo = () => {
-    return (
-      <div>
-        <p className="font-bold text-4xl text-white">
-          We care about your comfort
-        </p>
-        <p className="font-normal text-base text-white"></p>
-        <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
-          At Brokerless, we care about your comfort. We provide you with the
-          best rooms at the best prices. Renting a room has never been easier.
-        </p>
-      </div>
-    );
-  };
-  const SkeletonThree = () => {
-    return (
-      <div>
-        <p className="font-bold text-4xl text-white">No more broker fees</p>
-        <p className="font-normal text-base text-white"></p>
-        <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
-          With Brokerless, you can rent a room without paying any broker fees.
-          Save time and money by renting directly from the owner.
-        </p>
-      </div>
-    );
-  };
-  const SkeletonFour = () => {
-    return (
-      <div>
-        <p className="font-bold text-4xl text-white">
-          We provide the best rooms
-        </p>
-        <p className="font-normal text-base text-white"></p>
-        <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
-          At Brokerless, we provide you with the best rooms at the best prices.
-          Renting a room has never been easier.
-        </p>
-      </div>
-    );
-  };
+  const SkeletonOne = () => (
+    <div>
+      <p className="font-bold text-4xl text-white">Easy Room Renting</p>
+      <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
+        Renting a room has never been easier. With Brokerless, you can find a
+        room that suits your needs and budget without the hassle of brokers.
+      </p>
+    </div>
+  );
+
+  const SkeletonTwo = () => (
+    <div>
+      <p className="font-bold text-4xl text-white">
+        We care about your comfort
+      </p>
+      <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
+        At Brokerless, we care about your comfort. We provide you with the best
+        rooms at the best prices. Renting a room has never been easier.
+      </p>
+    </div>
+  );
+
+  const SkeletonThree = () => (
+    <div>
+      <p className="font-bold text-4xl text-white">No more broker fees</p>
+      <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
+        With Brokerless, you can rent a room without paying any broker fees.
+        Save time and money by renting directly from the owner.
+      </p>
+    </div>
+  );
+
+  const SkeletonFour = () => (
+    <div>
+      <p className="font-bold text-4xl text-white">We provide the best rooms</p>
+      <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
+        At Brokerless, we provide you with the best rooms at the best prices.
+        Renting a room has never been easier.
+      </p>
+    </div>
+  );
 
   const Cards = [
     {
@@ -125,59 +114,59 @@ function HomePage() {
     {
       quote:
         "With Brokerless, you can rent a room without paying any broker fees. Save time and money by renting directly from the owner.",
-      name: "Brokerless New User ",
+      name: "Brokerless New User",
       title: "Team Brokerless",
     },
   ];
 
-  const word = `With Brokerless, you can rent a room without paying any broker fees. Save time and money by renting directly from the owner Discover Brokerless. Rent rooms broker-free. Save time and money with direct owner connections. Rent smarter with Brokerless Renting a room has never been easier. With Brokerless, you can find a room that suits your needs and budget without the hassle of brokers`;
-
   return (
-    <div className="h-screen">
-      <div>
-        <div className="grid grid-cols-1 md:grid-cols-2  gap-10 items-center px-5 md:px-20 pt-20 h-screen w-full">
-          <div className="flex flex-col gap-4  w-fit">
-            <div className="flex flex-col gap-2 ">
-              <H1 className="z-20">Brokerless</H1>
-              <H3>
-                Rent
-                <span>
-                  <FlipWords
-                    words={words}
-                    className="text-2xl md:text-3xl font-semibold text-secondary"
-                  />
-                </span>
-              </H3>
-            </div>
-            <p className="text-justify font-semibold md:leading-7 text-xs md:text-lg text-primary">
-              Discover Brokerless. Rent rooms broker-free. Save time and money
-              with direct owner connections. Rent smarter with Brokerless
-            </p>
-            <Link to={`/auth/login-user`}>
-              <ButtonMove
-                borderRadius="1.75rem"
-                className="bg-primary text-white  border-neutral-400 text-base font-semibold"
-              >
-                <span>Get Started</span>
-              </ButtonMove>
-            </Link>
+    <div className="h-screen bg-gradient-to-r from-blue-100 to-gray-200">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center px-5 md:px-20 pt-20 h-screen w-full">
+        <div className="flex flex-col gap-4 w-fit">
+          <div className="flex flex-col gap-2">
+            <H1 className="z-20">Brokerless</H1>
+            <H3>
+              Rent
+              <span>
+                <FlipWords
+                  words={words}
+                  className="text-2xl md:text-3xl font-semibold text-secondary"
+                />
+              </span>
+            </H3>
           </div>
-          <div className="hidden 2xl:flex ">
-            <img
-              className="object-contain absolute  bottom-70 top-10 left-90 right-10 w-[900px] z-20"
-              src={background}
-            />
-          </div>
+          <p className="text-justify font-semibold md:leading-7 text-xs md:text-lg text-whiteish">
+            Discover Brokerless. Rent rooms broker-free. Save time and money
+            with direct owner connections. Rent smarter with Brokerless.
+          </p>
+          <Link to="/auth/login-user">
+            <ButtonMove
+              borderRadius="1.75rem"
+              className="bg-primary text-white border-neutral-400 text-base font-semibold"
+            >
+              <span>Get Started</span>
+            </ButtonMove>
+          </Link>
+        </div>
+        <div className="hidden 2xl:flex">
+          <img
+            className="object-contain absolute bottom-70 top-10 left-90 right-10 w-[900px] z-20"
+            src={background}
+            alt="Background"
+          />
         </div>
       </div>
+
       <div className="flex flex-col justify-center items-center gap-2 px-10">
         <h1 className="text-5xl font-bold text-center text-slate-800 my-1">
           Discover Brokerless
         </h1>
       </div>
+
       <LayoutGrid cards={Cards} />
+
       <div className="h-[40rem] rounded-md flex flex-col antialiased bg-white items-center justify-center relative overflow-hidden">
-        <h1 className="text-5xl font-bold text-center my-4 text-slate-700 ">
+        <h1 className="text-5xl font-bold text-center my-4 text-slate-700">
           Testimonials
         </h1>
         <InfiniteMovingCards
@@ -187,7 +176,7 @@ function HomePage() {
           className="w-full p-10"
         />
       </div>
-      <div></div>
+
       <PageFooter />
     </div>
   );

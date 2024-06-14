@@ -6,6 +6,7 @@ import {
   loginLandlord,
   getLandlordProfile,
   logoutLandlord,
+  updateLandlordProfile,
 } from "../controllers/landlord.controller.js";
 
 const router = Router();
@@ -22,5 +23,8 @@ router.route("/logout").get(isValidLandlord, logoutLandlord); //http://localhost
 
 // GET Landlord Profile API Endpoint
 router.route("/me").get(isValidLandlord, getLandlordProfile);
+
+//UPDATE Landlord Profile API Endpoint
+router.route("/update").put(isValidLandlord, updateLandlordProfile);
 
 export default router;

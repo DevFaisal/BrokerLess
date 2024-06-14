@@ -76,38 +76,38 @@ function ApplicationsPage() {
 }
 export default ApplicationsPage;
 
-export function ApplicationCard({ application, onClick }) {
+export function ApplicationCard({ application, onApprove }) {
+  const startDateFormatted = new Date(
+    application.startDate
+  ).toLocaleDateString();
+  const endDateFormatted = new Date(application.endDate).toLocaleDateString();
+  const daysDifference =
+    (new Date(application.endDate) - new Date(application.startDate)) /
+    (1000 * 60 * 60 * 24);
+
   return (
-    <main
-      className="flex h-20 flex-row w-full justify-between items-center ring-1 ring-violet-200 bg-white p-4 rounded-lg shadow-lg
-    hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-20
-    "
-    >
+    <div className="flex h-20 w-full justify-between items-center ring-1 ring-violet-200 bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-20">
       <div className="flex flex-col items-start">
-        <h1 className="text-l font-bold text-black">{application.User.name}</h1>
+        <h1 className="text-lg font-bold text-black">
+          {application.User.name}
+        </h1>
         <p className="text-sm text-gray-400">{application.User.phone}</p>
       </div>
       <div className="flex flex-col items-start">
         <p className="text-sm text-slate-700">
-          Start Date {new Date(application.startDate).toLocaleDateString()}{" "}
+          Start Date {startDateFormatted}
         </p>
-        <p className="text-sm text-slate-700">
-          End Date {new Date(application.endDate).toLocaleDateString()}
-        </p>
-        <p className="text-xs text-slate-700">
-          {(new Date(application.endDate) - new Date(application.startDate)) /
-            (1000 * 60 * 60 * 24)}
-          -Days
-        </p>
+        <p className="text-sm text-slate-700">End Date {endDateFormatted}</p>
+        <p className="text-xs text-slate-700">{daysDifference} Days</p>
       </div>
-      <div className="flex gap-1 items-start">
-        <School className="w-6 h-6 inline-block" />
+      <div className="flex gap-1 items-center">
+        <School className="w-6 h-6" />
         <p>{application.Property.name}</p>
         <p>Rent ₹{application.rent}</p>
       </div>
       <div>
-        <Button onClick={onClick}>Approve</Button>
+        <Button onClick={onApprove}>Approve</Button>
       </div>
-    </main>
+    </div>
   );
 }

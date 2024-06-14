@@ -81,27 +81,27 @@ function PropertyInfo() {
     return (
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
+          <div className="flex flex-col gap-4 p-4 rounded-lg shadow-md bg-white">
             <img
-              className="w-full h-full object-cover object-center rounded-md"
+              className="w-full h-80 object-cover rounded-lg"
               src={property.contents?.imageUrl}
               alt={property.contents?.name}
             />
           </div>
-          <div className="flex flex-col gap-4 p-4 justify-between rounded-md shadow-md">
+          <div className="flex flex-col gap-4 p-4 rounded-lg shadow-md bg-white">
             <div>
-              <p className="text-4xl font-bold rounded-md text-gray-800">
+              <p className="text-3xl font-bold text-gray-800">
                 {property.contents?.name}
               </p>
-              <p className="text-xl font-semibold rounded-md text-gray-300">
+              <p className="text-lg font-semibold text-gray-600">
                 {property.contents?.description}
               </p>
-              <p className="text-2xl font-semibold rounded-md text-black">
+              <p className="text-xl font-semibold text-gray-900">
                 ₹{property.contents?.rent}
               </p>
-              <p>{property.contents?.type}</p>
+              <p className="text-md text-gray-700">{property.contents?.type}</p>
               <p
-                className={`px-2 py-1 text-sm rounded-lg w-max ${
+                className={`px-3 py-1 text-sm rounded-lg w-max ${
                   property.contents?.status === "AVAILABLE"
                     ? "bg-green-500 text-white"
                     : property.contents?.status === "RENTED"
@@ -112,82 +112,76 @@ function PropertyInfo() {
                 {property.contents?.status}
               </p>
             </div>
-            <div className="flex flex-col h-50 items-between justify-between">
-              <h1 className="text-2xl font-semibold rounded-md text-gray-900">
+            <div className="flex flex-col gap-2">
+              <h1 className="text-lg font-semibold text-gray-900">
                 Landlord Details
               </h1>
-              <span className="h-[1px] w-full bg-success my-2"></span>
-              <p className="text-xl font-semibold rounded-md text-gray-900">
+              <span className="h-px w-full bg-gray-300 my-2"></span>
+              <p className="text-base font-semibold text-gray-700">
                 {property.contents?.landlord.name}
               </p>
-              <p className="text-sm font-semibold rounded-md text-gray-900">
+              <p className="text-sm text-gray-700">
                 {property.contents?.landlord.email}
               </p>
-              <p className="text-sm font-semibold rounded-md text-gray-900">
+              <p className="text-sm text-gray-700">
                 {property.contents?.landlord.phone}
               </p>
             </div>
           </div>
-          <div className="flex flex-col gap-4 p-4 justify-between rounded-md shadow-md">
+          <div className="flex flex-col gap-4 p-4 rounded-lg shadow-md bg-white">
             {property.contents?.PropertyAddress.map((address, index) => (
               <div key={index}>
-                <h1 className="text-2xl font-semibold rounded-md text-gray-900">
-                  Address
-                </h1>
-                <span className="h-[1px] bg-success my-2"></span>
-                <p className="text-xl font-semibold rounded-md text-gray-900">
+                <h1 className="text-lg font-semibold text-gray-900">Address</h1>
+                <span className="h-px bg-gray-300 my-2"></span>
+                <p className="text-base font-semibold text-gray-700">
                   {address.street}
                 </p>
-                <p className="text-sm font-semibold rounded-md text-gray-900">
-                  {address.city}
-                </p>
-                <p className="text-sm font-semibold rounded-md text-gray-900">
-                  {address.state}
-                </p>
-                <p className="text-sm font-semibold rounded-md text-gray-900">
-                  {address.zip}
-                </p>
-                <p className="text-sm font-semibold rounded-md text-gray-900">
-                  {address.country}
-                </p>
+                <p className="text-sm text-gray-700">{address.city}</p>
+                <p className="text-sm text-gray-700">{address.state}</p>
+                <p className="text-sm text-gray-700">{address.zip}</p>
+                <p className="text-sm text-gray-700">{address.country}</p>
               </div>
             ))}
-          </div>
-          <div className="flex flex-col gap-4 p-4 justify-between rounded-md shadow-md">
-            <h1>Request to Rent</h1>
-            <span className="h-[1px] bg-success my-2"></span>
-            <form
-              onSubmit={handleSubmit(GenerateAgreement)}
-              className="flex flex-col gap-4 p-4 justify-between rounded-md shadow-md"
-            >
-              <div className="flex items-center justify-between w-full">
-                <div className="flex flex-col">
-                  <label className="text-xl font-semibold rounded-md text-gray-900">
-                    Start Date
-                  </label>
-                  <DisabledDatePicker
-                    onChange={(date) =>
-                      setSelectedDate({ ...selectedDate, startDate: date })
-                    }
-                    selected={selectedDate.startDate}
-                    dateRanges={agreementDate.contents}
-                  />
+            <div className="flex flex-col gap-4">
+              <h1 className="text-lg font-semibold text-gray-900">
+                Request to Rent
+              </h1>
+              <span className="h-px bg-gray-300 my-2"></span>
+              <form
+                onSubmit={handleSubmit(GenerateAgreement)}
+                className="flex flex-col gap-4"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col">
+                    <label className="text-base font-semibold text-gray-900">
+                      Start Date
+                    </label>
+                    <DisabledDatePicker
+                      onChange={(date) =>
+                        setSelectedDate({ ...selectedDate, startDate: date })
+                      }
+                      selected={selectedDate.startDate}
+                      dateRanges={agreementDate.contents}
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-base font-semibold text-gray-900">
+                      End Date
+                    </label>
+                    <DisabledDatePicker
+                      onChange={(date) =>
+                        setSelectedDate({ ...selectedDate, endDate: date })
+                      }
+                      selected={selectedDate.endDate}
+                      dateRanges={agreementDate.contents}
+                    />
+                  </div>
                 </div>
-                <div className="flex flex-col">
-                  <label className="text-xl font-semibold rounded-md text-gray-900">
-                    End Date
-                  </label>
-                  <DisabledDatePicker
-                    onChange={(date) =>
-                      setSelectedDate({ ...selectedDate, endDate: date })
-                    }
-                    selected={selectedDate.endDate}
-                    dateRanges={agreementDate.contents}
-                  />
-                </div>
-              </div>
-              <Button>Submit Request</Button>
-            </form>
+                <Button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                  Submit Request
+                </Button>
+              </form>
+            </div>
           </div>
         </div>
       </main>
