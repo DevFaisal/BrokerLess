@@ -19,7 +19,7 @@ function NavBar() {
       <div
         className={`md:flex md:gap-10 ${
           isOpen
-            ? `flex flex-col h-1/2 self-center bg-white py-5 items-center absolute top-16 left-0 w-full z-50`
+            ? `flex flex-col gap-3 px-10  self-center bg-white py-5 items-center absolute top-16 left-0 w-full z-50`
             : "hidden"
         }`}
       >
@@ -29,7 +29,7 @@ function NavBar() {
             to={link.path}
             onClick={() => setIsOpen(false)}
             className={({ isActive }) =>
-              isActive ? "text-blue-500" : "text-black"
+              `${isActive ? "text-blue-500" : "text-black"} border-1 p-3 mx-10 ring-1 ring-gray-400 rounded-md w-full `
             }
           >
             {link.text}
