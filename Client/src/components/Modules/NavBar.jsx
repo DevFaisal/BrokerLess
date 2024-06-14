@@ -35,6 +35,18 @@ function NavBar() {
             {link.text}
           </NavLink>
         ))}
+        <div className="flex gap-3">
+          <Link to="/auth/login-user">
+            <OutlineButton onClick={() => setIsOpen(false)}>
+              User Login
+            </OutlineButton>
+          </Link>
+          <Link to="/auth/login-landlord">
+            <OutlineButton onClick={() => setIsOpen(false)}>
+              Landlord Login
+            </OutlineButton>
+          </Link>
+        </div>
       </div>
     );
   };
