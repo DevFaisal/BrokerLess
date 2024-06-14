@@ -31,10 +31,10 @@ function ServicesPage() {
     <>
       <Container>
         <section className="py-16 px-6 mx-auto max-w-screen-xl text-center">
-          <h1 className="mb-12 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+          <h1 className="mb-12 text-4xl font-extrabold tracking-tight text-gray-900  md:text-5xl lg:text-6xl">
             Our Services
           </h1>
-          <p className="mb-16 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">
+          <p className="mb-16 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 ">
             We offer a range of services to make the rental process easy and
             efficient for both landlords and tenants. Explore our services to
             see how we can help you.
@@ -43,7 +43,7 @@ function ServicesPage() {
             {services.map((service, index) => (
               <div
                 key={index}
-                className="max-w-sm mx-auto bg-white rounded-lg shadow-lg dark:bg-gray-800"
+                className="max-w-sm mx-auto bg-white rounded-lg shadow-lg "
               >
                 <img
                   className="w-full h-48 rounded-t-lg"
@@ -51,10 +51,10 @@ function ServicesPage() {
                   alt={service.title}
                 />
                 <div className="p-6">
-                  <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+                  <h2 className="mb-4 text-2xl font-bold text-gray-900">
                     {service.title}
                   </h2>
-                  <p className="text-gray-700 dark:text-gray-300">
+                  <p className="text-gray-700 ">
                     {service.description}
                   </p>
                 </div>
@@ -65,16 +65,16 @@ function ServicesPage() {
 
         <section className="py-16 ">
           <div className="px-6 mx-auto max-w-screen-xl text-center lg:px-8">
-            <h2 className="mb-8 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white md:text-5xl lg:text-5xl">
+            <h2 className="mb-8 text-4xl font-extrabold tracking-tight text-gray-900  md:text-5xl lg:text-5xl">
               Ready to get started?
             </h2>
-            <p className="mb-12 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
+            <p className="mb-12 text-lg font-normal text-gray-500 lg:text-xl ">
               Join us today and experience the benefits of our comprehensive
               rental services.
             </p>
             <Link
               to="/auth/login-user"
-              className="inline-flex justify-center items-center py-3 px-6 text-base font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
+              className="inline-flex justify-center items-center py-3 px-6 text-base font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 "
             >
               Get Started
               <svg

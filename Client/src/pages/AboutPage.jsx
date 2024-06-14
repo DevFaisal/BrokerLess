@@ -7,8 +7,8 @@ function AboutPage() {
       <Container>
         <section className="py-16 px-6 mx-auto max-w-screen-xl lg:px-8">
           <div className="gap-16 items-center lg:grid lg:grid-cols-2">
-            <div className="font-light text-gray-500 sm:text-lg dark:text-gray-400">
-              <h2 className="mb-6 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+            <div className="font-light text-gray-500 sm:text-lg ">
+              <h2 className="mb-6 text-4xl tracking-tight font-extrabold text-gray-900 ">
                 About Us
               </h2>
               <p className="mb-6 leading-relaxed">
@@ -42,10 +42,10 @@ function AboutPage() {
 
         <section>
           <div className="py-16 px-6 mx-auto max-w-screen-xl text-center lg:px-8">
-            <h1 className="mb-6 text-4xl font-extrabold tracking-tight leading-tight text-gray-900 md:text-5xl lg:text-5xl dark:text-white">
+            <h1 className="mb-6 text-4xl font-extrabold tracking-tight leading-tight text-gray-900 md:text-5xl lg:text-5xl ">
               We are here to find the best solutions for you
             </h1>
-            <p className="mb-12 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400 leading-relaxed">
+            <p className="mb-12 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 leading-relaxed">
               Brokerless's mission is to provide a seamless and efficient rental
               experience for both landlords and tenants. We are committed to
               providing a platform that is easy to use and understand. Our goal
@@ -55,7 +55,7 @@ function AboutPage() {
             <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
               <a
                 href="#"
-                className="inline-flex justify-center items-center py-3 px-6 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
+                className="inline-flex justify-center items-center py-3 px-6 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 "
               >
                 Get started
                 <svg
@@ -76,7 +76,7 @@ function AboutPage() {
               </a>
               <a
                 href="#"
-                className="py-3 px-6 sm:ml-4 text-base font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                className="py-3 px-6 sm:ml-4 text-base font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 "
               >
                 Learn more
               </a>
