@@ -59,11 +59,8 @@ function NavBar() {
       {renderLinks(links)}
 
       <div className="md:flex gap-3 hidden">
-        <Link to="/auth/register-user">
-          <OutlineButton>Connect</OutlineButton>
-        </Link>
         <Link to="/auth/login-user">
-          <Button className="bg-secondary">User Login</Button>
+          <OutlineButton>User Login</OutlineButton>
         </Link>
         <Link to="/auth/login-landlord">
           <Button className="bg-backgroundTwo hover:bg-slate-800">
