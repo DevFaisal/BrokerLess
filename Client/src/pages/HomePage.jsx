@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "../components/Buttons/Button";
-import background from "../assets/Images/background-1.png";
+import background from "../assets/Images/backgroundNew.png";
 import { Link } from "react-router-dom";
 import { FlipWords } from "../utils/flip-words";
 import H1 from "../components/Inputs/H1";
@@ -120,11 +120,13 @@ function HomePage() {
   ];
 
   return (
-    <div className="h-screen bg-gradient-to-r from-blue-100 to-gray-200">
+    <div className="h-screen bg-background-image-2 bg-cover bg-center bg-no-repeat bg-fixed bg-opacity-50">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center px-5 md:px-20 pt-20 h-screen w-full">
         <div className="flex flex-col gap-4 w-fit">
           <div className="flex flex-col gap-2">
-            <H1 className="z-20">Brokerless</H1>
+            <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-emerald-500 to-emerald-900 bg-clip-text text-transparent">
+              Brokerless
+            </h1>
             <H3>
               Rent
               <span>
@@ -156,27 +158,28 @@ function HomePage() {
           />
         </div>
       </div>
+      <section className="bg-background-image-2 bg-cover bg-center bg-no-repeat bg-fixed bg-opacity-50 h-screen w-full flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center gap-2 px-10">
+          <h1 className="text-5xl font-bold text-center text-slate-800 my-1">
+            Discover Brokerless
+          </h1>
+        </div>
 
-      <div className="flex flex-col justify-center items-center gap-2 px-10">
-        <h1 className="text-5xl font-bold text-center text-slate-800 my-1">
-          Discover Brokerless
-        </h1>
-      </div>
-
-      <LayoutGrid cards={Cards} />
-
-      <div className="h-[40rem] rounded-md flex flex-col antialiased bg-white items-center justify-center relative overflow-hidden">
-        <h1 className="text-5xl font-bold text-center my-4 text-slate-700">
-          Testimonials
-        </h1>
-        <InfiniteMovingCards
-          items={testimonials}
-          direction="right"
-          speed="slow"
-          className="w-full p-10"
-        />
-      </div>
-
+        <LayoutGrid cards={Cards} />
+      </section>
+      <section className="bg-background-image-2 bg-cover bg-center bg-no-repeat bg-fixed bg-opacity-50 h-screen w-full flex flex-col justify-center items-center">
+        <div className="h-[40rem] rounded-md flex flex-col antialiased bg-none items-center justify-center relative overflow-hidden">
+          <h1 className="text-5xl font-bold text-center my-4 text-slate-700">
+            Testimonials
+          </h1>
+          <InfiniteMovingCards
+            items={testimonials}
+            direction="right"
+            speed="slow"
+            className="w-full p-10"
+          />
+        </div>
+      </section>
       <PageFooter />
     </div>
   );

@@ -22,6 +22,10 @@ export default {
         backgroundTwo: "#52796f",
         backgroundThree: "#264653",
       },
+      backgroundImage: {
+        "background-image": 'url("/src/assets/Images/bg.png")',
+        "background-image-2": 'url("/src/assets/Images/bg-2.jpg")',
+      },
       fontSize: {
         "2xs": ".625rem",
         "4xs": ".5rem",
@@ -82,7 +86,7 @@ function addVariablesForColors({ addBase, theme }) {
   let newVars = Object.fromEntries(
     Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
   );
- 
+
   addBase({
     ":root": newVars,
   });

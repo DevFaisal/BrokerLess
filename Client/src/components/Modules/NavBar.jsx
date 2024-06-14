@@ -39,11 +39,14 @@ function NavBar() {
           ))}
         </div>
         <div className="flex gap-3">
-          <Link to="/auth/login-user">
+          <Link onClick={() => setIsOpen(false)} to="/auth/login-user">
             <OutlineButton>User Login</OutlineButton>
           </Link>
           <Link to="/auth/login-landlord">
-            <Button className="bg-backgroundTwo hover:bg-slate-800">
+            <Button
+              onClick={() => setIsOpen(false)}
+              className="bg-backgroundTwo hover:bg-slate-800"
+            >
               Landlord Login
             </Button>
           </Link>
@@ -53,9 +56,7 @@ function NavBar() {
   };
 
   return (
-    <nav className="text-black bg-white flex justify-between items-center p-3 px-10 
-    sticky top-0 z-50 w-full shadow-md
-    ">
+    <nav className="flex justify-between items-center  px-5 py-3  w-full  top-0 z-50">
       <div>
         <img width={100} src={logo} alt="Logo" />
       </div>
