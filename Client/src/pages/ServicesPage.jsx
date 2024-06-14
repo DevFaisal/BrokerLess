@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, PageFooter } from "../components/Index";
+import { Link } from "react-router-dom";
 
 function ServicesPage() {
   const services = [
@@ -62,17 +63,17 @@ function ServicesPage() {
           </div>
         </section>
 
-        <section className="py-16 bg-gray-50 dark:bg-gray-900">
+        <section className="py-16 ">
           <div className="px-6 mx-auto max-w-screen-xl text-center lg:px-8">
-            <h2 className="mb-8 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+            <h2 className="mb-8 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white md:text-5xl lg:text-5xl">
               Ready to get started?
             </h2>
             <p className="mb-12 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
               Join us today and experience the benefits of our comprehensive
               rental services.
             </p>
-            <a
-              href="#"
+            <Link
+              to="/auth/login-user"
               className="inline-flex justify-center items-center py-3 px-6 text-base font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
             >
               Get Started
@@ -91,7 +92,7 @@ function ServicesPage() {
                   d="M1 5h12m0 0L9 1m4 4L9 9"
                 />
               </svg>
-            </a>
+            </Link>
           </div>
         </section>
       </Container>

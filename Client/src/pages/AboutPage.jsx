@@ -40,9 +40,9 @@ function AboutPage() {
           </div>
         </section>
 
-        <section className="bg-gray-50 dark:bg-gray-900">
+        <section>
           <div className="py-16 px-6 mx-auto max-w-screen-xl text-center lg:px-8">
-            <h1 className="mb-6 text-4xl font-extrabold tracking-tight leading-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+            <h1 className="mb-6 text-4xl font-extrabold tracking-tight leading-tight text-gray-900 md:text-5xl lg:text-5xl dark:text-white">
               We are here to find the best solutions for you
             </h1>
             <p className="mb-12 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400 leading-relaxed">
