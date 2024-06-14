@@ -17,34 +17,35 @@ function NavBar() {
   const renderLinks = (links) => {
     return (
       <div
-        className={`md:flex md:gap-10 ${
+        className={`md:flex md:gap-10 justify-between items-center w-full ${
           isOpen
             ? `flex flex-col gap-3 px-10  self-center bg-white py-5 items-center absolute top-16 left-0 w-full z-50`
             : "hidden"
         }`}
       >
-        {links.map((link, index) => (
-          <NavLink
-            key={index}
-            to={link.path}
-            onClick={() => setIsOpen(false)}
-            className={({ isActive }) =>
-              `${isActive ? "text-blue-500" : "text-black"} border-1 p-3 mx-10 ring-1 ring-gray-400 rounded-md w-full `
-            }
-          >
-            {link.text}
-          </NavLink>
-        ))}
+        <div></div>
+        <div className="flex flex-col sm:flex-row w-full sm:w-auto items-center gap-5">
+          {links.map((link, index) => (
+            <NavLink
+              key={index}
+              to={link.path}
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `${isActive ? "text-blue-500" : "text-black"} sm:border-1 sm:p-0 p-3 sm:mx-0 mx-10 ring-1 sm:ring-1 sm:ring-white ring-gray-400 rounded-md w-full `
+              }
+            >
+              {link.text}
+            </NavLink>
+          ))}
+        </div>
         <div className="flex gap-3">
           <Link to="/auth/login-user">
-            <OutlineButton onClick={() => setIsOpen(false)}>
-              User Login
-            </OutlineButton>
+            <OutlineButton>User Login</OutlineButton>
           </Link>
           <Link to="/auth/login-landlord">
-            <OutlineButton onClick={() => setIsOpen(false)}>
+            <Button className="bg-backgroundTwo hover:bg-slate-800">
               Landlord Login
-            </OutlineButton>
+            </Button>
           </Link>
         </div>
       </div>
@@ -52,7 +53,9 @@ function NavBar() {
   };
 
   return (
-    <nav className="text-black flex justify-between items-center p-3 px-10">
+    <nav className="text-black bg-white flex justify-between items-center p-3 px-10 
+    sticky top-0 z-50 w-full shadow-md
+    ">
       <div>
         <img width={100} src={logo} alt="Logo" />
       </div>
@@ -70,7 +73,7 @@ function NavBar() {
 
       {renderLinks(links)}
 
-      <div className="md:flex gap-3 hidden">
+      {/* <div className="md:flex gap-3 hidden">
         <Link to="/auth/login-user">
           <OutlineButton>User Login</OutlineButton>
         </Link>
@@ -79,7 +82,7 @@ function NavBar() {
             Landlord Login
           </Button>
         </Link>
-      </div>
+      </div> */}
     </nav>
   );
 }
