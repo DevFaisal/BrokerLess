@@ -274,13 +274,19 @@ const getAllTenants = async (req, res) => {
         properties: {
           select: {
             name: true,
-            // Add where clause to get only rented properties
             tenant: {
               select: {
                 id: true,
                 name: true,
                 email: true,
                 phone: true,
+              },
+            },
+            Agreement: {
+              select: {
+                status: true,
+                startDate: true,
+                endDate: true,
               },
             },
           },

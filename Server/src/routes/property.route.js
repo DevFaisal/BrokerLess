@@ -22,7 +22,7 @@ const client = new PrismaClient();
 // ------------------- Property Routes -------------------
 
 //GET Request to get all properties
-router.route("/").get(getAllProperties); //http://localhost:5000/api/property
+router.route("/").get(getAllProperties); 
 
 // GET Request to get a property by ID
 router.route("/prop").get(isValidLandlord, getPropertyById);

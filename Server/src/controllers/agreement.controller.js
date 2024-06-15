@@ -6,7 +6,14 @@ const route = Router();
 const prisma = new PrismaClient();
 
 const generateAgreement = async (req, res) => {
-  const result = Validation.agreementSchemaValidation(req.body);
+  const data = {
+    propertyId: req.body.propertyId,
+    startDate: new Date(req.body.startDate),
+    endDate: new Date(req.body.endDate),
+    rent: req.body.rent,
+  };
+
+  const result = Validation.agreementSchemaValidation(data);
   if (!result.success) {
     return res
       .status(400)
@@ -65,8 +72,8 @@ const generateAgreement = async (req, res) => {
       data: {
         propertyId: req.body.propertyId,
         tenantId: req.user.id,
-        startDate: new Date(req.body.startDate).toISOString(),
-        endDate: new Date(req.body.endDate).toISOString(),
+        startDate: new Date(req.body.startDate),
+        endDate: new Date(req.body.endDate),
         rent: req.body.rent,
         status: "PENDING",
       },
@@ -147,62 +154,53 @@ const deleteAgreement = async (req, res) => {
 
 const getAgreements = async (req, res) => {
   try {
-    const agreements = await prisma.property.findMany({
+    const property = await prisma.property.findMany({
       where: {
-        landlordId: req.user.id,
-      },
-      select: {
-        id: true,
-        name: true,
-        status: true,
-        PropertyAddress: {
-          select: {
-            city: true,
-            state: true,
+        AND: [
+          {
+            landlordId: req.user.id,
           },
-        },
-        Agreement: {
-          select: {
-            id: true,
-            startDate: true,
-            endDate: true,
-            rent: true,
-            status: true,
-            User: {
-              select: {
-                name: true,
-                email: true,
-                phone: true,
+          {
+            Agreement: {
+              some: {
+                status: "PENDING",
               },
             },
           },
+        ],
+      },
+    });
+    const agreements = await prisma.agreement.findMany({
+      where: {
+        propertyId: {
+          in: property.map((property) => property.id),
+        },
+        status: "PENDING",
+      },
+      select: {
+        id: true,
+        startDate: true,
+        endDate: true,
+        rent: true,
+        status: true,
+        User: {
+          select: {
+            name: true,
+            phone: true,
+          },
+        },
+        Property: {
+          select: {
+            name: true,
+          },
         },
       },
     });
-
     if (agreements.length === 0) {
-      return res.status(404).json({ message: "No agreements found" });
+      return res.status(204).json({ message: "No agreements found" });
     }
-    const refinedData = agreements.map((agreement) => {
-      return {
-        id: agreement.id,
-        name: agreement.name,
-        status: agreement.status,
-        city: agreement.PropertyAddress.city,
-        state: agreement.PropertyAddress.state,
-        agreements: agreement.Agreement.map((agreement) => {
-          return {
-            id: agreement.id,
-            startDate: agreement.startDate,
-            endDate: agreement.endDate,
-            rent: agreement.rent,
-            status: agreement.status,
-            tenant: agreement.User,
-          };
-        }),
-      };
-    });
-    return res.status(200).json(refinedData);
+
+    return res.status(200).json(agreements);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -235,10 +233,13 @@ const getAgreementDate = async (req, res) => {
 };
 
 const approveAgreement = async (req, res) => {
+  if (!req.query.applicationId) {
+    return res.status(400).json({ message: "Application ID is required" });
+  }
   try {
     const agreement = await prisma.agreement.findUnique({
       where: {
-        id: req.body.id,
+        id: req.query.applicationId,
       },
     });
     if (!agreement) {
@@ -252,13 +253,12 @@ const approveAgreement = async (req, res) => {
         id: true,
       },
     });
-
     if (landlord.id !== req.user.id) {
       return res.status(403).json({ message: "Unauthorized" });
     }
-    await prisma.agreement.update({
+    const updatedAgreement = await prisma.agreement.update({
       where: {
-        id: req.body.id,
+        id: req.query.applicationId,
       },
       data: {
         status: "APPROVED",
@@ -270,6 +270,11 @@ const approveAgreement = async (req, res) => {
       },
       data: {
         status: "RENTED",
+        tenant: {
+          connect: {
+            id: agreement.tenantId,
+          },
+        },
       },
     });
     return res.status(200).json({ message: "Agreement approved" });

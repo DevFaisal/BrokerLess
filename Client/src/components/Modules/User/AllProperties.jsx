@@ -6,6 +6,7 @@ import { useRecoilStateLoadable } from "recoil";
 import { GetAllPropertiesForUser } from "../../../store/PropertyAtom";
 import Loading from "../Loading";
 import ContentError from "../ContentError";
+import { LayoutGrid } from "../../../utils/layout-grid";
 
 function AllProperties() {
   const [properties, setProperties] = useRecoilStateLoadable(

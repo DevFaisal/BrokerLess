@@ -22,12 +22,21 @@ export default {
         backgroundTwo: "#52796f",
         backgroundThree: "#264653",
       },
+      backgroundImage: {
+        "background-image": 'url("/src/assets/Images/bg.png")',
+        "background-image-2": 'url("/src/assets/Images/bg-2.jpg")',
+      },
       fontSize: {
         "2xs": ".625rem",
         "4xs": ".5rem",
         "7xl": "5rem",
       },
       keyframes: {
+        scroll: {
+          to: {
+            transform: "translate(calc(-50% - 0.5rem))",
+          },
+        },
         slideLeft: {
           "0%": { transform: "translateX(100%)", opacity: "0" },
           "100%": { transform: "translateX(0)", opacity: "1" },
@@ -40,6 +49,8 @@ export default {
       animation: {
         slideLeft: "slideLeft 0.5s ease-out forwards",
         slideRight: "slideRight 0.5s ease-out forwards",
+        scroll:
+          "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
       },
     },
   },

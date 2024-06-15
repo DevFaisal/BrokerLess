@@ -64,3 +64,18 @@ export const fetchAllUserRequests = selectorFamily({
       return response.data;
     },
 });
+
+export const getAllTenants = selectorFamily({
+  key: "getAllTenants",
+  get:
+    () =>
+    async ({ get }) => {
+      const response = await axios.get(
+        `${import.meta.env.VITE_LOCALHOST}/api/property/tenants`,
+        {
+          withCredentials: true,
+        }
+      );
+      return response.data;
+    },
+});

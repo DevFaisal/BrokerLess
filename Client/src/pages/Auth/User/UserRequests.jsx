@@ -98,11 +98,12 @@ export function RequestCard({ request, onClick }) {
           {new Date(request?.endDate).toLocaleDateString()}
         </p>
       </div>
-      <div>
+
+      {request?.status == "APPROVED" ? null : (
         <button onClick={onClick}>
           <Trash2Icon color="red" />
         </button>
-      </div>
+      )}
     </div>
   );
 }

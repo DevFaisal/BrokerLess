@@ -113,7 +113,7 @@ model Agreement {
   tenantId   String
   status     AgreementStatus @default(PENDING)
   startDate  DateTime
-  endDate    String //Change to Date later
+  endDate    DateTime
   rent       Int
   createdAt  DateTime        @default(now())
   Property   Property        @relation(fields: [propertyId], references: [id], onDelete: Cascade)

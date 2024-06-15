@@ -1,4 +1,4 @@
-import { atom, selector } from "recoil";
+import { atom, selector, selectorFamily } from "recoil";
 import axios from "axios";
 import { useEffect } from "react";
 
@@ -39,3 +39,18 @@ const FetchLandLord = async () => {
 };
 
 export default FetchLandLord;
+
+export const fetchApplications = selectorFamily({
+  key: "fetchApplications",
+  get:
+    () =>
+    async ({ get }) => {
+      const response = await axios.get(
+        `${import.meta.env.VITE_LOCALHOST}/api/agreement`,
+        {
+          withCredentials: true,
+        }
+      );
+      return response.data;
+    },
+});

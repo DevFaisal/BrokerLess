@@ -186,6 +186,49 @@ const getLandlordProfile = async (req, res) => {
   }
 };
 
+const updateLandlordProfile = async (req, res) => {
+  //Validate the request body
+  const result = Validation.landlordUpdate(req.body); //Create this function in utils/Validation.js
+  //Check if the request body is valid
+  if (!result.success) {
+    return res
+      .status(400)
+      .send(result.error.errors?.map((error) => error.message));
+  }
+  try {
+    //Update the landlord
+    const updatedLandlord = await prisma.landlord.update({
+      where: {
+        id: req.user.id,
+      },
+      data: {
+        name: req.body.name,
+        phone: req.body.phone,
+        Landlordaddress: {
+          update: {
+            street: req.body.street,
+            city: req.body.city,
+            state: req.body.state,
+            zip: req.body.zip,
+            country: req.body.country,
+          },
+        },
+      },
+    });
+    if (!updatedLandlord) {
+      return res.status(500).json({
+        message: "Failed to update landlord",
+      });
+    }
+    return res.status(200).json({
+      message: "Landlord updated successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 // Logout landlord
 const logoutLandlord = async (req, res) => {
   try {
@@ -197,4 +240,10 @@ const logoutLandlord = async (req, res) => {
   }
 };
 
-export { registerLandlord, loginLandlord, getLandlordProfile, logoutLandlord };
+export {
+  registerLandlord,
+  loginLandlord,
+  getLandlordProfile,
+  logoutLandlord,
+  updateLandlordProfile,
+};

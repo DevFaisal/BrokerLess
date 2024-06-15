@@ -36,6 +36,7 @@ import {
   AllProperties,
   UserPropertiesWrapper,
 } from "../components/Index";
+import LandLordProfilePage from "../pages/Auth/Landlord/LandLordProfilePage";
 
 const RootRouter = () => {
   return (
@@ -91,7 +92,7 @@ const RootRouter = () => {
                 <Route path="tenants" element={<Tenants />} />
                 <Route path="applications" element={<ApplicationsPage />} />
                 <Route path="maintenance" element={<div>Maintenance</div>} />
-                <Route path="profile" element={<div>Profile</div>} />
+                <Route path="profile" element={<LandLordProfilePage />} />
               </Route>
               <Route path="profile" element={<div>Profile</div>} />
               <Route path="settings" element={<div>Settings</div>} />
