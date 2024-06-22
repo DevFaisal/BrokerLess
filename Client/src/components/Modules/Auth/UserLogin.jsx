@@ -24,6 +24,8 @@ function UserLogin() {
   });
 
   const onSubmit = async (data) => {
+    //Debugging
+    console.log(import.meta.env.VITE_LOCALHOST);
     setLoading(true);
     console.log("Form Data Submitted:", data);
     try {
