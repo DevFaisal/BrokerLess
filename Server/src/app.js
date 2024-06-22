@@ -12,7 +12,7 @@ app.use(express.static("public"));
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: "*", // Allow all origins   process.env.CLIENT_URL
     credentials: true,
   })
 );
@@ -27,7 +27,7 @@ import verificationRoute from "./routes/verification.route.js";
 // Routes
 app.use("/auth/user", userRouter);
 app.use("/auth/landlord", landlordRouter);
-app.use("/api/property", propertyRoute); 
+app.use("/api/property", propertyRoute);
 app.use("/api/agreement", agreementRoute);
 app.use("/api/verification", verificationRoute);
 

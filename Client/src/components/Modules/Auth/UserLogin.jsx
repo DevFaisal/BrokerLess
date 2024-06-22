@@ -7,6 +7,7 @@ import { Button, Container, FooterLinks, FormInput } from "../../Index";
 import { useNavigate } from "react-router-dom";
 
 function UserLogin() {
+  const loginAPI = `${import.meta.env.VITE_LOCALHOST}/auth/user/login`;
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const navigate = useNavigate();
@@ -16,26 +17,19 @@ function UserLogin() {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
-      phone: "",
     },
   });
 
   const onSubmit = async (data) => {
-    //Debugging
-    console.log(import.meta.env.VITE_LOCALHOST);
+    console.log("Login API:", loginAPI);
     setLoading(true);
     console.log("Form Data Submitted:", data);
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_LOCALHOST}/auth/user/login`,
-        data,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.post(loginAPI, data, {
+        withCredentials: true,
+      });
       console.log("API Response:", response);
       setLoading(false);
       toast.success(response.data.message);
