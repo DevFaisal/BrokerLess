@@ -12,7 +12,7 @@ app.use(express.static("public"));
 
 app.use(
   cors({
-    origin: "*", // Allow all origins   process.env.CLIENT_URL
+    origin: process.env.CLIENT_URL || "http://localhost:3000",
     credentials: true,
   })
 );
