@@ -73,17 +73,6 @@ function NavBar() {
       </div>
 
       {renderLinks(links)}
-
-      {/* <div className="md:flex gap-3 hidden">
-        <Link to="/auth/login-user">
-          <OutlineButton>User Login</OutlineButton>
-        </Link>
-        <Link to="/auth/login-landlord">
-          <Button className="bg-backgroundTwo hover:bg-slate-800">
-            Landlord Login
-          </Button>
-        </Link>
-      </div> */}
     </nav>
   );
 }

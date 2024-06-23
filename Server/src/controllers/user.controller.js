@@ -6,7 +6,6 @@ import verificationEmail from "../utils/verificationEmail.js";
 import z from "zod";
 import resetPasswordEmail from "../utils/resetPasswordEmail.js";
 
-
 const prisma = new PrismaClient();
 
 const registerUser = async (req, res) => {
@@ -175,9 +174,10 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
 
     const cookieOptions = {
-      httpOnly: true,
+      origin: process.env.CLIENT_URL,
+      credentials: true,
       secure: true,
-      sameSite: "lax",
+      sameSite: "none",
       maxAge: 3600000,
     };
 
