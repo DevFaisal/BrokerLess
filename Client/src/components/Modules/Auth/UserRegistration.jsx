@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { LoaderCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import axios from "axios";
 import { Button, Container, FooterLinks, FormInput } from "../../Index";
 import { registerUser } from "../../../api/UserApi";
 
