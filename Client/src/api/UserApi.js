@@ -81,6 +81,62 @@ export const resendVerificationEmail = async (data) => {
   }
 };
 
+export const forgotPassword = async (data) => {
+  let config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: `${API}/auth/user/forgot-password`,
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    data: data,
+  };
+  try {
+    const response = await axios.request(config);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const resetUserPassword = async (data) => {
+  let config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: `${API}/auth/user/reset-password`,
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    data: data,
+  };
+  try {
+    const response = await axios.request(config);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const checkUserVerificationToken = async (verificationToken) => {
+  let config = {
+    method: "get",
+    maxBodyLength: Infinity,
+    url: `${API}/auth/user/reset-password/${verificationToken}`,
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+  };
+  try {
+    const response = await axios.request(config);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const me = async () => {
   let config = {
     method: "get",

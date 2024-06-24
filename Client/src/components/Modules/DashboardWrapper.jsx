@@ -4,16 +4,12 @@ import { AlignJustify, LogOut } from "lucide-react";
 import axios from "axios";
 import { Container } from "../Index";
 import logo from "../../assets/logos/logowhite.svg";
+import { logOutfromInside } from "../../api/GeneralApi";
 
 function DashboardWrapper({ heading, username, children, links, credentials }) {
   const logOut = async () => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_LOCALHOST}/auth/${credentials}/logout`,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await logOutfromInside(credentials);
       console.log(response);
       if (response.status === 200) {
         window.location.href = "/";
@@ -47,7 +43,7 @@ function DashboardWrapper({ heading, username, children, links, credentials }) {
               key={index}
               to={link.path}
               className={({ isActive }) => {
-                return `w-4/2 text-base p-3 my-2 text-white focus:text-black hover:text-black hover:bg-white mx-2 rounded-lg ${isActive ? "bg-white text-black" : ""} `;
+                return `w-4/2 text-base p-3 my-2 text-white hover:text-black hover:bg-white mx-2 rounded-lg ${isActive ? "text-slate-900 bg-white" : ""} `;
               }}
             >
               <div className="flex items-center gap-2">
