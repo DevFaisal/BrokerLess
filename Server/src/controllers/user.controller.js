@@ -176,7 +176,7 @@ const loginUser = async (req, res) => {
     const cookieOptions = {
       origin: process.env.CLIENT_URL,
       credentials: true,
-      secure: false,
+      secure: true,
       sameSite: "none",
       maxAge: 3600000,
     };

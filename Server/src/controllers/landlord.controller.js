@@ -139,7 +139,7 @@ const loginLandlord = async (req, res) => {
 
     const cookieOptions = {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: "none",
       maxAge: 3600000,
     };
