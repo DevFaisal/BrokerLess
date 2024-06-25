@@ -1,5 +1,11 @@
-import axios from "axios";
 import { selectorFamily, atomFamily } from "recoil";
+import {
+  getAgreementDates,
+  getAllPropertiesOfLandlord,
+  getAllPropertiesOfUser,
+  getDetailedInfoOfProperty,
+  getPropertyByID,
+} from "../api/PropertyApi";
 
 export const PropertyAtomFamily = atomFamily({
   key: "PropertyAtomFamily",
@@ -8,12 +14,7 @@ export const PropertyAtomFamily = atomFamily({
     get:
       (id) =>
       async ({ get }) => {
-        const response = await axios.get(
-          `${import.meta.env.VITE_LOCALHOST}/api/property/prop/?id=${id}`,
-          {
-            withCredentials: true,
-          }
-        );
+        const response = await getPropertyByID(id);
         return response.data;
       },
   }),
@@ -24,12 +25,7 @@ export const GetAllProperties = selectorFamily({
   get:
     () =>
     async ({ get }) => {
-      const response = await axios.get(
-        `${import.meta.env.VITE_LOCALHOST}/api/property/landlord`,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await getAllPropertiesOfLandlord();
       return response.data;
     },
 });
@@ -39,12 +35,7 @@ export const GetAllPropertiesForUser = selectorFamily({
   get:
     () =>
     async ({ get }) => {
-      const response = await axios.get(
-        `${import.meta.env.VITE_LOCALHOST}/api/property`,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await getAllPropertiesOfUser();
       return response.data;
     },
 });
@@ -54,12 +45,7 @@ export const GetPropertyInfo = selectorFamily({
   get:
     (id) =>
     async ({ get }) => {
-      const response = await axios.get(
-        `${import.meta.env.VITE_LOCALHOST}/api/property/info?id=${id}`,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await getDetailedInfoOfProperty(id);
       return response.data;
     },
 });
@@ -69,10 +55,7 @@ export const GetAgreementDate = selectorFamily({
   get:
     (id) =>
     async ({ get }) => {
-      const response = await axios.get(
-        `${import.meta.env.VITE_LOCALHOST}/api/agreement/date`,
-        { withCredentials: true, params: { id: id } }
-      );
-      return response.data;
+      const response = await getAgreementDates(id);
+      return response;
     },
 });

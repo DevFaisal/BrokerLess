@@ -110,6 +110,7 @@ export const resetUserPassword = async (data) => {
       "Access-Control-Allow-Origin": "*",
     },
     data: data,
+    withCredentials: true,
   };
   try {
     const response = await axios.request(config);
@@ -128,6 +129,7 @@ export const checkUserVerificationToken = async (verificationToken) => {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
     },
+    withCredentials: true,
   };
   try {
     const response = await axios.request(config);

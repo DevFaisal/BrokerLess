@@ -7,6 +7,7 @@ import { Button, DisabledDatePicker, Loading } from "../../../components/Index";
 import { useRecoilStateLoadable } from "recoil";
 import { GetAgreementDate, GetPropertyInfo } from "../../../store/PropertyAtom";
 import ContentError from "../../../components/Modules/ContentError";
+import { generateAgreement } from "../../../api/PropertyApi";
 
 function PropertyInfo() {
   const [selectedDate, setSelectedDate] = useState({});
@@ -14,6 +15,7 @@ function PropertyInfo() {
   const [agreementDate, setAgreementDate] = useRecoilStateLoadable(
     GetAgreementDate(propertyId)
   );
+
   const [property, setProperty] = useRecoilStateLoadable(
     GetPropertyInfo(propertyId)
   );
@@ -35,6 +37,8 @@ function PropertyInfo() {
     data.startDate = selectedDate.startDate;
     data.endDate = selectedDate.endDate;
 
+    console.log(data);
+
     if (!data.startDate || !data.endDate) {
       return toast.error("Please fill all the fields");
     }
@@ -48,16 +52,13 @@ function PropertyInfo() {
     }
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_LOCALHOST}/api/agreement/generate`,
-        {
-          propertyId,
-          startDate: data.startDate,
-          endDate: data.endDate,
-          rent: parseInt(property.contents.rent),
-        },
-        { withCredentials: true }
-      );
+      const refinedData = {
+        propertyId,
+        startDate: new Date(data.startDate),
+        endDate: new Date(data.endDate),
+        rent: parseInt(property.contents.rent),
+      };
+      const response = await generateAgreement(refinedData);
       if (response.status === 200) {
         toast.success("Agreement Request Sent Successfully");
         window.location.href = "/user/requests";
@@ -161,7 +162,7 @@ function PropertyInfo() {
                         setSelectedDate({ ...selectedDate, startDate: date })
                       }
                       selected={selectedDate.startDate}
-                      dateRanges={agreementDate.contents}
+                      dateRanges={agreementDate.contents.data}
                     />
                   </div>
                   <div className="flex flex-col">
@@ -173,7 +174,7 @@ function PropertyInfo() {
                         setSelectedDate({ ...selectedDate, endDate: date })
                       }
                       selected={selectedDate.endDate}
-                      dateRanges={agreementDate.contents}
+                      dateRanges={agreementDate.contents.data}
                     />
                   </div>
                 </div>

@@ -5,12 +5,11 @@ import "react-datepicker/dist/react-datepicker.css";
 const DisabledDatePicker = ({ dateRanges, onChange, selected }) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-
   const isDateDisabled = (date) => {
     if (date < today) {
       return true;
     }
-    if (dateRanges?.response?.status === 404) {
+    if (dateRanges?.response?.status === 404 || dateRanges === undefined) {
       return false;
     } else {
       return dateRanges.some((range) => {

@@ -1,15 +1,18 @@
 import { Router } from "express";
-import { PrismaClient } from "@prisma/client";
+import { AgreementStatus, PrismaClient } from "@prisma/client";
 import Validation from "../utils/Validation.js";
 
 const route = Router();
 const prisma = new PrismaClient();
 
 const generateAgreement = async (req, res) => {
+  const sanitizeInput = (input) => {
+    return input.replace(/\0/g, "");
+  };
   const data = {
-    propertyId: req.body.propertyId,
-    startDate: new Date(req.body.startDate),
-    endDate: new Date(req.body.endDate),
+    propertyId: sanitizeInput(req.body.propertyId),
+    startDate: new Date(sanitizeInput(req.body.startDate)),
+    endDate: new Date(sanitizeInput(req.body.endDate)),
     rent: req.body.rent,
   };
 
@@ -21,8 +24,17 @@ const generateAgreement = async (req, res) => {
   }
 
   try {
-    // Check weather if any agreement already exists for the property
-    const agreementExists = await prisma.agreement.findFirst({
+    const minAgreementPeriod = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
+    if (
+      new Date(data.endDate) - new Date(data.startDate) <
+      minAgreementPeriod
+    ) {
+      return res
+        .status(400)
+        .json({ message: "Minimum Agreement period should be 30 days" });
+    }
+
+    const existingAgreements = await prisma.agreement.findFirst({
       where: {
         propertyId: req.body.propertyId,
         User: {
@@ -30,55 +42,22 @@ const generateAgreement = async (req, res) => {
         },
       },
     });
-    if (agreementExists) {
+    if (existingAgreements) {
       return res.status(400).json({ message: "Agreement already exists" });
     }
 
-    //Check weather the Agreement is already hold by another tenant for the same period
-    const property = await prisma.property.findUnique({
-      where: {
-        id: req.body.propertyId,
-      },
-      select: {
-        Agreement: {
-          select: {
-            startDate: true,
-            endDate: true,
-          },
-        },
-      },
-    });
-
-    if (property.Agreement.length > 0) {
-      for (let i = 0; i < property.Agreement.length; i++) {
-        if (
-          (new Date(req.body.startDate) >=
-            new Date(property.Agreement[i].startDate) &&
-            new Date(req.body.startDate) <=
-              new Date(property.Agreement[i].endDate)) ||
-          (new Date(req.body.endDate) >=
-            new Date(property.Agreement[i].startDate) &&
-            new Date(req.body.endDate) <=
-              new Date(property.Agreement[i].endDate))
-        ) {
-          return res
-            .status(400)
-            .json({ message: "Property already rented for the given period" });
-        }
-      }
-    }
-
-    const agreement = await prisma.agreement.create({
+    const newAgreement = await prisma.agreement.create({
       data: {
         propertyId: req.body.propertyId,
         tenantId: req.user.id,
-        startDate: new Date(req.body.startDate),
-        endDate: new Date(req.body.endDate),
+        startDate: req.body.startDate, //TODO: Change to Date
+        endDate: req.body.endDate, //TODO: Change to Date
         rent: req.body.rent,
         status: "PENDING",
       },
     });
-    res.status(200).json(agreement);
+
+    res.status(200).json(newAgreement);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
@@ -233,6 +212,7 @@ const getAgreementDate = async (req, res) => {
 };
 
 const approveAgreement = async (req, res) => {
+  console.log(req.query);
   if (!req.query.applicationId) {
     return res.status(400).json({ message: "Application ID is required" });
   }

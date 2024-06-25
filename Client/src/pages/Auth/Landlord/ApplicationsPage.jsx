@@ -66,7 +66,7 @@ function ApplicationsPage() {
             <ApplicationCard
               key={application.id}
               application={application}
-              onClick={ApproveApplication(application.id)}
+              onApprove={ApproveApplication(application.id)}
             />
           ))}
         </div>
