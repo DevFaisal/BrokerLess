@@ -3,6 +3,7 @@ import axios from "axios";
 const API = import.meta.env.VITE_LOCALHOST;
 
 export const logOutfromInside = async (credentials) => {
+  console.log("Logging out", credentials);
   let config = {
     method: "get",
     maxBodyLength: Infinity,

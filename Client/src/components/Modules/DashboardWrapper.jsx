@@ -43,7 +43,7 @@ function DashboardWrapper({ heading, username, children, links, credentials }) {
               key={index}
               to={link.path}
               className={({ isActive }) => {
-                return `w-4/2 text-base p-3 my-2 text-white hover:text-black hover:bg-white mx-2 rounded-lg ${isActive ? "text-slate-900 bg-white" : ""} `;
+                return `w-4/2 text-base p-3 my-2 text-white hover:text-black hover:bg-white mx-2 rounded-lg ${isActive ? "mix-blend-difference " : ""} `;
               }}
             >
               <div className="flex items-center gap-2">
