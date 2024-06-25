@@ -5,13 +5,14 @@ import { toast } from "react-hot-toast";
 import { LoaderCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button, Container } from "../../Index";
+import { forgotPassword } from "../../../api/UserApi";
 
 function ForgetPassword() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const sentEmail = async () => {
+  const sendEmail = async () => {
     try {
       if (!email) {
         return toast.error("Please enter your email");
@@ -19,23 +20,24 @@ function ForgetPassword() {
       if (!email.includes("@")) {
         return toast.error("Please enter a valid email");
       }
+
       setLoading(true);
-      const response = await axios.post(
-        `${import.meta.env.VITE_LOCALHOST}/auth/user/forgot-password`,
-        { email }
-      );
-      if (response.status === 200) {
-        toast.success(response.data.message);
+      const res = await forgotPassword({ email });
+      if (res.status === 200) {
+        toast.success(res.data.message);
         setTimeout(() => {
           navigate("/auth/login-user");
         }, 2000);
+      } else if (res.status === 400) {
+        toast.error(res.data.message);
       } else {
-        toast.error(response.data.message);
+        toast.error(res.data.message);
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -52,7 +54,7 @@ function ForgetPassword() {
         />
         <Button
           className={"flex justify-center w-full mt-5 mb-5 "}
-          onClick={sentEmail}
+          onClick={sendEmail}
         >
           {loading ? (
             <LoaderCircle size={20} className="text-white animate-spin" />

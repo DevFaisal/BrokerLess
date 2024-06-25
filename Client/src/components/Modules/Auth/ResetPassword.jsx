@@ -9,12 +9,14 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../Buttons/Button";
 import { useForm } from "react-hook-form";
 import { FormInput } from "../../Index";
+import {
+  checkUserVerificationToken,
+  resetUserPassword,
+} from "../../../api/UserApi";
 
 function ResetPassword() {
   const { verificationToken } = useParams();
   const navigate = useNavigate();
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
@@ -48,18 +50,13 @@ function ResetPassword() {
   useEffect(() => {
     const checkVerificationToken = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_LOCALHOST}/auth/user/reset-password/${verificationToken}`
-        );
-        console.log(response);
-        if (response.status === 200) {
+        const res = await checkUserVerificationToken(verificationToken);
+        if (res.response.status === 200) {
           setError(false);
-        } else {
-          setError(false);
-          setErrorMessage(response.data.message);
+        } else if (res.response.status === 400) {
+          setErrorMessage(res.response.data.message);
         }
       } catch (error) {
-        setErrorMessage(error.response.data.message);
         console.log(error);
       }
     };
@@ -68,20 +65,25 @@ function ResetPassword() {
 
   const resetPassword = async (data) => {
     const { password, confirmPassword } = data;
+
+    // Validate password length
     if (password.length < 8) {
       return toast.error("Password must be at least 8 characters long");
     }
+
+    // Validate if passwords match
     if (password !== confirmPassword) {
       return toast.error("Passwords do not match");
     }
+
     setLoading(true);
+
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_LOCALHOST}/auth/user/reset-password`,
-        { password, verificationToken }
-      );
+      // Call the API to reset the user's password
+      const response = await resetUserPassword({ password, verificationToken });
+
+      // Handle the response based on the status code
       if (response.status === 200) {
-        setLoading(false);
         toast.success(response.data.message);
         setTimeout(() => {
           navigate("/auth/login-user");
@@ -90,9 +92,20 @@ function ResetPassword() {
         toast.error(response.data.message);
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      // Handle errors gracefully
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+    } finally {
+      // Ensure loading state is reset
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (

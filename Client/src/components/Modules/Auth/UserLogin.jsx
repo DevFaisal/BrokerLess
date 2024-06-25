@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { Button, Container, FooterLinks, FormInput } from "../../Index";
 import { useNavigate } from "react-router-dom";
+import { loginUser, resendVerificationEmail } from "../../../api/UserApi";
 
 function UserLogin() {
   const [loading, setLoading] = useState(false);
@@ -16,56 +17,36 @@ function UserLogin() {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
-      phone: "",
     },
   });
 
   const onSubmit = async (data) => {
     setLoading(true);
-    console.log("Form Data Submitted:", data);
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_LOCALHOST}/auth/user/login`,
-        data,
-        {
-          withCredentials: true,
-        }
-      );
-      console.log("API Response:", response);
+    const { response, status } = await loginUser(data);
+    if (status === 200) {
       setLoading(false);
-      toast.success(response.data.message);
-
+      toast.success("Login Successful");
       window.location.reload("/user/dashboard");
-    } catch (error) {
-      console.error("Error Details:", error);
+    } else {
       setLoading(false);
-      if (error.response && error.response.data) {
-        toast.error(
-          error.response.data.message || "An unexpected error occurred"
-        );
-        if (error.response.data.message === "Email not verified") {
-          setEmailError(true);
-        }
+      if (response?.data.message === "Email not verified") {
+        setEmailError(true);
       } else {
-        toast.error("Network error or server not responding");
+        toast.error(response?.data.message || "An unexpected error occurred");
       }
     }
   };
 
   const resendEmail = async () => {
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_LOCALHOST}/auth/user/resend-verification-email`,
-        { email: document.getElementById("email").value }
-      );
-      console.log(response);
-      toast.success(response.data.message);
-      setEmailError(false);
+      const response = await resendVerificationEmail({
+        email: document.getElementById("email").value,
+      });
+      toast.success(response?.data.message);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error?.response.data.message);
     }
   };
 

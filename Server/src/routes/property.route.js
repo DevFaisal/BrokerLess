@@ -25,7 +25,7 @@ const client = new PrismaClient();
 router.route("/").get(getAllProperties); 
 
 // GET Request to get a property by ID
-router.route("/prop").get(isValidLandlord, getPropertyById);
+router.route("/detail").get(isValidLandlord, getPropertyById);
 
 // GET Request to get a property by Address
 router.route("/search").get(searchProperty);
@@ -55,6 +55,6 @@ router.route("/tenants").get(isValidLandlord, getAllTenants);
 // ------------------- Tenant Routes -------------------
 
 // GET Request to get properties by ID
-router.route("/info").get(Authentication, getPropertyByIdToTenant); //http://localhost:5000/api/property/info
+router.route("/info").get(Authentication, getPropertyByIdToTenant); 
 
 export default router;

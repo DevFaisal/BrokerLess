@@ -7,6 +7,7 @@ import {
 } from "recoil";
 import axios from "axios";
 import { useEffect } from "react";
+import { me } from "../api/UserApi";
 
 // Define the UserAtom to store user data
 export const UserAtom = atom({
@@ -19,12 +20,7 @@ export const UserSelector = selector({
   key: "UserSelector",
   get: async () => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_LOCALHOST}/auth/user/me`,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await me();
       return response.data;
     } catch (error) {
       console.error(error);

@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { LoaderCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import axios from "axios";
 import { Button, Container, FooterLinks, FormInput } from "../../Index";
+import { registerUser } from "../../../api/UserApi";
 
 function UserRegistration() {
   const navigate = useNavigate();
@@ -23,19 +23,22 @@ function UserRegistration() {
   });
   const onSubmit = async (data) => {
     setLoading(true);
-    const response = await axios
-      .post(`${import.meta.env.VITE_LOCALHOST}/auth/user/register`, data)
-      .then((res) => {
+
+    try {
+      const res = await registerUser(data);
+      if (res.status === 201) {
         setLoading(false);
         toast.success(res.data.message);
         navigate("/auth/login-user");
-        return res;
-      })
-      .catch((error) => {
+      } else {
         setLoading(false);
-        toast.error(error.response.data.message);
-        return error;
-      });
+        toast.error(res.response.data.message);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error("Error Details:", error);
+      toast.error(error.response.data.message);
+    }
   };
   const Inputs = [
     {

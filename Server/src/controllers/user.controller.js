@@ -6,7 +6,6 @@ import verificationEmail from "../utils/verificationEmail.js";
 import z from "zod";
 import resetPasswordEmail from "../utils/resetPasswordEmail.js";
 
-
 const prisma = new PrismaClient();
 
 const registerUser = async (req, res) => {
@@ -175,9 +174,10 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
 
     const cookieOptions = {
-      httpOnly: true,
+      origin: process.env.CLIENT_URL,
+      credentials: true,
       secure: true,
-      sameSite: "lax",
+      sameSite: "none",
       maxAge: 3600000,
     };
 
@@ -206,38 +206,49 @@ const logoutUser = async (req, res) => {
 
 const forgetPassword = async (req, res) => {
   const { email } = req.body;
+
   try {
+    // Check if the user exists
     const user = await prisma.user.findFirst({
       where: {
         email: email,
       },
     });
+
     if (!user) {
       return res.status(404).json({
         message: "User not found",
       });
     }
+
+    // Generate a verification token that expires in 5 minutes
     const verificationToken = jwt.sign(
       {
-        exp: Math.floor((Date.now() + 5 * 60000) / 1000), // Reset token expires in 5 minutes
+        exp: Math.floor((Date.now() + 5 * 60000) / 1000), // Token expires in 5 minutes
         email: email,
       },
       process.env.JWT_SECRET
     );
 
+    // Send the reset password email
     const mail = await resetPasswordEmail(email, verificationToken, user.name);
     if (mail.error) {
       return res.status(500).json({
-        message: "error: " + mail.error.message,
+        message: "Error sending email: " + mail.error.message,
       });
     }
 
+    // Update the user's verification token in the database
     await prisma.user.update({
       where: {
         email: email,
       },
       data: {
-        verificationToken: verificationToken,
+        verificationToken: {
+          create: {
+            token: verificationToken,
+          },
+        },
       },
     });
 
@@ -250,6 +261,7 @@ const forgetPassword = async (req, res) => {
 };
 
 const checkVerificationToken = async (req, res) => {
+  console.log(req.params);
   const { verificationToken } = req.params;
   const email = jwt.verify(
     verificationToken,
@@ -278,13 +290,24 @@ const checkVerificationToken = async (req, res) => {
       where: {
         email: email,
       },
+      select: {
+        email: true,
+        verificationToken: {
+          select: {
+            token: true,
+          },
+        },
+      },
     });
     if (!user) {
       return res.status(404).json({
         message: "User not found",
       });
     }
-    const validToken = user.verificationToken === verificationToken;
+    const length = user.verificationToken.length;
+    const validToken =
+      user.verificationToken[length - 1].token == verificationToken;
+
     if (!validToken) {
       return res.status(400).json({
         message: "Invalid Token",
