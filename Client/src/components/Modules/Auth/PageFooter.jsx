@@ -33,7 +33,7 @@ function PageFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="flex flex-col items-center justify-center gap-8 py-12 px-4 text-center text-white bg-gray-900">
+    <footer className="flex flex-col items-center justify-center gap-8 py-12 px-4 text-center text-white bg-gray-900 z-10">
       <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between md:w-full md:px-10">
         <div className="flex items-center gap-4">
           <div className="flex justify-center h-24 w-24 md:h-32 md:w-32 items-center pl-12 rounded-full self-center bg-white p-1">

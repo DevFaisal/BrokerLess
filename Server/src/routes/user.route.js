@@ -40,7 +40,7 @@ router.route("/reset-password").post(resetPassword);
 router.route("/me").get(Authentication, userProfile);
 
 //UPDATE User Profile API Endpoint
-router.route("/profile").put(Authentication, updateUserProfile);
+router.route("/update").put(Authentication, updateUserProfile);
 
 //GET Refresh Token API Endpoint
 router.route("/refresh-token").get(Authentication, refreshToken);

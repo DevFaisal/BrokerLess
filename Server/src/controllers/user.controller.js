@@ -414,15 +414,15 @@ const userProfile = async (req, res) => {
         email: true,
         phone: true,
         isVerified: true,
-        // UserAddress: {
-        //   select: {
-        //     street: true,
-        //     city: true,
-        //     state: true,
-        //     zip: true,
-        //     country: true,
-        //   },
-        // },
+        UserAddress: {
+          select: {
+            street: true,
+            city: true,
+            state: true,
+            zip: true,
+            country: true,
+          },
+        },
       },
     });
 
@@ -451,20 +451,28 @@ const updateUserProfile = async (req, res) => {
       .send(result.error.errors?.map((error) => error.message));
   }
   try {
-    await prisma.userAddress.create({
-      data: {
-        street: req.body.street,
-        city: req.body.city,
-        state: req.body.state,
-        zip: req.body.zip,
-        country: req.body.country,
-        User: {
-          connect: {
-            id: req.user.id,
+    prisma.userAddress
+      .deleteMany({})
+      .then(async () => {
+        await prisma.userAddress.create({
+          data: {
+            street: req.body.street,
+            city: req.body.city,
+            state: req.body.state,
+            zip: req.body.zip,
+            country: req.body.country,
+            User: {
+              connect: {
+                id: req.user.id,
+              },
+            },
           },
-        },
-      },
-    });
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        return res.status(400).json({ message: "Error while updating" });
+      });
 
     return res.status(200).json({
       message: "Profile updated successfully",

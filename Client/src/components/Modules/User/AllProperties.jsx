@@ -23,7 +23,7 @@ function AllProperties() {
   } else if (properties.state === "hasValue") {
     return (
       <div className="w-full p-2">
-        <div className="flex justify-between my-2  p-4 rounded-md ring-1 ring-violet-100">
+        <div className="flex justify-between my-2 p-4 rounded-md ring-1 ring-violet-100">
           <div className="flex">
             <School className="w-6 h-6 inline-block" />
             <h1 className=" font-bold text-black ml-2">
@@ -32,7 +32,7 @@ function AllProperties() {
           </div>
         </div>
         <div className="flex flex-col overflow-hidden items-center">
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 w-full h-[50rem] pb-10 shadow-lg overflow-y-scroll">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 w-full pb-10 shadow-lg overflow-y-scroll">
             {properties.contents?.map((property, index) => (
               <PropCard
                 key={index}

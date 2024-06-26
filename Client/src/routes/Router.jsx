@@ -37,6 +37,7 @@ import {
   UserPropertiesWrapper,
 } from "../components/Index";
 import LandLordProfilePage from "../pages/Auth/Landlord/LandLordProfilePage";
+import UserProfilePage from "../pages/Auth/User/UserProfilePage";
 
 const RootRouter = () => {
   return (
@@ -107,7 +108,7 @@ const RootRouter = () => {
                 </Route>
                 <Route path="requests" element={<UserRequests />} />
                 <Route path="maintenance" element={<div>Maintenance</div>} />
-                <Route path="profile" element={<div>Profile</div>} />
+                <Route path="profile" element={<UserProfilePage />} />
               </Route>
             </Route>
             <Route
