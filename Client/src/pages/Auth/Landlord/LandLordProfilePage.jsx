@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Loading, Button } from "../../../components/Index";
 import { useRecoilStateLoadable } from "recoil";
 import { LandLordSelector } from "../../../store/LandLordAtom";
+import toast from "react-hot-toast";
 
 function LandLordProfilePage() {
   const { register, handleSubmit } = useForm();
@@ -17,15 +18,16 @@ function LandLordProfilePage() {
     try {
       // Example API call to update profile (replace with your actual endpoint)
       const response = await axios.put(
-        `${import.meta.env.VITE_LOCALHOST}/api/profile/update`,
+        `${import.meta.env.VITE_LOCALHOST}/auth/landlord/update`,
         data,
         { withCredentials: true }
       );
       if (response.status === 200) {
         // Assuming profile update is successful, you might want to update state or show a success message
-        console.log("Profile updated successfully");
+        toast.success("Profile updated successfully");
       }
     } catch (error) {
+      toast.error("Error updating profile");
       console.error("Error updating profile", error);
     } finally {
       setLoading(false);
@@ -80,9 +82,9 @@ function LandLordProfilePage() {
             Email
           </label>
           <input
-            {...register("email")}
             id="email"
             type="email"
+            disabled={true}
             defaultValue={profile.contents?.email}
             className="mt-1 px-4 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-lg"
             required

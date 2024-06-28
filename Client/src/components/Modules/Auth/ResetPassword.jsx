@@ -51,10 +51,10 @@ function ResetPassword() {
     const checkVerificationToken = async () => {
       try {
         const res = await checkUserVerificationToken(verificationToken);
-        if (res.response.status === 200) {
+        if (res.status === 200) {
           setError(false);
-        } else if (res.response.status === 400) {
-          setErrorMessage(res.response.data.message);
+        } else if (res.status === 400) {
+          setErrorMessage(res.data.message);
         }
       } catch (error) {
         console.log(error);

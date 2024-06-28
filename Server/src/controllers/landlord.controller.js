@@ -188,8 +188,8 @@ const getLandlordProfile = async (req, res) => {
 
 const updateLandlordProfile = async (req, res) => {
   //Validate the request body
-  const result = Validation.landlordUpdate(req.body); //Create this function in utils/Validation.js
-  //Check if the request body is valid
+  const result = Validation.landlordUpdate(req.body);
+
   if (!result.success) {
     return res
       .status(400)
@@ -204,15 +204,15 @@ const updateLandlordProfile = async (req, res) => {
       data: {
         name: req.body.name,
         phone: req.body.phone,
-        Landlordaddress: {
-          update: {
-            street: req.body.street,
-            city: req.body.city,
-            state: req.body.state,
-            zip: req.body.zip,
-            country: req.body.country,
-          },
-        },
+        // Landlordaddress: {
+        //   update: {
+        //     street: req.body.street,
+        //     city: req.body.city,
+        //     state: req.body.state,
+        //     zip: req.body.zip,
+        //     country: req.body.country,
+        //   },
+        // },
       },
     });
     if (!updatedLandlord) {

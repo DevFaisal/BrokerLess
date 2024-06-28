@@ -35,6 +35,6 @@ router.route("/date").get(Authentication, getAgreementDate);
 router.route("/").get(isValidLandlord, getAgreements);
 
 // Approve Agreement Application API Endpoint
-router.route("/approve").put(isValidLandlord, approveAgreement); //http://localhost:5000/api/agreement/approve?applicationId=1
+router.route("/approve").put(isValidLandlord, approveAgreement);
 
 export default router;

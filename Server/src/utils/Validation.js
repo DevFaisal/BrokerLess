@@ -139,6 +139,33 @@ const Validation = {
     return schema.safeParse(data);
   },
   // TODO: Create property Address Schema TOD
+  landlordUpdate: (data) => {
+    const schema = z.object({
+      name: z
+        .string()
+        .min(5, { message: "Name must be at least 5 characters long" })
+        .max(20, { message: "Name must be at most 20 characters long" }),
+      phone: z
+        .string()
+        .min(10, { message: "Phone number must be at least 10 digits long" }),
+      // street: z
+      //   .string()
+      //   .min(5, { message: "Street must be at least 5 characters long" }),
+      // city: z
+      //   .string()
+      //   .min(5, { message: "City must be at least 5 characters long" }),
+      // state: z
+      //   .string()
+      //   .min(5, { message: "State must be at least 5 characters long" }),
+      // zip: z
+      //   .string()
+      //   .min(5, { message: "Zip must be at least 5 characters long" }),
+      // country: z
+      //   .string()
+      //   .min(5, { message: "Country must be at least 5 characters long" }),
+    });
+    return schema.safeParse(data);
+  },
 };
 
 export default Validation;

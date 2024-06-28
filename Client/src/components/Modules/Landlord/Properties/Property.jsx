@@ -21,8 +21,6 @@ function Property() {
     PropertyAtomFamily(propertyId)
   );
 
-  console.log("Property Loadable", propertyLoadable);
-
   const { register, handleSubmit } = useForm({
     defaultValues: {
       name: propertyLoadable.contents?.name,

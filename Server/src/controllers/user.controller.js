@@ -261,7 +261,6 @@ const forgetPassword = async (req, res) => {
 };
 
 const checkVerificationToken = async (req, res) => {
-  console.log(req.params);
   const { verificationToken } = req.params;
   const email = jwt.verify(
     verificationToken,
@@ -351,13 +350,25 @@ const resetPassword = async (req, res) => {
       where: {
         email: email,
       },
+      select: {
+        email: true,
+        verificationToken: {
+          select: {
+            token: true,
+          },
+        },
+      },
     });
     if (!user) {
       return res.status(404).json({
         message: "User not found",
       });
     }
-    const validToken = user.verificationToken === verificationToken;
+
+    const validToken =
+      user.verificationToken[user.verificationToken.length - 1].token ===
+      verificationToken;
+
     if (!validToken) {
       return res.status(400).json({
         message: "Invalid Token",
@@ -374,7 +385,11 @@ const resetPassword = async (req, res) => {
       },
       data: {
         password: hashedPassword,
-        verificationToken: "",
+        verificationToken: {
+          deleteMany: {
+            token: verificationToken,
+          },
+        },
       },
     });
 
@@ -399,15 +414,15 @@ const userProfile = async (req, res) => {
         email: true,
         phone: true,
         isVerified: true,
-        // UserAddress: {
-        //   select: {
-        //     street: true,
-        //     city: true,
-        //     state: true,
-        //     zip: true,
-        //     country: true,
-        //   },
-        // },
+        UserAddress: {
+          select: {
+            street: true,
+            city: true,
+            state: true,
+            zip: true,
+            country: true,
+          },
+        },
       },
     });
 
@@ -436,20 +451,28 @@ const updateUserProfile = async (req, res) => {
       .send(result.error.errors?.map((error) => error.message));
   }
   try {
-    await prisma.userAddress.create({
-      data: {
-        street: req.body.street,
-        city: req.body.city,
-        state: req.body.state,
-        zip: req.body.zip,
-        country: req.body.country,
-        User: {
-          connect: {
-            id: req.user.id,
+    prisma.userAddress
+      .deleteMany({})
+      .then(async () => {
+        await prisma.userAddress.create({
+          data: {
+            street: req.body.street,
+            city: req.body.city,
+            state: req.body.state,
+            zip: req.body.zip,
+            country: req.body.country,
+            User: {
+              connect: {
+                id: req.user.id,
+              },
+            },
           },
-        },
-      },
-    });
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        return res.status(400).json({ message: "Error while updating" });
+      });
 
     return res.status(200).json({
       message: "Profile updated successfully",

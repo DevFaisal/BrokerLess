@@ -112,12 +112,12 @@ model Agreement {
   propertyId String
   tenantId   String
   status     AgreementStatus @default(PENDING)
-  startDate  DateTime
-  endDate    DateTime
+  startDate  String
+  endDate    String
   rent       Int
   createdAt  DateTime        @default(now())
   Property   Property        @relation(fields: [propertyId], references: [id], onDelete: Cascade)
-  User       User            @relation(fields: [tenantId], references: [id])
+  User       User            @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 }
 
 enum AgreementStatus {

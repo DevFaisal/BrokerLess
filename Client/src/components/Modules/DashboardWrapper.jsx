@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { AlignJustify, LogOut } from "lucide-react";
 import axios from "axios";
 import { Container } from "../Index";
-import logo from "../../assets/logos/logowhite.svg";
+import logo from "../../assets/logos/logo.svg";
 import { logOutfromInside } from "../../api/GeneralApi";
 
 function DashboardWrapper({ heading, username, children, links, credentials }) {
@@ -29,13 +29,13 @@ function DashboardWrapper({ heading, username, children, links, credentials }) {
     <div className="flex h-screen">
       {/* Sidebar */}
       <aside
-        className={`w-1/5 h-full bg-[#006d77] flex flex-col p-4 shadow-lg ${
+        className={`w-1/6 h-full bg-white flex flex-col p-4 shadow-lg ${
           menu ? "hidden" : "flex"
         }`}
       >
         <div className="flex flex-col p-2">
           <img src={logo} alt="Brokerless Logo" className="w-20 h-auto" />
-          <p className="text-xs text-white mt-2">Room rental made easy</p>
+          <p className="text-xs text-black mt-2">Room rental made easy</p>
         </div>
         <div className="flex flex-col gap-2 flex-grow overflow-y-auto">
           {links.map((link, index) => (
@@ -43,7 +43,7 @@ function DashboardWrapper({ heading, username, children, links, credentials }) {
               key={index}
               to={link.path}
               className={({ isActive }) => {
-                return `w-4/2 text-base p-3 my-2 text-white hover:text-black hover:bg-white mx-2 rounded-lg ${isActive ? "mix-blend-difference " : ""} `;
+                return `w-4/2 text-base p-3 my-2 text-black hover:text-white hover:bg-black mx-2 rounded-lg ${isActive ? "bg-black text-white" : "bg-white"} `;
               }}
             >
               <div className="flex items-center gap-2">
@@ -75,7 +75,7 @@ function DashboardWrapper({ heading, username, children, links, credentials }) {
           </div>
         </div>
 
-        <div className="ring-1 ring-violet-200 rounded-lg overflow-hidden">
+        <div className="ring-1 h-fit max-h-full ring-violet-200 rounded-lg overflow-hidden z-0 ">
           <Container>{children}</Container>
         </div>
       </main>
