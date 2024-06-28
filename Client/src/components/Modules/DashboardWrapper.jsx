@@ -26,10 +26,10 @@ function DashboardWrapper({ heading, username, children, links, credentials }) {
   }
 
   return (
-    <div className="flex h-screen">
+    <div className="flex max-h-screen overflow-hidden">
       {/* Sidebar */}
       <aside
-        className={`w-1/6 h-full bg-white flex flex-col p-4 shadow-lg ${
+        className={`w-1/6 h-screen flex flex-col p-4 shadow-lg ${
           menu ? "hidden" : "flex"
         }`}
       >
@@ -54,7 +54,7 @@ function DashboardWrapper({ heading, username, children, links, credentials }) {
           ))}
         </div>
         <button
-          className="flex items-center text-white hover:text-black"
+          className="flex items-center text-black hover:text-blue-500 mt-auto"
           onClick={logOut}
         >
           <LogOut className="h-5 w-5 mr-2" />
@@ -75,7 +75,7 @@ function DashboardWrapper({ heading, username, children, links, credentials }) {
           </div>
         </div>
 
-        <div className="ring-1 h-fit max-h-full ring-violet-200 rounded-lg overflow-hidden z-0 ">
+        <div className="ring-1 h-[55rem] container mx-auto max-h-screen ring-violet-200 rounded-lg overflow-y-scroll z-0 ">
           <Container>{children}</Container>
         </div>
       </main>

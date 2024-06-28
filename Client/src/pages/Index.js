@@ -13,7 +13,7 @@ import LandlordLoginPage from "./Auth/LandlordLoginPage";
 import LandlordLordDashboardPage from "./Auth/Landlord/LandLordDashboardPage";
 import UserDashboardPage from "./Auth/User/UserDashboardPage";
 import UserRequests from "./Auth/User/UserRequests";
-import PropertyInfo from "./Auth/User/PropertyInfo";
+import PropertyInfo from "./Auth/User/PropertyInfo/PropertyInfo";
 import ApplicationsPage from "./Auth/Landlord/ApplicationsPage";
 export {
   HomePage,

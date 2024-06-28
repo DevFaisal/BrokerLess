@@ -129,6 +129,7 @@ function AddProperty() {
       <form
         className="flex flex-col gap-4 overflow-scroll h-screen"
         onSubmit={handleSubmit(onSubmit)}
+        encType="multipart/form-data"
       >
         <div className="flex items-center justify-center w-full">
           <label

@@ -33,6 +33,7 @@ import AddProperty from "./Modules/Landlord/Properties/AddProperty";
 import UserPropertiesWrapper from "./Modules/UserPropertiesWrapper";
 import LandLordPropertiesWrapper from "./Modules/LandLordPropertiesWrapper";
 import AllProperties from "./Modules/User/AllProperties";
+import ContentError from "./Modules/ContentError";
 
 export {
   EmailVerification,
@@ -70,4 +71,5 @@ export {
   UserPropertiesWrapper,
   LandLordPropertiesWrapper,
   AllProperties,
+  ContentError,
 };
