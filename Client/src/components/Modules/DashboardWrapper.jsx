@@ -75,7 +75,7 @@ function DashboardWrapper({ heading, username, children, links, credentials }) {
           </div>
         </div>
 
-        <div className="ring-1 h-[55rem] container mx-auto max-h-screen ring-violet-200 rounded-lg overflow-y-scroll z-0 ">
+        <div className="ring-1 h-[55rem] container mx-auto max-h-screen ring-purple-200 rounded-lg overflow-y-scroll">
           <Container>{children}</Container>
         </div>
       </main>

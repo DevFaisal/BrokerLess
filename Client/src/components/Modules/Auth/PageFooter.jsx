@@ -33,7 +33,7 @@ function PageFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="flex flex-col items-center justify-center gap-8 py-12 px-4 text-center text-white bg-gray-900 z-10">
+    <footer className="flex flex-col items-center justify-center gap-8 py-12 px-4 text-center text-slate-900 bg-white z-10">
       <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between md:w-full md:px-10">
         <div className="flex items-center gap-4">
           <div className="flex justify-center h-24 w-24 md:h-32 md:w-32 items-center pl-12 rounded-full self-center bg-white p-1">
@@ -45,7 +45,7 @@ function PageFooter() {
           </div>
           <h1 className="text-2xl md:text-5xl font-bold">Brokerless</h1>
         </div>
-        <p className="font-light text-gray-400 sm:text-lg max-w-xl">
+        <p className="font-light sm:text-lg max-w-xl">
           Brokerless room rental platform that connects landlords and tenants
           directly. We are dedicated to providing a seamless and efficient
           rental experience. Our platform is user-friendly, making the rental
@@ -61,7 +61,7 @@ function PageFooter() {
           <Link
             key={link.name}
             to={link.url}
-            className="text-white hover:text-gray-300 transition-colors duration-300"
+            className=" transition-colors duration-300"
           >
             {link.name}
           </Link>
@@ -75,7 +75,7 @@ function PageFooter() {
             href={link.url}
             target="_blank"
             rel="noreferrer"
-            className="text-white hover:text-gray-300 transition-colors duration-300"
+            className=" transition-colors duration-300"
           >
             {link.icon}
           </a>

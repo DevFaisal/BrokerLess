@@ -4,6 +4,7 @@ import Button from "../Buttons/Button";
 import { Link, NavLink, Navigate } from "react-router-dom";
 import OutlineButton from "../Buttons/OutlineButton";
 import { AlignJustify } from "lucide-react";
+import { Container } from "../Index";
 
 const links = [
   { path: "/", text: "Home" },
@@ -17,9 +18,9 @@ function NavBar() {
   const renderLinks = (links) => {
     return (
       <div
-        className={`md:flex md:gap-10 justify-between items-center w-full ${
+        className={`md:flex md:gap-10 justify-between  items-center w-full ${
           isOpen
-            ? `flex flex-col gap-3 px-10  self-center bg-white py-5 items-center absolute top-16 left-0 w-full z-50`
+            ? `flex flex-col gap-3 px-10  self-center bg-white py-5 items-center absolute top-16 left-0 w-full z-50 md:hidden transition-all ease-in duration-500`
             : "hidden"
         }`}
       >
@@ -38,17 +39,12 @@ function NavBar() {
             </NavLink>
           ))}
         </div>
-        <div className="flex gap-3">
+        <div className="xl:hidden flex gap-3">
           <Link onClick={() => setIsOpen(false)} to="/auth/login-user">
-            <OutlineButton>User Login</OutlineButton>
+            <Button>User Login</Button>
           </Link>
           <Link to="/auth/login-landlord">
-            <Button
-              onClick={() => setIsOpen(false)}
-              className="bg-backgroundTwo hover:bg-slate-800"
-            >
-              Landlord Login
-            </Button>
+            <Button onClick={() => setIsOpen(false)}>Landlord Login</Button>
           </Link>
         </div>
       </div>
@@ -56,15 +52,15 @@ function NavBar() {
   };
 
   return (
-    <nav className="flex justify-between items-center  px-5 py-3  w-full  top-0 z-50">
+    <nav className="z-10 w-full flex items-center justify-between p-10 md:px-40 py-5">
       <div>
         <img width={100} src={logo} alt="Logo" />
       </div>
 
-      <div className="md:hidden">
+      <div className="md:hidden flex pl-60">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`block text-black focus:outline-none transform transition-all ease-out duration-500 ${
+          className={` text-black focus:outline-none transform transition-all ease-out duration-500 ${
             isOpen ? "rotate-90 duration-500" : ""
           }`}
         >
@@ -72,7 +68,18 @@ function NavBar() {
         </button>
       </div>
 
-      {renderLinks(links)}
+      <div>{renderLinks(links)}</div>
+
+      <div className="hidden xl:flex">
+        <div className="flex gap-3">
+          <Link onClick={() => setIsOpen(false)} to="/auth/login-user">
+            <Button>User Login</Button>
+          </Link>
+          <Link to="/auth/login-landlord">
+            <Button onClick={() => setIsOpen(false)}>Landlord Login</Button>
+          </Link>
+        </div>
+      </div>
     </nav>
   );
 }

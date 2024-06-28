@@ -15,9 +15,7 @@ function FormInput({
       <H4 className="text-center text-gray-500 pb-5">{Subheading}</H4>
       {Inputs.map((input, index) => (
         <div key={index} className={className}>
-          <label className="block md:font-semibold text-black">
-            {input.label}
-          </label>
+          <label className=" md:font-semibold text-black">{input.label}</label>
           <input
             id={input.name}
             key={index}
