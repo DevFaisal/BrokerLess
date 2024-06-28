@@ -19,18 +19,18 @@ function Features() {
             />
           </svg>
 
-          <h2 class="my-8 text-2xl font-bold text-gray-700 dark:text-white md:text-4xl">
+          <h2 class="my-8 text-2xl font-bold text-gray-700  md:text-4xl">
             Features that you will love
           </h2>
-          <p class="text-gray-600 dark:text-gray-300">
+          <p class="text-gray-600 ">
             We provide verified and secure features that you will love. We have
             a team of experts who are dedicated to providing the best services
             to our customers. Our goal is to make the rental process as simple
             and transparent as possible.
           </p>
         </div>
-        <div class="mt-16 grid divide-x divide-y divide-gray-100 dark:divide-gray-700 overflow-hidden rounded-3xl border border-gray-100 text-gray-600 dark:border-gray-700 sm:grid-cols-2 lg:grid-cols-4 lg:divide-y-0 xl:grid-cols-4">
-          <div class="group relative bg-white dark:bg-gray-800 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
+        <div class="mt-16 grid divide-x divide-y divide-gray-100 overflow-hidden rounded-3xl border border-gray-100 text-gray-600  sm:grid-cols-2 lg:grid-cols-4 lg:divide-y-0 xl:grid-cols-4">
+          <div class="group relative bg-white  transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
             <div class="relative space-y-8 py-12 p-8">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/4341/4341139.png"
@@ -41,10 +41,10 @@ function Features() {
               />
 
               <div class="space-y-2">
-                <h5 class="text-xl font-semibold text-gray-700 dark:text-white transition group-hover:text-secondary">
+                <h5 class="text-xl font-semibold text-gray-700  transition group-hover:text-secondary">
                   Verification process
                 </h5>
-                <p class="text-gray-600 dark:text-gray-300">
+                <p class="text-gray-600 ">
                   Tenants and landlords are verified to ensure a secure and
                   transparent rental process.
                 </p>
@@ -69,7 +69,7 @@ function Features() {
               </a>
             </div>
           </div>
-          <div class="group relative bg-white dark:bg-gray-800 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
+          <div class="group relative bg-white  transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
             <div class="relative space-y-8 py-12 p-8">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/4341/4341134.png"
@@ -80,10 +80,10 @@ function Features() {
               />
 
               <div class="space-y-2">
-                <h5 class="text-xl font-semibold text-gray-700 dark:text-white transition group-hover:text-secondary">
+                <h5 class="text-xl font-semibold text-gray-700  transition group-hover:text-secondary">
                   Secure payment
                 </h5>
-                <p class="text-gray-600 dark:text-gray-300">
+                <p class="text-gray-600 ">
                   Payments are secure and transparent. We ensure that all
                   transactions are safe and reliable.
                 </p>
@@ -108,7 +108,7 @@ function Features() {
               </a>
             </div>
           </div>
-          <div class="group relative bg-white dark:bg-gray-800 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
+          <div class="group relative bg-white  transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
             <div class="relative space-y-8 py-12 p-8">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/4341/4341160.png"
@@ -119,10 +119,10 @@ function Features() {
               />
 
               <div class="space-y-2">
-                <h5 class="text-xl font-semibold text-gray-700 dark:text-white transition group-hover:text-secondary">
+                <h5 class="text-xl font-semibold text-gray-700  transition group-hover:text-secondary">
                   24/7 support
                 </h5>
-                <p class="text-gray-600 dark:text-gray-300">
+                <p class="text-gray-600 ">
                   Our team is available 24/7 to provide support and assistance
                   to our customers.
                 </p>
@@ -147,8 +147,8 @@ function Features() {
               </a>
             </div>
           </div>
-          <div class="group relative bg-gray-50 dark:bg-gray-900 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
-            <div class="relative space-y-8 py-12 p-8 transition duration-300 group-hover:bg-white dark:group-hover:bg-gray-800">
+          <div class="group relative bg-gray-50  transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10">
+            <div class="relative space-y-8 py-12 p-8 transition duration-300 group-hover:bg-white ">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/4341/4341025.png"
                 class="w-12"
@@ -158,10 +158,10 @@ function Features() {
               />
 
               <div class="space-y-2">
-                <h5 class="text-xl font-semibold text-gray-700 dark:text-white transition group-hover:text-secondary">
+                <h5 class="text-xl font-semibold text-gray-700  group-hover:text-secondary">
                   User-friendly platform
                 </h5>
-                <p class="text-gray-600 dark:text-gray-300">
+                <p class="text-gray-600 ">
                   Our platform is user-friendly, making the rental process
                   simple and transparent.
                 </p>
