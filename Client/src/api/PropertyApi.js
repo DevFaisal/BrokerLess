@@ -137,3 +137,23 @@ export const deleteAgreement = async (id) => {
     return error;
   }
 };
+
+export const addProperty = async (data) => {
+  let config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: `${API}/api/property`,
+    headers: {
+      "Content-Type": "multipart/form-data",
+      "Access-Control-Allow-Origin": "*",
+    },
+    withCredentials: true,
+    data: data,
+  };
+  try {
+    const response = await axios.request(config);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};

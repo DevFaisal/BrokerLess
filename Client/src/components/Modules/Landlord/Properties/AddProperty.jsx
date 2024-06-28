@@ -5,6 +5,7 @@ import { LoaderCircle } from "lucide-react";
 import { Button } from "../../../Index";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { addProperty } from "../../../../api/PropertyApi";
 
 function AddProperty() {
   const [imagePreview, setImagePreview] = useState(null);
@@ -94,15 +95,8 @@ function AddProperty() {
     newData.append("zip", data.zip);
     newData.append("country", data.country);
 
-    const config = {
-      method: "post",
-      url: `${import.meta.env.VITE_LOCALHOST}/api/property`,
-      data: newData,
-      withCredentials: true,
-    };
-
     try {
-      const res = await axios(config);
+      const res = await addProperty(newData);
       if (res.status === 200) {
         toast.success("Property Added Successfully");
         navigate("/landlord/properties");
