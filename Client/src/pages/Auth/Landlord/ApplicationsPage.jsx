@@ -4,10 +4,12 @@ import { Button, Loading } from "../../../components/Index";
 import { useRecoilStateLoadable } from "recoil";
 import { fetchApplications } from "../../../store/LandLordAtom";
 import ContentError from "../../../components/Modules/ContentError";
-import { School } from "lucide-react";
+import { LoaderCircle, School } from "lucide-react";
 import Header from "../../../components/Modules/Header";
+import toast from "react-hot-toast";
 
 function ApplicationsPage() {
+  const [loading, setLoading] = useState(false);
   const [applications, setApplications] =
     useRecoilStateLoadable(fetchApplications());
 
@@ -36,6 +38,7 @@ function ApplicationsPage() {
     }
 
     const ApproveApplication = (applicationId) => async () => {
+      setLoading(true);
       try {
         const response = await axios.put(
           `${import.meta.env.VITE_LOCALHOST}/api/agreement/approve?applicationId=${applicationId}`,
@@ -46,6 +49,7 @@ function ApplicationsPage() {
         );
         console.log(response);
         if (response.status === 200) {
+          setLoading(false);
           setApplications((prev) => ({
             ...prev,
             contents: prev.contents.filter(
@@ -53,7 +57,9 @@ function ApplicationsPage() {
             ),
           }));
         }
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         console.error("Error approving application", error);
       }
     };
@@ -67,6 +73,7 @@ function ApplicationsPage() {
               key={application.id}
               application={application}
               onApprove={ApproveApplication(application.id)}
+              loading={loading}
             />
           ))}
         </div>
@@ -76,7 +83,30 @@ function ApplicationsPage() {
 }
 export default ApplicationsPage;
 
-export function ApplicationCard({ application, onApprove }) {
+export function ApplicationCard({ application, onApprove, loading }) {
+  const handleDownload = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_LOCALHOST}/api/agreement/download/${application.id}`,
+        {
+          withCredentials: true,
+          responseType: "blob",
+        }
+      );
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `Verification_documents.zip`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      toast.success("Documents downloaded successfully");
+    } catch (error) {
+      console.error("Error downloading documents:", error);
+      toast.error("An error occurred while downloading documents");
+    }
+  };
+
   const startDateFormatted = new Date(
     application.startDate
   ).toLocaleDateString();
@@ -106,7 +136,21 @@ export function ApplicationCard({ application, onApprove }) {
         <p>Rent ₹{application.rent}</p>
       </div>
       <div>
-        <Button onClick={onApprove}>Approve</Button>
+        <Button onClick={handleDownload}>Download</Button>
+      </div>
+      <div>
+        <Button
+          className={"flex justify-center w-full mt-5 "}
+          type="submit"
+          disabled={loading}
+          onClick={onApprove}
+        >
+          {loading ? (
+            <LoaderCircle size={20} className="text-white animate-spin" />
+          ) : (
+            "Approve"
+          )}
+        </Button>
       </div>
     </div>
   );

@@ -129,7 +129,7 @@ function LandLordRegistration() {
           Inputs={Inputs}
           register={register}
           errors={errors}
-          className={"grid grid-cols-2 gap-2  "}
+          className={" grid grid-cols-1  md:grid-cols-2  "}
           Heading={"Landlord Registration"}
           Subheading={"Register as landlord"}
         />

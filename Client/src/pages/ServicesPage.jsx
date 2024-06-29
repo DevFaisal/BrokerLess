@@ -54,9 +54,7 @@ function ServicesPage() {
                   <h2 className="mb-4 text-2xl font-bold text-gray-900">
                     {service.title}
                   </h2>
-                  <p className="text-gray-700 ">
-                    {service.description}
-                  </p>
+                  <p className="text-gray-700 ">{service.description}</p>
                 </div>
               </div>
             ))}
@@ -96,7 +94,6 @@ function ServicesPage() {
           </div>
         </section>
       </Container>
-      <PageFooter />
     </>
   );
 }

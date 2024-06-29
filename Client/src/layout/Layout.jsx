@@ -18,13 +18,21 @@ const Layout = () => {
 
   return (
     <>
-      <main >
+      <main className="bg-white  ">
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 grid grid-cols-2 -space-x-52 opacity-40  pointer-events-none"
+        >
+          <div class="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 "></div>
+          <div class="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 "></div>
+        </div>
         {!authState ? (
           <>
             <NavBar />
-            <Outlet />
-            {/* Uncomment the PageFooter if you need it */}
-            {/* <PageFooter /> */}
+            <div className="space-y-40 mb-40">
+              <Outlet />
+            </div>
+            <PageFooter />
           </>
         ) : (
           <Navigate

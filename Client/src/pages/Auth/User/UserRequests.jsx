@@ -5,6 +5,7 @@ import { AlertDialog, Loading } from "../../../components/Index";
 import { useRecoilStateLoadable } from "recoil";
 import { fetchAllUserRequests } from "../../../store/UserAtom";
 import ContentError from "../../../components/Modules/ContentError";
+import { deleteAgreement } from "../../../api/PropertyApi";
 
 function UserRequests() {
   const [requests, setRequests] = useRecoilStateLoadable(
@@ -13,13 +14,7 @@ function UserRequests() {
   const [deleteRequest, setDeleteRequest] = useState(false);
 
   const DeleteRequest = async ({ id }) => {
-    const response = await axios.delete(
-      `${import.meta.env.VITE_LOCALHOST}/api/agreement/tenant`,
-      {
-        withCredentials: true,
-        data: { id },
-      }
-    );
+    const response = await deleteAgreement(id);
     window.location.href = "/user/requests";
     if (response.status === 200) {
       setRequests(requests.filter((request) => request.id !== id));
@@ -73,6 +68,9 @@ function UserRequests() {
 export default UserRequests;
 
 export function RequestCard({ request, onClick }) {
+  const handlePayment = (id) => {
+    console.log("Payment", id);
+  };
   return (
     <div className="flex items-center justify-between p-4 rounded-md ring-1 ring-gray-300 my-4  w-full flex-1 px-20 text-center">
       <div className="flex flex-col items-start">
@@ -84,13 +82,35 @@ export function RequestCard({ request, onClick }) {
       </div>
       <div>
         <p
-          className={`${request?.status === "PENDING" ? "bg-yellow-500" : ""} 
-          ${request?.status === "APPROVED" ? "bg-green-500" : ""}
-            ${request?.status === "DECLINED" ? "bg-red-500" : ""}
-            rounded-md p-2  font-bold
-            `}
+          className={`${
+            request?.status === "PENDING"
+              ? "bg-yellow-500"
+              : request?.status === "APPROVED"
+                ? "bg-blue-500"
+                : request?.status === "DECLINED"
+                  ? "bg-red-500"
+                  : ""
+          } rounded-md p-2 font-bold`}
         >
-          {request?.status}
+          {
+            {
+              PENDING: "Pending",
+              APPROVED: (
+                <>
+                  {
+                    <button
+                      onClick={() => {
+                        handlePayment(request.id);
+                      }}
+                    >
+                      Payment
+                    </button>
+                  }
+                </>
+              ),
+              DECLINED: "Declined",
+            }[request?.status]
+          }
         </p>
         <p>
           {new Date(request?.startDate).toLocaleDateString()}
@@ -99,7 +119,7 @@ export function RequestCard({ request, onClick }) {
         </p>
       </div>
 
-      {request?.status == "APPROVED" ? null : (
+      {request?.status == "PAYMENT" ? null : (
         <button onClick={onClick}>
           <Trash2Icon color="red" />
         </button>

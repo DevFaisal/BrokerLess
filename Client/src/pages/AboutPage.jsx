@@ -84,7 +84,6 @@ function AboutPage() {
           </div>
         </section>
       </Container>
-      <PageFooter />
     </>
   );
 }

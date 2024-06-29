@@ -10,7 +10,9 @@ import {
   getTenantAgreement,
   deleteAgreement,
   getAgreementDate,
+  downloadDocuments,
 } from "../controllers/agreement.controller.js";
+import { uploadDocuments } from "../middlewares/multer.js";
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -18,7 +20,9 @@ const prisma = new PrismaClient();
 //-----------------Agreement Tenant Routes-----------------
 
 // POST Request to create a new Agreement
-router.route("/generate").post(Authentication, generateAgreement);
+router
+  .route("/generate")
+  .post(Authentication, uploadDocuments, generateAgreement);
 
 //GET Agreement of a Specific Tenant
 router.route("/tenant").get(Authentication, getTenantAgreement);
@@ -33,6 +37,11 @@ router.route("/date").get(Authentication, getAgreementDate);
 
 // GET All Agreement Applications API Endpoint
 router.route("/").get(isValidLandlord, getAgreements);
+
+//Download Verification Documents
+router
+  .route("/download/:applicationId")
+  .get(isValidLandlord, downloadDocuments);
 
 // Approve Agreement Application API Endpoint
 router.route("/approve").put(isValidLandlord, approveAgreement);

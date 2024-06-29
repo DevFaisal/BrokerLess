@@ -14,7 +14,7 @@ import {
   getAllTenants,
   getPropertyByIdToTenant,
 } from "../controllers/property.controller.js";
-import { upload } from "../middlewares/multer.js";
+import { uploadImage } from "../middlewares/multer.js";
 
 const router = Router();
 const client = new PrismaClient();
@@ -22,7 +22,7 @@ const client = new PrismaClient();
 // ------------------- Property Routes -------------------
 
 //GET Request to get all properties
-router.route("/").get(getAllProperties); 
+router.route("/").get(getAllProperties);
 
 // GET Request to get a property by ID
 router.route("/detail").get(isValidLandlord, getPropertyById);
@@ -36,7 +36,7 @@ router.route("/search").get(searchProperty);
 router.route("/landlord").get(isValidLandlord, getLandlordProperties);
 
 // POST Request to create a new property by Landlord only
-router.route("/").post(isValidLandlord, upload.single("Image"), createProperty);
+router.route("/").post(isValidLandlord, uploadImage, createProperty);
 
 // PUT Request to update a property by Landlord only
 router.route("/update").put(isValidLandlord, updateProperty);
@@ -55,6 +55,6 @@ router.route("/tenants").get(isValidLandlord, getAllTenants);
 // ------------------- Tenant Routes -------------------
 
 // GET Request to get properties by ID
-router.route("/info").get(Authentication, getPropertyByIdToTenant); 
+router.route("/info").get(Authentication, getPropertyByIdToTenant);
 
 export default router;

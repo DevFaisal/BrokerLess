@@ -104,7 +104,47 @@ export const generateAgreement = async (data) => {
     maxBodyLength: Infinity,
     url: `${API}/api/agreement/generate`,
     headers: {
+      "Content-Type": "multipart/form-data",
+      "Access-Control-Allow-Origin": "*",
+    },
+    withCredentials: true,
+    data: data,
+  };
+  try {
+    const response = await axios.request(config);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteAgreement = async (id) => {
+  let config = {
+    method: "delete",
+    maxBodyLength: Infinity,
+    url: `${API}/api/agreement/tenant`,
+    headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    withCredentials: true,
+    data: { id: id },
+  };
+  try {
+    const response = await axios.request(config);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const addProperty = async (data) => {
+  let config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: `${API}/api/property`,
+    headers: {
+      "Content-Type": "multipart/form-data",
       "Access-Control-Allow-Origin": "*",
     },
     withCredentials: true,

@@ -83,7 +83,7 @@ function UserLogin() {
   return (
     <Container>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col w-auto">
+        <div className="flex flex-col w-auto ">
           <FormInput
             Inputs={Inputs}
             register={register}
@@ -92,7 +92,7 @@ function UserLogin() {
             Subheading={"Login as User"}
           />
           <Button
-            className={"flex justify-center w-full mt-5 "}
+            className={"flex justify-center mt-5 "}
             type="submit"
             disabled={loading}
           >

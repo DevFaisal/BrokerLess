@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { AgreementStatus, PrismaClient } from "@prisma/client";
 import Validation from "../utils/Validation.js";
+import fs from "fs";
+import path from "path";
+import zip from "express-zip";
 
 const route = Router();
 const prisma = new PrismaClient();
@@ -13,10 +16,11 @@ const generateAgreement = async (req, res) => {
     propertyId: sanitizeInput(req.body.propertyId),
     startDate: new Date(sanitizeInput(req.body.startDate)),
     endDate: new Date(sanitizeInput(req.body.endDate)),
-    rent: req.body.rent,
+    rent: parseInt(sanitizeInput(req.body.rent)),
   };
 
   const result = Validation.agreementSchemaValidation(data);
+
   if (!result.success) {
     return res
       .status(400)
@@ -45,14 +49,49 @@ const generateAgreement = async (req, res) => {
     if (existingAgreements) {
       return res.status(400).json({ message: "Agreement already exists" });
     }
+    //Store Aadhar & Pan Card PDF of Server
+    if (!req.files) {
+      return res.status(400).json({ message: "Documents are required" });
+    } else {
+      if (!req.files || !req.files.aadharCard || !req.files.panCard) {
+        return res.status(400).json({
+          message: "Both Aadhar Card and PAN Card documents are required",
+        });
+      }
 
+      const userId = req.user.id;
+      const userDir = `./public/uploads/${userId}`;
+
+      // Ensure the user directory exists
+      if (!fs.existsSync(userDir)) {
+        fs.mkdirSync(userDir, { recursive: true });
+      }
+
+      const aadhar = req.files.aadharCard[0];
+      const pan = req.files.panCard[0];
+
+      if (
+        aadhar.mimetype !== "application/pdf" ||
+        pan.mimetype !== "application/pdf"
+      ) {
+        return res
+          .status(400)
+          .json({ message: "Documents should be in PDF format" });
+      }
+
+      const aadharPath = path.join(userDir, `${userId}_aadharCard.pdf`);
+      const panPath = path.join(userDir, `${userId}_panCard.pdf`);
+
+      fs.renameSync(aadhar.path, aadharPath);
+      fs.renameSync(pan.path, panPath);
+    }
     const newAgreement = await prisma.agreement.create({
       data: {
         propertyId: req.body.propertyId,
         tenantId: req.user.id,
         startDate: req.body.startDate, //TODO: Change to Date
         endDate: req.body.endDate, //TODO: Change to Date
-        rent: req.body.rent,
+        rent: parseInt(req.body.rent),
         status: "PENDING",
       },
     });
@@ -119,6 +158,18 @@ const deleteAgreement = async (req, res) => {
     if (!agreement) {
       return res.status(404).json({ message: "Agreement not found" });
     }
+
+    //delete the uploaded documents
+    const userId = req.user.id;
+    const userDir = `./public/uploads/${userId}`;
+    const aadharPath = path.join(userDir, `${userId}_aadharCard.pdf`);
+    const panPath = path.join(userDir, `${userId}_panCard.pdf`);
+
+    if (fs.existsSync(aadharPath) || fs.existsSync(panPath)) {
+      fs.unlinkSync(aadharPath);
+      fs.unlinkSync(panPath);
+    }
+
     await prisma.agreement.delete({
       where: {
         id: req.body.id,
@@ -149,7 +200,7 @@ const getAgreements = async (req, res) => {
         ],
       },
     });
-    const agreements = await prisma.agreement.findMany({
+    let agreements = await prisma.agreement.findMany({
       where: {
         propertyId: {
           in: property.map((property) => property.id),
@@ -164,6 +215,7 @@ const getAgreements = async (req, res) => {
         status: true,
         User: {
           select: {
+            id: true,
             name: true,
             phone: true,
           },
@@ -178,7 +230,6 @@ const getAgreements = async (req, res) => {
     if (agreements.length === 0) {
       return res.status(204).json({ message: "No agreements found" });
     }
-
     return res.status(200).json(agreements);
   } catch (error) {
     console.log(error);
@@ -211,8 +262,40 @@ const getAgreementDate = async (req, res) => {
   }
 };
 
+const downloadDocuments = async (req, res) => {
+  try {
+    const applicationId = req.params.applicationId;
+    const user = await prisma.agreement.findUnique({
+      where: {
+        id: applicationId,
+      },
+    });
+    const userId = user.tenantId;
+
+    const userDir = `./public/uploads/${userId}`;
+    const aadharPath = path.join(userDir, `${userId}_aadharCard.pdf`);
+    const panPath = path.join(userDir, `${userId}_panCard.pdf`);
+
+    if (!fs.existsSync(aadharPath) || !fs.existsSync(panPath)) {
+      return res.status(404).json({ message: "Documents not found" });
+    }
+
+    res.zip(
+      [
+        { path: aadharPath, name: `aadharCard.pdf` },
+        { path: panPath, name: `panCard.pdf` },
+      ],
+      `Verification_documents.zip`
+    );
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while downloading documents" });
+  }
+};
+
 const approveAgreement = async (req, res) => {
-  console.log(req.query);
   if (!req.query.applicationId) {
     return res.status(400).json({ message: "Application ID is required" });
   }
@@ -271,4 +354,5 @@ export {
   getTenantAgreement,
   deleteAgreement,
   getAgreementDate,
+  downloadDocuments,
 };

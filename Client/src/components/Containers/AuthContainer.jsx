@@ -5,14 +5,14 @@ function AuthContainer({ children, logo, text, bgColorleft, bgColorright }) {
   return (
     <div className="flex flex-col-reverse md:flex-row-reverse">
       <aside
-        className={`${bgColorleft} flex justify-center items-center py-5 h-screen w-full md:w-1/2 max-w-2/5`}
+        className={`bg-transparent flex justify-center items-center py-5 h-screen w-full md:w-1/2 max-w-2/5`}
       >
-        <div className=" px-5 py-2 md:p-5 bg-white mx-5 2xl:mx-40 rounded-md max-w-1/2 shadow-lg">
+        <div className="px-4 py-2 md:p-5 bg-slate-100 mx-5 2xl:mx-40 md:w-full rounded-md max-auto  shadow-xl  ring-1 ring-gray-100">
           {children}
         </div>
       </aside>
       <aside
-        className={`hidden ${bgColorright} md:flex flex-col justify-center items-start p-4 md:h-screen w-full md:w-1/2 max-w-2/5`}
+        className={`hidden  md:flex flex-col justify-center items-start p-4 md:h-screen w-full md:w-1/2 max-w-2/5`}
       >
         <p>
           <img width={900} className="text-black " src={logo} alt="logo" />
