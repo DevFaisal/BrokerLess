@@ -44,12 +44,25 @@
  }
 
  6. Refresh Token 
-  url: http://localhost:8000/auth/user//refresh-token
+  url: http://localhost:8000/auth/user/refresh-token
   type: GET
   body:{
    NULL
   }
 
+7. Verfy email
+ url: http://localhost:8000/auth/user/verify-email
+ type:GET
+ body:{
+  NULL
+ }
+
+8. Resend Email verfication
+  url: http://localhost:8000/auth/user/resend-verification-email
+ type:POST
+ body:{
+  email
+ }
 ----LANDLORD ENDPOINTS------
 1. Landlord Regsitration
  url: http://localhost:8000/auth/landlord/register
@@ -154,3 +167,10 @@
    description,
    rent
   }
+
+6. Delete Property
+ URL: http://localhost:8000/api/property/delete
+ type: Delete
+ body:{
+  id
+ }
