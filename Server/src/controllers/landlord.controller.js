@@ -134,19 +134,23 @@ const loginLandlord = async (req, res) => {
     //Create a token
     const token = jwt.sign(
       { id: landlord.id, email: landlord.email },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
     );
 
-    const cookieOptions = {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      maxAge: 3600000,
-    };
+    // const cookieOptions = {
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: "none",
+    //   maxAge: 3600000,
+    // };
 
-    res.cookie("Authentication", `Bearer ${token}`, cookieOptions);
+    // res.cookie("Authentication", `Bearer ${token}`, cookieOptions);
     return res.status(200).json({
       message: "Logged in successfully",
+      token: token,
     });
   } catch (error) {
     console.log(error);

@@ -34,7 +34,9 @@ function Property() {
       await axios.delete(
         `${import.meta.env.VITE_LOCALHOST}/api/property/?id=${propertyId}`,
         {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
       toast.success("Property deleted successfully");
@@ -51,7 +53,9 @@ function Property() {
         `${import.meta.env.VITE_LOCALHOST}/api/property/update`,
         { ...data, id: propertyId },
         {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
       if (response.status === 201) {

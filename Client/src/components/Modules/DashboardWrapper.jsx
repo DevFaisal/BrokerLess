@@ -37,7 +37,7 @@ function DashboardWrapper({ heading, username, children, links, credentials }) {
           <img src={logo} alt="Brokerless Logo" className="w-20 h-auto" />
           <p className="text-xs text-black mt-2">Room rental made easy</p>
         </div>
-        <div className="flex flex-col gap-2 flex-grow overflow-y-auto">
+        <div className="flex flex-col gap-2  flex-grow overflow-y-auto">
           {links.map((link, index) => (
             <NavLink
               key={index}

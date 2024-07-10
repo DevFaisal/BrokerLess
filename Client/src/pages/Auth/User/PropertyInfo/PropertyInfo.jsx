@@ -36,7 +36,7 @@ function PropertyInfo() {
       newFormData.append("panCard", data.panCard[0]);
 
       const response = await generateAgreement(newFormData);
-      
+
       if (response.status === 200) {
         toast.success("Agreement Request Sent Successfully");
         window.location.href = "/user/requests";
@@ -58,6 +58,13 @@ function PropertyInfo() {
         message="An error occurred while fetching property"
       />
     );
+  } else if (property.state === "hasValue" && property.contents == undefined) {
+    return (
+      <ContentError
+        heading="Error"
+        message="No property found with the given ID"
+      />
+    );
   } else if (property.state === "hasValue") {
     return (
       <main className="px-4 py-8">
@@ -66,7 +73,7 @@ function PropertyInfo() {
             <PropertyDetails property={property} />
           </div>
           <div className="bg-white shadow-md rounded-lg p-4">
-            <AddressDetails addresses={property.contents.PropertyAddress} />
+            <AddressDetails addresses={property.contents?.PropertyAddress} />
             <RentRequestForm
               property={property}
               agreementDate={agreementDate}

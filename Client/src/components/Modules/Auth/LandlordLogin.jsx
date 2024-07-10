@@ -29,11 +29,14 @@ function LandlordLogin() {
         `${import.meta.env.VITE_LOCALHOST}/auth/landlord/login`,
         data,
         {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
       setLoading(false);
       toast.success(response.data.message);
+      localStorage.setItem("token", response.data.token);
       window.location.reload("/landlord/dashboard");
     } catch (error) {
       setLoading(false);

@@ -10,8 +10,8 @@ export const getPropertyByID = async (id) => {
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-    withCredentials: true,
   };
   try {
     const response = await axios.request(config);
@@ -29,6 +29,7 @@ export const getAllPropertiesOfLandlord = async () => {
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     withCredentials: true,
   };
@@ -48,8 +49,8 @@ export const getAllPropertiesOfUser = async () => {
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
+      Authorization: "Bearer " + localStorage.getItem("token"),
     },
-    withCredentials: true,
   };
   try {
     const response = await axios.request(config);
@@ -67,8 +68,8 @@ export const getDetailedInfoOfProperty = async (id) => {
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-    withCredentials: true,
   };
   try {
     const response = await axios.request(config);
@@ -86,6 +87,7 @@ export const getAgreementDates = async (id) => {
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     withCredentials: true,
     params: { id: id },
@@ -106,8 +108,8 @@ export const generateAgreement = async (data) => {
     headers: {
       "Content-Type": "multipart/form-data",
       "Access-Control-Allow-Origin": "*",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-    withCredentials: true,
     data: data,
   };
   try {
@@ -126,8 +128,8 @@ export const deleteAgreement = async (id) => {
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-    withCredentials: true,
     data: { id: id },
   };
   try {
@@ -146,6 +148,7 @@ export const addProperty = async (data) => {
     headers: {
       "Content-Type": "multipart/form-data",
       "Access-Control-Allow-Origin": "*",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     withCredentials: true,
     data: data,

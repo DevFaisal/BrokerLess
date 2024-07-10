@@ -22,12 +22,13 @@ function UserLogin() {
     },
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (InputData) => {
     setLoading(true);
-    const { response, status } = await loginUser(data);
+    const { response, status, data } = await loginUser(InputData);
     if (status === 200) {
       setLoading(false);
       toast.success("Login Successful");
+      localStorage.setItem("token", data.token);
       window.location.reload("/user/dashboard");
     } else {
       setLoading(false);

@@ -171,20 +171,13 @@ const loginUser = async (req, res) => {
       });
     }
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
-
-    const cookieOptions = {
-      origin: process.env.CLIENT_URL,
-      credentials: true,
-      secure: true,
-      sameSite: "none",
-      maxAge: 3600000,
-    };
-
-    res.cookie("Authentication", `Bearer ${token}`, cookieOptions);
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
 
     return res.status(200).json({
       message: "Logged in successfully",
+      token: token,
     });
   } catch (error) {
     console.log(error);

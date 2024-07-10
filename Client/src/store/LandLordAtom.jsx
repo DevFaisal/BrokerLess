@@ -14,7 +14,9 @@ export const LandLordSelector = selector({
       const response = await axios.get(
         `${import.meta.env.VITE_LOCALHOST}/auth/landlord/me`,
         {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
       return response.data;
@@ -48,7 +50,9 @@ export const fetchApplications = selectorFamily({
       const response = await axios.get(
         `${import.meta.env.VITE_LOCALHOST}/api/agreement`,
         {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
       return response.data;
