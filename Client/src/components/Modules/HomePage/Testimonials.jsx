@@ -66,7 +66,7 @@ function Testimonials() {
             <div class="flex gap-4">
               <img
                 class="w-12 h-12 rounded-full"
-                src="./images/avatars/avatar-2.webp"
+                src="./1705996037784.jpg"
                 alt="user avatar"
                 width="200"
                 height="200"
@@ -74,7 +74,7 @@ function Testimonials() {
               />
               <div>
                 <h6 class="text-lg font-medium text-gray-700 dark:text-white">
-                  Yanick Doe
+                Shahid Manzoor
                 </h6>
                 <p class="text-sm text-gray-500 dark:text-gray-300">
                   Developer
@@ -100,10 +100,10 @@ function Testimonials() {
               />
               <div>
                 <h6 class="text-lg font-medium text-gray-700 dark:text-white">
-                  Jane Doe
+                  Shahid
                 </h6>
                 <p class="text-sm text-gray-500 dark:text-gray-300">
-                  Mobile dev
+                  Web Weveloper
                 </p>
               </div>
             </div>
