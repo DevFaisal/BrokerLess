@@ -11,6 +11,7 @@ import {
   deleteAgreement,
   getAgreementDate,
   downloadDocuments,
+  processAgreement,
 } from "../controllers/agreement.controller.js";
 import { uploadDocuments } from "../middlewares/multer.js";
 
@@ -42,6 +43,9 @@ router.route("/").get(isValidLandlord, getAgreements);
 router
   .route("/download/:applicationId")
   .get(isValidLandlord, downloadDocuments);
+
+// Process Agreement Application API Endpoint
+router.route("/process").put(isValidLandlord, processAgreement);
 
 // Approve Agreement Application API Endpoint
 router.route("/approve").put(isValidLandlord, approveAgreement);

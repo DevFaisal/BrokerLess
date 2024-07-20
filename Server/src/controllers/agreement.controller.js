@@ -3,9 +3,8 @@ import { AgreementStatus, PrismaClient } from "@prisma/client";
 import Validation from "../utils/Validation.js";
 import fs from "fs";
 import path from "path";
-import zip from "express-zip";
 
-const route = Router();
+
 const prisma = new PrismaClient();
 
 const generateAgreement = async (req, res) => {
@@ -81,7 +80,7 @@ const generateAgreement = async (req, res) => {
 
       const aadharPath = path.join(userDir, `${userId}_aadharCard.pdf`);
       const panPath = path.join(userDir, `${userId}_panCard.pdf`);
-
+    
       fs.renameSync(aadhar.path, aadharPath);
       fs.renameSync(pan.path, panPath);
     }
@@ -190,22 +189,15 @@ const getAgreements = async (req, res) => {
           {
             landlordId: req.user.id,
           },
-          {
-            Agreement: {
-              some: {
-                status: "PENDING",
-              },
-            },
-          },
         ],
       },
     });
+
     let agreements = await prisma.agreement.findMany({
       where: {
         propertyId: {
           in: property.map((property) => property.id),
         },
-        status: "PENDING",
       },
       select: {
         id: true,
@@ -295,6 +287,46 @@ const downloadDocuments = async (req, res) => {
   }
 };
 
+const processAgreement = async (req, res) => {
+  if (!req.query.applicationId) {
+    return res.status(400).json({ message: "Application ID is required" });
+  }
+  try {
+    const agreement = await prisma.agreement.findUnique({
+      where: {
+        id: req.query.applicationId,
+      },
+    });
+    if (!agreement) {
+      return res.status(404).json({ message: "Agreement not found" });
+    }
+    const landlord = await prisma.landlord.findUnique({
+      where: {
+        id: req.user.id,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (landlord.id !== req.user.id) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
+    const updatedAgreement = await prisma.agreement.update({
+      where: {
+        id: req.query.applicationId,
+      },
+      data: {
+        status: "PAYMENT",
+      },
+    });
+
+    return res.status(200).json({ message: "Agreement Processed" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 const approveAgreement = async (req, res) => {
   if (!req.query.applicationId) {
     return res.status(400).json({ message: "Application ID is required" });
@@ -355,4 +387,5 @@ export {
   deleteAgreement,
   getAgreementDate,
   downloadDocuments,
+  processAgreement,
 };

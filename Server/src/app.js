@@ -23,6 +23,8 @@ import landlordRouter from "./routes/landlord.route.js";
 import propertyRoute from "./routes/property.route.js";
 import agreementRoute from "./routes/agreement.route.js";
 import verificationRoute from "./routes/verification.route.js";
+import Authentication from "./middlewares/Authentication.js";
+import PaymentRoute from "./routes/payment.route.js";
 
 // Routes
 app.use("/auth/user", userRouter);
@@ -30,5 +32,6 @@ app.use("/auth/landlord", landlordRouter);
 app.use("/api/property", propertyRoute);
 app.use("/api/agreement", agreementRoute);
 app.use("/api/verification", verificationRoute);
+app.use("/payment", PaymentRoute);
 
 export { app };

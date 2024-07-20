@@ -13,13 +13,21 @@ function UserRequests() {
   );
   const [deleteRequest, setDeleteRequest] = useState(false);
 
-  const DeleteRequest = async ({ id }) => {
-    const response = await deleteAgreement(id);
-    window.location.href = "/user/requests";
-    if (response.status === 200) {
-      setRequests(requests.filter((request) => request.id !== id));
-    }
+  const DeleteRequest = async (id) => {
+    return deleteAgreement(id).then((response) => {
+      window.location.href = "/user/requests";
+      if (response.status === 200) {
+        setRequests(requests.filter((request) => request.id !== id));
+      }
+    });
   };
+
+  useEffect(() => {
+    if (deleteRequest) {
+      DeleteRequest(deleteRequest.id);
+      setDeleteRequest(false);
+    }
+  }, [deleteRequest]);
 
   if (requests.state === "loading") return <Loading />;
   else if (requests.state === "hasError")
@@ -54,9 +62,7 @@ function UserRequests() {
             <AlertDialog
               title={"Delete Request"}
               message={"Are you sure you want to delete this request?"}
-              onConfirm={() =>
-                DeleteRequest({ id: deleteRequest.id }, setDeleteRequest(false))
-              }
+              onConfirm={() => DeleteRequest(deleteRequest.id)}
               onCancel={() => setDeleteRequest(false)}
             />
           )}
@@ -65,14 +71,38 @@ function UserRequests() {
     );
   }
 }
+
 export default UserRequests;
 
+import { loadStripe } from "@stripe/stripe-js";
 export function RequestCard({ request, onClick }) {
-  const handlePayment = (id) => {
-    console.log("Payment", id);
+  console.log(request);
+  let stripe = null;
+  const handlePayment = async (id) => {
+    if (!stripe) {
+      stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+    }
+
+    const item = {
+      Tenant: request.User.name,
+      propertyName: request.Property.name,
+      rent: request.rent,
+    };
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    };
+
+    const response = await fetch(import.meta.env.VITE_LOCALHOST + "/payment", {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify({ item }),
+    });
+    const session = await response.json();
+    stripe.redirectToCheckout({ sessionId: session.id });
   };
   return (
-    <div className="flex items-center justify-between p-4 rounded-md ring-1 ring-gray-300 my-4  w-full flex-1 px-20 text-center">
+    <div className="flex items-center justify-between p-4 rounded-md ring-1 ring-gray-300 my-4 w-full flex-1 px-20 text-center">
       <div className="flex flex-col items-start">
         <h1 className="text-xl font-bold">{request?.Property?.name}</h1>
         <p className="text-sm font-light">
@@ -81,37 +111,19 @@ export function RequestCard({ request, onClick }) {
         </p>
       </div>
       <div>
-        <p
-          className={`${
-            request?.status === "PENDING"
-              ? "bg-yellow-500"
-              : request?.status === "APPROVED"
-                ? "bg-blue-500"
-                : request?.status === "DECLINED"
-                  ? "bg-red-500"
-                  : ""
-          } rounded-md p-2 font-bold`}
-        >
-          {
-            {
-              PENDING: "Pending",
-              APPROVED: (
-                <>
-                  {
-                    <button
-                      onClick={() => {
-                        handlePayment(request.id);
-                      }}
-                    >
-                      Payment
-                    </button>
-                  }
-                </>
-              ),
-              DECLINED: "Declined",
-            }[request?.status]
-          }
+        <p>
+          {request?.status == "PAYMENT" ? (
+            <button
+              className="bg-blue-500 text-white px-2 py-1 rounded-md"
+              onClick={() => handlePayment(request.id)}
+            >
+              Payment
+            </button>
+          ) : (
+            request?.status
+          )}
         </p>
+
         <p>
           {new Date(request?.startDate).toLocaleDateString()}
           {" to "}
@@ -119,7 +131,7 @@ export function RequestCard({ request, onClick }) {
         </p>
       </div>
 
-      {request?.status == "PAYMENT" ? null : (
+      {request?.status == "APPROVED" ? null : (
         <button onClick={onClick}>
           <Trash2Icon color="red" />
         </button>

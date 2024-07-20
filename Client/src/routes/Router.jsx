@@ -38,6 +38,8 @@ import {
 } from "../components/Index";
 import LandLordProfilePage from "../pages/Auth/Landlord/LandLordProfilePage";
 import UserProfilePage from "../pages/Auth/User/UserProfilePage";
+import Success from "../pages/Payment/Success";
+import Failure from "../pages/Payment/Failure";
 
 const RootRouter = () => {
   return (
@@ -109,6 +111,8 @@ const RootRouter = () => {
                 <Route path="requests" element={<UserRequests />} />
                 <Route path="maintenance" element={<div>Maintenance</div>} />
                 <Route path="profile" element={<UserProfilePage />} />
+                <Route path="payment-success" element={<Success />} />
+                <Route path="payment-failed" element={<Failure />} />
               </Route>
             </Route>
             <Route

@@ -121,12 +121,10 @@ model Agreement {
 }
 
 enum AgreementStatus {
-  ACTIVE
-  INACTIVE
   PENDING
   DECLINED
   APPROVED
-  CANCELLED
+  PAYMENT
 }
 
 model verificationToken {

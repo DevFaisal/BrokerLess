@@ -36,27 +36,20 @@ function ApplicationsPage() {
         </div>
       );
     }
-
-    const ApproveApplication = (applicationId) => async () => {
+    const ProcessApplication = (applicationId) => async () => {
       setLoading(true);
       try {
         const response = await axios.put(
-          `${import.meta.env.VITE_LOCALHOST}/api/agreement/approve?applicationId=${applicationId}`,
+          `${import.meta.env.VITE_LOCALHOST}/api/agreement/process?applicationId=${applicationId}`,
           {},
           {
-            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
           }
         );
         console.log(response);
-        if (response.status === 200) {
-          setLoading(false);
-          setApplications((prev) => ({
-            ...prev,
-            contents: prev.contents.filter(
-              (application) => application.id !== applicationId
-            ),
-          }));
-        }
+        toast.success("Application Processed successfully");
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -72,8 +65,9 @@ function ApplicationsPage() {
             <ApplicationCard
               key={application.id}
               application={application}
-              onApprove={ApproveApplication(application.id)}
+              onApprove={ProcessApplication(application.id)}
               loading={loading}
+              status={application.status}
             />
           ))}
         </div>
@@ -83,14 +77,16 @@ function ApplicationsPage() {
 }
 export default ApplicationsPage;
 
-export function ApplicationCard({ application, onApprove, loading }) {
+export function ApplicationCard({ application, onApprove, loading, status }) {
   const handleDownload = async () => {
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_LOCALHOST}/api/agreement/download/${application.id}`,
         {
-          withCredentials: true,
           responseType: "blob",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
       const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -148,9 +144,12 @@ export function ApplicationCard({ application, onApprove, loading }) {
           {loading ? (
             <LoaderCircle size={20} className="text-white animate-spin" />
           ) : (
-            "Approve"
+            "Proceed"
           )}
         </Button>
+      </div>
+      <div>
+        <h1 className="text-lg font-bold text-black">{status}</h1>
       </div>
     </div>
   );

@@ -54,7 +54,9 @@ export const fetchAllUserRequests = selectorFamily({
       const response = await axios.get(
         `${import.meta.env.VITE_LOCALHOST}/api/agreement/tenant`,
         {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
       return response.data;
@@ -69,7 +71,9 @@ export const getAllTenants = selectorFamily({
       const response = await axios.get(
         `${import.meta.env.VITE_LOCALHOST}/api/property/tenants`,
         {
-          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
       return response.data;

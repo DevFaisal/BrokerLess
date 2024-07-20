@@ -8,15 +8,9 @@ import { logOutfromInside } from "../../api/GeneralApi";
 
 function DashboardWrapper({ heading, username, children, links, credentials }) {
   const logOut = async () => {
-    try {
-      const response = await logOutfromInside(credentials);
-      console.log(response);
-      if (response.status === 200) {
-        window.location.href = "/";
-      }
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
+    const token = localStorage.getItem("token");
+    localStorage.clear();
+    window.location.reload();
   };
 
   const [menu, setMenu] = useState(false);
