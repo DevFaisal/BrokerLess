@@ -76,7 +76,6 @@ export default UserRequests;
 
 import { loadStripe } from "@stripe/stripe-js";
 export function RequestCard({ request, onClick }) {
-  console.log(request);
   let stripe = null;
   const handlePayment = async (id) => {
     if (!stripe) {
@@ -113,12 +112,17 @@ export function RequestCard({ request, onClick }) {
       <div>
         <p>
           {request?.status == "PAYMENT" ? (
-            <button
-              className="bg-blue-500 text-white px-2 py-1 rounded-md"
-              onClick={() => handlePayment(request.id)}
-            >
-              Payment
-            </button>
+            <>
+              <p className="text-sm font-light">
+                Your request has been approved, please click to pay the rent
+              </p>
+              <button
+                className="bg-blue-500 text-white px-2 py-1 rounded-md"
+                onClick={() => handlePayment(request.id)}
+              >
+                <p>Pay ₹{request?.rent}</p>
+              </button>
+            </>
           ) : (
             request?.status
           )}

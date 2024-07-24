@@ -27,11 +27,17 @@ function PropertyInfo() {
 
   const handleRentRequest = async (data) => {
     try {
+      const days =
+        (new Date(data.endDate) - new Date(data.startDate)) /
+        (1000 * 60 * 60 * 24);
+
+      const calculatedRent = CalculateRent(days, property.contents.rent);
+
       const newFormData = new FormData();
       newFormData.append("propertyId", propertyId);
       newFormData.append("startDate", new Date(data.startDate));
       newFormData.append("endDate", new Date(data.endDate));
-      newFormData.append("rent", parseInt(property.contents.rent));
+      newFormData.append("rent", parseInt(calculatedRent));
       newFormData.append("aadharCard", data.aadharCard[0]);
       newFormData.append("panCard", data.panCard[0]);
 
@@ -113,3 +119,8 @@ function PropertyInfo() {
 }
 
 export default PropertyInfo;
+
+export function CalculateRent(days, rent) {
+  const rentOfDay = parseInt(rent) / 30;
+  return rentOfDay * days;
+}

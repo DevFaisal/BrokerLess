@@ -4,7 +4,6 @@ import Validation from "../utils/Validation.js";
 import fs from "fs";
 import path from "path";
 
-
 const prisma = new PrismaClient();
 
 const generateAgreement = async (req, res) => {

@@ -15,7 +15,10 @@ const documentStorage = multer.diskStorage({
     cb(null, "./public/documents");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
+    cb(
+      null,
+      Date.now() + "-" + file.fieldname + path.extname(file.originalname)
+    );
   },
 });
 
