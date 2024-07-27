@@ -3,6 +3,7 @@ import { AgreementStatus, PrismaClient } from "@prisma/client";
 import Validation from "../utils/Validation.js";
 import fs from "fs";
 import path from "path";
+import zip from "express-zip";
 
 const prisma = new PrismaClient();
 
@@ -79,7 +80,7 @@ const generateAgreement = async (req, res) => {
 
       const aadharPath = path.join(userDir, `${userId}_aadharCard.pdf`);
       const panPath = path.join(userDir, `${userId}_panCard.pdf`);
-    
+
       fs.renameSync(aadhar.path, aadharPath);
       fs.renameSync(pan.path, panPath);
     }
@@ -253,6 +254,39 @@ const getAgreementDate = async (req, res) => {
   }
 };
 
+// const downloadDocuments = async (req, res) => {
+//   try {
+//     const applicationId = req.params.applicationId;
+//     const user = await prisma.agreement.findUnique({
+//       where: {
+//         id: applicationId,
+//       },
+//     });
+//     const userId = user.tenantId;
+
+//     const userDir = `./public/uploads/${userId}`;
+//     const aadharPath = path.join(userDir, `${userId}_aadharCard.pdf`);
+//     const panPath = path.join(userDir, `${userId}_panCard.pdf`);
+
+//     if (!fs.existsSync(aadharPath) || !fs.existsSync(panPath)) {
+//       return res.status(404).json({ message: "Documents not found" });
+//     }
+
+//     res.zip(
+//       [
+//         { path: aadharPath, name: `aadharCard.pdf` },
+//         { path: panPath, name: `panCard.pdf` },
+//       ],
+//       `Verification_documents.zip`
+//     );
+//   } catch (error) {
+//     console.error(error);
+//     res
+//       .status(500)
+//       .json({ message: "An error occurred while downloading documents" });
+//   }
+// };
+
 const downloadDocuments = async (req, res) => {
   try {
     const applicationId = req.params.applicationId;
@@ -271,13 +305,11 @@ const downloadDocuments = async (req, res) => {
       return res.status(404).json({ message: "Documents not found" });
     }
 
-    res.zip(
-      [
-        { path: aadharPath, name: `aadharCard.pdf` },
-        { path: panPath, name: `panCard.pdf` },
-      ],
-      `Verification_documents.zip`
-    );
+    const fileNames = [
+      { name: "aadharCard.pdf", path: aadharPath },
+      { name: "panCard.pdf", path: panPath },
+    ];
+    res.zip(fileNames, `Verification_documents.zip`);
   } catch (error) {
     console.error(error);
     res

@@ -40,6 +40,8 @@ import LandLordProfilePage from "../pages/Auth/Landlord/LandLordProfilePage";
 import UserProfilePage from "../pages/Auth/User/UserProfilePage";
 import Success from "../pages/Payment/Success";
 import Failure from "../pages/Payment/Failure";
+import UserDashboardIndex from "../pages/Auth/User/UserDashboardIndex";
+import LandLordDashboardIndex from "../pages/Auth/Landlord/LandLordDashboardIndex";
 
 const RootRouter = () => {
   return (
@@ -83,7 +85,7 @@ const RootRouter = () => {
             {/* LANDLORD ROUTES */}
             <Route path="/landlord" element={<LandLordPrivateRoute />}>
               <Route path="" element={<LandlordLordDashboardPage />}>
-                <Route path="dashboard" element={<div>Dashboard</div>} />
+                <Route path="dashboard" element={<LandLordDashboardIndex/>} />
                 <Route
                   path="properties"
                   element={<LandLordPropertiesWrapper />}
@@ -103,7 +105,7 @@ const RootRouter = () => {
             {/* USER ROUTES */}
             <Route path="/user" element={<UserPrivateRoute />}>
               <Route path="" element={<UserDashboardPage />}>
-                <Route path="dashboard" element={<div>Dashboard</div>} />
+                <Route path="dashboard" element={<UserDashboardIndex />} />
                 <Route path="properties" element={<UserPropertiesWrapper />}>
                   <Route index element={<AllProperties />} />
                   <Route path=":propertyId" element={<PropertyInfo />} />

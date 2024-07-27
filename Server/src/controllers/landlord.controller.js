@@ -166,6 +166,11 @@ const getLandlordProfile = async (req, res) => {
       },
       include: {
         Landlordaddress: true,
+        properties: {
+          include: {
+            Agreement: true,
+          },
+        },
       },
     });
     landlord = {
@@ -182,6 +187,18 @@ const getLandlordProfile = async (req, res) => {
           country: address.country,
         };
       }),
+      agreement: landlord.properties
+        .map((property) => {
+          return {
+            agreement: property.Agreement.filter((agreement) => {
+              return agreement.status === "PENDING";
+            }).length,
+          };
+        })
+        .reduce((acc, curr) => {
+          return acc + curr.agreement;
+        }, 0),
+      properties: landlord.properties.map((property) => {}).length,
     };
     return res.status(200).json(landlord);
   } catch (error) {

@@ -21,7 +21,11 @@ function UserProfilePage() {
       const response = await axios.put(
         `${import.meta.env.VITE_LOCALHOST}/auth/user/update`,
         data,
-        { withCredentials: true }
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       if (response.status === 200) {
         // Assuming profile update is successful, you might want to update state or show a success message
