@@ -39,16 +39,16 @@ const registerUser = async (req, res) => {
       process.env.JWT_SECRET
     );
 
-    // const mail = await verificationEmail(
-    //   req.body.email,
-    //   verificationToken,
-    //   req.body.name
-    // );
-    // if (mail.error) {
-    //   return res.status(500).json({
-    //     message: "error: " + mail.error.message,
-    //   });
-    // }
+    const mail = await verificationEmail(
+      req.body.email,
+      verificationToken,
+      req.body.name
+    );
+    if (mail.error) {
+      return res.status(500).json({
+        message: "error: " + mail.error.message,
+      });
+    }
     //Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -60,7 +60,7 @@ const registerUser = async (req, res) => {
         email: req.body.email,
         password: hashedPassword,
         phone: req.body.phone,
-        isVerified: true, // Change this to false to enable email verification
+        isVerified: false, // Change this to false to enable email verification
         verificationToken: {
           create: {
             token: verificationToken,
@@ -137,6 +137,7 @@ const loginUser = async (req, res) => {
   const result = Validation.UserLogin(req.body);
   //Check if the request body is valid
   if (!result.success) {
+    console.log(result.error.errors);
     return res
       .status(400)
       .send(result.error.errors?.map((error) => error.message));
@@ -174,7 +175,7 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-
+    console.log(token);
     return res.status(200).json({
       message: "Logged in successfully",
       token: token,

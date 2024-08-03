@@ -12,6 +12,7 @@ import {
   getAgreementDate,
   downloadDocuments,
   processAgreement,
+  getTenantDetails,
 } from "../controllers/agreement.controller.js";
 import { uploadDocuments } from "../middlewares/multer.js";
 
@@ -33,6 +34,9 @@ router.route("/tenant").delete(Authentication, deleteAgreement);
 
 //GET Agreement Date of a Specific Property
 router.route("/date").get(Authentication, getAgreementDate);
+
+//GET Tenant Details Payment etc
+router.route("/tenant/:id").get(Authentication, getTenantDetails);
 
 //------------Agreement Landlord Routes------------
 

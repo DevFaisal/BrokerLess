@@ -102,6 +102,58 @@ const generateAgreement = async (req, res) => {
   }
 };
 
+const getTenantDetails = async (req, res) => {
+  const tenantId = req.params.id;
+
+  if (!tenantId) {
+    return res.status(400).json({ message: "Tenant ID is required" });
+  }
+  try {
+    const tenant = await prisma.user.findUnique({
+      where: {
+        id: tenantId,
+      },
+      select: {
+        name: true,
+        email: true,
+        phone: true,
+        Agreement: {
+          select: {
+            id: true,
+            startDate: true,
+            endDate: true,
+            rent: true,
+            status: true,
+            Property: {
+              select: {
+                name: true,
+                rent: true,
+              },
+            },
+            Payment: {
+              select: {
+                paymentId: true,
+                createdAt: true,
+                amount: true,
+                status: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!tenant) {
+      return res.status(404).json({ message: "Agreement not found" });
+    }
+
+    return res.status(200).json(tenant);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 const getTenantAgreement = async (req, res) => {
   try {
     const agreement = await prisma.agreement.findMany({
@@ -128,6 +180,7 @@ const getTenantAgreement = async (req, res) => {
         },
         User: {
           select: {
+            id: true,
             name: true,
             email: true,
             phone: true,
@@ -222,6 +275,10 @@ const getAgreements = async (req, res) => {
     if (agreements.length === 0) {
       return res.status(204).json({ message: "No agreements found" });
     }
+
+    agreements = agreements.filter(
+      (agreement) => agreement.status !== AgreementStatus.APPROVED
+    );
     return res.status(200).json(agreements);
   } catch (error) {
     console.log(error);
@@ -419,4 +476,5 @@ export {
   getAgreementDate,
   downloadDocuments,
   processAgreement,
+  getTenantDetails,
 };

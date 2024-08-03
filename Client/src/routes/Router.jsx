@@ -42,6 +42,8 @@ import Success from "../pages/Payment/Success";
 import Failure from "../pages/Payment/Failure";
 import UserDashboardIndex from "../pages/Auth/User/UserDashboardIndex";
 import LandLordDashboardIndex from "../pages/Auth/Landlord/LandLordDashboardIndex";
+import TenantWrapper from "../components/Containers/TenantWrapper";
+import Tenant from "../components/Modules/Landlord/Tenant";
 
 const RootRouter = () => {
   return (
@@ -85,7 +87,7 @@ const RootRouter = () => {
             {/* LANDLORD ROUTES */}
             <Route path="/landlord" element={<LandLordPrivateRoute />}>
               <Route path="" element={<LandlordLordDashboardPage />}>
-                <Route path="dashboard" element={<LandLordDashboardIndex/>} />
+                <Route path="dashboard" element={<LandLordDashboardIndex />} />
                 <Route
                   path="properties"
                   element={<LandLordPropertiesWrapper />}
@@ -94,7 +96,10 @@ const RootRouter = () => {
                   <Route path=":propertyId" element={<Property />} />
                   <Route path="add" element={<AddProperty />} />
                 </Route>
-                <Route path="tenants" element={<Tenants />} />
+                <Route path="tenants" element={<TenantWrapper />}>
+                  <Route index element={<Tenants />} />
+                  <Route path=":tenantId" element={<Tenant />} />
+                </Route>
                 <Route path="applications" element={<ApplicationsPage />} />
                 <Route path="maintenance" element={<div>Maintenance</div>} />
                 <Route path="profile" element={<LandLordProfilePage />} />

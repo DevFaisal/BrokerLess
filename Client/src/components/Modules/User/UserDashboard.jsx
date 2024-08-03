@@ -25,11 +25,11 @@ function UserDashboard() {
       path: "/user/requests",
       icon: <Inbox />,
     },
-    {
-      name: "Maintenance",
-      path: "/user/maintenance",
-      icon: <Construction />,
-    },
+    // {
+    //   name: "Maintenance",
+    //   path: "/user/maintenance",
+    //   icon: <Construction />,
+    // },
     {
       name: "Profile",
       path: "/user/profile",

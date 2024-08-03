@@ -39,16 +39,16 @@ const registerLandlord = async (req, res) => {
       process.env.JWT_SECRET
     );
 
-    // const mail = await VerificationEmail(
-    //   req.body.email,
-    //   verificationToken,
-    //   "Landlord " + req.body.name
-    // );
-    // if (mail.error) {
-    //   return res.status(500).json({
-    //     message: "error: " + mail.error.message,
-    //   });
-    // }
+    const mail = await VerificationEmail(
+      req.body.email,
+      verificationToken,
+      "Landlord " + req.body.name
+    );
+    if (mail.error) {
+      return res.status(500).json({
+        message: "error: " + mail.error.message,
+      });
+    }
 
     //Hash the password
     const salt = await bcrypt.genSalt(10);
@@ -61,7 +61,7 @@ const registerLandlord = async (req, res) => {
         email: req.body.email,
         password: hashedPassword,
         phone: req.body.phone,
-        isVerified: true, //Change this to false to enable email verification
+        isVerified: false, //Change this to false to enable email verification
         Landlordaddress: {
           create: {
             street: req.body.street,

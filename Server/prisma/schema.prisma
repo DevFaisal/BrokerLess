@@ -22,6 +22,7 @@ model User {
   UserAddress       UserAddress[]
   verificationToken verificationToken[]
   Property          Property[]
+  Payment           Payment[]
 }
 
 // USER ADDRESS MODEL
@@ -118,6 +119,7 @@ model Agreement {
   createdAt  DateTime        @default(now())
   Property   Property        @relation(fields: [propertyId], references: [id], onDelete: Cascade)
   User       User            @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  Payment    Payment[]
 }
 
 enum AgreementStatus {
@@ -136,4 +138,23 @@ model verificationToken {
   updatedAt  DateTime  @updatedAt
   User       User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   Landlord   Landlord? @relation(fields: [landlordId], references: [id], onDelete: Cascade)
+}
+
+model Payment {
+  id          String        @id @default(cuid())
+  amount      Int
+  status      PaymentStatus @default(PENDING)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Agreement   Agreement     @relation(fields: [agreementId], references: [id], onDelete: Cascade)
+  user        User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String?
+  agreementId String
+  paymentId   String?
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
 }

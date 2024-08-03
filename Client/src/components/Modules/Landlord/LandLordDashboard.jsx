@@ -29,11 +29,11 @@ function LandLordDashboard() {
       path: "/landlord/applications",
       icon: <Mailbox />,
     },
-    {
-      name: "Maintenance",
-      path: "/landlord/maintenance",
-      icon: <Construction />,
-    },
+    // {
+    //   name: "Maintenance",
+    //   path: "/landlord/maintenance",
+    //   icon: <Construction />,
+    // },
     {
       name: "Profile",
       path: "/landlord/profile",

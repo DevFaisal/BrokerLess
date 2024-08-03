@@ -36,6 +36,7 @@ function ApplicationsPage() {
         </div>
       );
     }
+
     const ProcessApplication = (applicationId) => async () => {
       setLoading(true);
       try {

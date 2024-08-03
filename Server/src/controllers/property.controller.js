@@ -5,6 +5,44 @@ import uploadOnCloudinary from "../utils/Cloudinary.js";
 const client = new PrismaClient();
 
 // ------------------- Property Routes -------------------
+
+const getRecentProperties = async (req, res) => {
+  try {
+    const properties = await client.property.findMany({
+      take: 4,
+      orderBy: {
+        createdAt: "desc",
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        rent: true,
+        status: true,
+        imageUrl: true,
+        landlord: {
+          select: {
+            name: true,
+            email: true,
+            phone: true,
+          },
+        },
+        PropertyAddress: {
+          select: {
+            street: true,
+            city: true,
+            state: true,
+            zip: true,
+            country: true,
+          },
+        },
+      },
+    });
+    res.status(200).json(properties);
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 const getAllProperties = async (req, res) => {
   try {
     const properties = await client.property.findMany();
@@ -266,42 +304,76 @@ const getTenantsOfSpecificProperty = async (req, res) => {
 
 const getAllTenants = async (req, res) => {
   try {
-    const tenants = await client.landlord.findUnique({
+    const tenant = await client.landlord.findUnique({
       where: {
         id: req.user.id,
       },
       select: {
         properties: {
           select: {
-            name: true,
-            tenant: {
-              select: {
-                id: true,
-                name: true,
-                email: true,
-                phone: true,
-              },
-            },
+            id: true,
             Agreement: {
               select: {
-                status: true,
-                startDate: true,
-                endDate: true,
+                tenantId: true,
+              },
+            },
+          },
+        },
+        // properties: {
+        //   select: {
+        //     name: true,
+        //     tenant: {
+        //       select: {
+        //         id: true,
+        //         name: true,
+        //         email: true,
+        //         phone: true,
+        //       },
+        //     },
+        //     Agreement: {
+        //       select: {
+        //         id: true,
+        //         status: true,
+        //         startDate: true,
+        //         endDate: true,
+        //       },
+        //     },
+        //   },
+        // },
+      },
+    });
+    const tenants = await client.user.findMany({
+      where: {
+        id: tenant.properties.Agreement?.map((agreement) => agreement.tenantId),
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        Agreement: {
+          select: {
+            id: true,
+            status: true,
+            startDate: true,
+            endDate: true,
+            Property: {
+              select: {
+                name: true,
               },
             },
           },
         },
       },
     });
-
     if (!tenants) {
       return res.status(404).json({ message: "No Tenants Found" });
     }
-    const refinedTenants = tenants.properties.filter(
-      (tenant) => tenant.tenant !== null
-    );
 
-    return res.status(200).json(refinedTenants);
+    // const refinedTenants = tenants.properties.filter(
+    //   (tenant) => tenant.tenant !== null
+    // );
+    return res.status(200).json(tenants);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -363,4 +435,5 @@ export {
   getLandlordProperties,
   getAllTenants,
   getPropertyByIdToTenant,
+  getRecentProperties,
 };

@@ -47,6 +47,7 @@ function UserRequests() {
       </main>
     );
   } else if (requests.state === "hasValue") {
+    console.log(requests.contents);
     return (
       <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
         <h1 className="text-xl py-2 mt-4 font-bold">User Requests</h1>
@@ -81,8 +82,10 @@ export function RequestCard({ request, onClick }) {
     if (!stripe) {
       stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
     }
-
     const item = {
+      email: request.User.email,
+      userId: request.User.id,
+      requestId: request.id,
       Tenant: request.User.name,
       propertyName: request.Property.name,
       rent: request.rent,

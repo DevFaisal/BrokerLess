@@ -13,6 +13,7 @@ import {
   getLandlordProperties,
   getAllTenants,
   getPropertyByIdToTenant,
+  getRecentProperties,
 } from "../controllers/property.controller.js";
 import { uploadImage } from "../middlewares/multer.js";
 
@@ -20,6 +21,9 @@ const router = Router();
 const client = new PrismaClient();
 
 // ------------------- Property Routes -------------------
+
+//GET Request to get all recently added properties
+router.route("/recent").get(getRecentProperties);
 
 //GET Request to get all properties
 router.route("/").get(getAllProperties);
